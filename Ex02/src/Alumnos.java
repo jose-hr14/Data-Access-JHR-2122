@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
-public class Alumnos {
+public class Alumnos
+{
     private ArrayList listaAlumnos = new ArrayList();
 
     // Agrega un nuevo alumno a la lista
@@ -14,31 +15,30 @@ public class Alumnos {
     //
     public Alumno Obtener(int num)
     {
-        if (num >= 0 && num <= listaAlumnos.Count)
+        if (num >= 0 && num <= listaAlumnos.size())
         {
-            return ((Alumno)listaAlumnos[num]);
+            return ( (Alumno) listaAlumnos.get( num ) );
         }
         return null;
     }
 
     // Devuelve la nota media de los alumnos
     //
-    public float Media
+    public float getMedia()
     {
-        get
+
+        if (listaAlumnos.size() == 0)
+            return 0;
+        else
         {
-            if (listaAlumnos.Count == 0)
-                return 0;
-            else
+            float media = 0;
+            for (int i = 0; i < listaAlumnos.size(); i++)
             {
-                float media = 0;
-                for (int i = 0; i < listaAlumnos.Count; i++)
-                {
-                    media += ((Alumno)listaAlumnos[i]).Nota;
-                }
-                return (media / listaAlumnos.Count);
+                media += ((Alumno)listaAlumnos.get(i)).getMark();
             }
+            return (media / listaAlumnos.size());
         }
+
     }
 }
-}
+
