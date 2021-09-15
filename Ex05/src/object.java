@@ -1,7 +1,10 @@
 public class object extends element
 {
-    protected Class returnType()
+    /*
+    protected objectType returnType()
     {
         return this.getClass();
     }
+    */
+     
 }
