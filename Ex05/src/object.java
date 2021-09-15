@@ -1,10 +1,10 @@
-public class object extends element
+public abstract class object extends element
 {
-    /*
+    protected objectType object_Type;
+
     protected objectType returnType()
     {
-        return this.getClass();
+        return object_Type;
     }
-    */
      
 }
