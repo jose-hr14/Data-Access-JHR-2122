@@ -1,4 +1,4 @@
-public class pupilFCT extends pupil
+public class studentFCT extends student
 {
     String company;
     String mentor;

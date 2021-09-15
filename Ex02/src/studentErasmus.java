@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class erasmusPupil
+public class studentErasmus
 {
     Date startingDate;
     Date endingDate;

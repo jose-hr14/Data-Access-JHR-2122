@@ -1,4 +1,4 @@
-public class pupil
+public class student
 {
     private String name;
     private int mark;

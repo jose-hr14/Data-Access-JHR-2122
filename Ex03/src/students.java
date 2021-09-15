@@ -1,23 +1,23 @@
 import java.util.ArrayList;
 
-public class pupils
+public class students
 {
     private ArrayList pupilsList = new ArrayList();
 
     // Add a new pupils to the array list
     //
-    public void add(pupil alu)
+    public void add(student alu)
     {
         pupilsList.add(alu);
     }
 
     // Returns a pupils in the num position
     //
-    public pupil get(int num)
+    public student get(int num)
     {
         if (num >= 0 && num <= pupilsList.size())
         {
-            return ( (pupil) pupilsList.get( num ) );
+            return ( (student) pupilsList.get( num ) );
         }
         return null;
     }
@@ -34,7 +34,7 @@ public class pupils
             float average = 0;
             for (int i = 0; i < pupilsList.size(); i++)
             {
-                average += ((pupil) pupilsList.get(i)).getMark();
+                average += ((student) pupilsList.get(i)).getMark();
             }
             return (average / pupilsList.size());
         }
