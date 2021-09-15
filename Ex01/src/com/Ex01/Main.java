@@ -26,7 +26,7 @@ public class Main {
             char auxLetter = keyboard.next().charAt(0);
             System.out.println();
             System.out.println("-------");
-            letters = letters + Character.toString(auxLetter);
+            letters += auxLetter;
 
             if (letters.charAt(numLetters) == '0')
                 exit = true;
@@ -63,7 +63,7 @@ public class Main {
         System.out.println("the smallest char is : " + minLetter);
         System.out.println("the biggest char is : " + maxLetter);
         System.out.println("There are " + numCapitalLetters + " capital letters ");
-        keyboard.next().charAt(0);
+        keyboard.nextLine();
         keyboard.close();
     }
 }
