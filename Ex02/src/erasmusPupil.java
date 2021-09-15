@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class AlumnoErasmus
+public class erasmusPupil
 {
     Date startingDate;
     Date endingDate;
@@ -18,5 +18,10 @@ public class AlumnoErasmus
     public void setEndingDate(Date endingDate)
     {
         this.endingDate = endingDate;
+    }
+
+    public Date getEndingDate()
+    {
+        return this.endingDate;
     }
 }

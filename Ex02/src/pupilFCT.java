@@ -1,4 +1,4 @@
-public class AlumnoFCT extends Alumno
+public class pupilFCT extends pupil
 {
     String company;
     String mentor;
