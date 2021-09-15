@@ -5,63 +5,64 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-	/*
-Este programa lee caracteres introducidos por teclado,
-los almacena en una cadena, calcula cuales son los mayores y menores atendiendo a la tabla ASCII * También almacena el número de ellos que son mayúsculas
-*/
-        String Letras = "";
-        int numLetras = 0;
-        char minLetra = Character.MIN_VALUE;
-        char maxLetra = Character.MAX_VALUE;
-        int numMayusculas = 0;
+        /*
+        This program reads characters inserted by the keyboard,
+        and stores them in a string, counts whose are the biggest and the smallest according to the ASCII table
+        and also, stores del number of capital letters
+        */
+        String letters = "";
+        int numLetters = 0;
+        char minLetter = Character.MIN_VALUE;
+        char maxLetter = Character.MAX_VALUE;
+        int numCapitalLetters = 0;
         Scanner keyboard = new Scanner(System.in);
 
-        boolean salir = false;
+        boolean exit = false;
 
-        while (numLetras < 10 && !salir)
+        while (numLetters < 10 && !exit)
         {
             //Leo una letra
-            System.out.println("Introduce una letra. Pulsa 0 si quieres salir: ");
-            char letraAux = keyboard.next().charAt(0);
+            System.out.println("Type a letter. Type 0 to exit: ");
+            char auxLetter = keyboard.next().charAt(0);
             System.out.println();
             System.out.println("-------");
-            Letras = Letras + Character.toString(letraAux);
+            letters = letters + Character.toString(auxLetter);
 
-            if (Letras.charAt(numLetras) == '0')
-                salir = true;
+            if (letters.charAt(numLetters) == '0')
+                exit = true;
 
-            //almaceno los menores y mayores.
-            if (minLetra > letraAux)
+            //Stores the biggest and the smallest character
+            if (minLetter > auxLetter)
             {
-                minLetra = letraAux;
+                minLetter = auxLetter;
             }
-            if (maxLetra < letraAux)
+            if (maxLetter < auxLetter)
             {
-                maxLetra = letraAux;
+                maxLetter = auxLetter;
             }
 
-            //Incremento el contador de letras
-            numLetras++;
+            //Increments de counter of letters
+            numLetters++;
         }
 
-        if (numLetras > 50)
-            System.out.println("El cadena de caracteres esta llena");
+        if (numLetters > 50)
+            System.out.println("The string of characters is full");
 
-        //Para cada char de la cadena
-        for (int i = 0; i < numLetras && Letras.charAt(i) != '0'; i++)
+        //For each char of the string
+        for (int i = 0; i < numLetters && letters.charAt(i) != '0'; i++)
         {
-            //Si la letra es mayusculas
-            if ((Letras.charAt(i) >= 'A') && (Letras.charAt(i) <= 'Z'))
+            //If the char is a capital letter
+            if ((letters.charAt(i) >= 'A') && (letters.charAt(i) <= 'Z'))
             {
-                //contabiliza las letras mayusculas
-                numMayusculas++;
+                //It accounts the number of capital letters
+                numCapitalLetters++;
             }
         }
 
-        //Escribe el resultado
-        System.out.println("el Char menor es : " + minLetra);
-        System.out.println("el Char mayor es : " + maxLetra);
-        System.out.println("Hay " + numMayusculas + " letras mayusculas ");
+        //Prints the result
+        System.out.println("the smallest char is : " + minLetter);
+        System.out.println("the biggest char is : " + maxLetter);
+        System.out.println("There are " + numCapitalLetters + " capital letters ");
         keyboard.next().charAt(0);
         keyboard.close();
     }
