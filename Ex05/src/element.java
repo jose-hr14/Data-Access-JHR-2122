@@ -1,5 +1,5 @@
 public abstract class element
 {
     protected float coordX;
-    protected String coordY;
+    protected float coordY;
 }
