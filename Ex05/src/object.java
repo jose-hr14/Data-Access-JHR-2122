@@ -6,5 +6,4 @@ public abstract class object extends element
     {
         return object_Type;
     }
-     
 }

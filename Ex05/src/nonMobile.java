@@ -11,6 +11,4 @@ public class nonMobile
     {
         return nonMobile_Type;
     }
-
-
 }
