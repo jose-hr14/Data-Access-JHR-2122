@@ -1,4 +1,4 @@
-public abstract class object extends element
+public abstract class Object extends Element
 {
     protected objectType object_Type;
 

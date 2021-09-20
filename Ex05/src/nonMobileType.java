@@ -1,4 +1,4 @@
 public enum nonMobileType
 {
-    wall, tower, tree
+    WALL, TOWER, TREE
 }

@@ -1,4 +1,4 @@
 public enum objectType
 {
-        nonMobileType, mobileType
+        NON_MOBILE_TYPE, MOBILE_TYPE
 }

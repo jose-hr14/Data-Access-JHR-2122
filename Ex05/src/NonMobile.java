@@ -1,8 +1,8 @@
-public class nonMobile
+public class NonMobile
 {
     protected nonMobileType nonMobile_Type;
 
-    public nonMobile(nonMobileType nonMobile_Type)
+    public NonMobile(nonMobileType nonMobile_Type)
     {
         this.nonMobile_Type = nonMobile_Type;
     }

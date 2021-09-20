@@ -1,4 +1,4 @@
 public enum mobileType
 {
-    food, projectile, weapon
+    FOOD, PROJECTILE, WEAPON
 }
