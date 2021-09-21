@@ -8,6 +8,12 @@ public class Main {
         String hallName;
         String museumName;
 
+        PaintingType paintingType;
+        String paintingFormat;
+
+        Materials sculptureMaterial;
+        Style sculptureStyle;
+
         List<Hall> hallList = museum.getHallList();
         List<Artwork> artworkList;
 
@@ -20,6 +26,17 @@ public class Main {
                 author = artworkList.get(i).getAuthor().getName();
                 hallName = artworkList.get(i).getHall().getName();
                 museumName = museum.getName();
+
+                if(artworkList.get(i) instanceof Painting)
+                {
+                    paintingType = ((Painting) artworkList.get(i)).getType();
+                    paintingFormat = ((Painting) artworkList.get(i)).getFormat();
+                }
+                if(artworkList.get(i) instanceof Sculpture)
+                {
+                    sculptureMaterial = ((Sculpture) artworkList.get(i)).getMaterial();
+                    sculptureStyle = ((Sculpture) artworkList.get(i)).getStyle();
+                }
             }
         }
     }

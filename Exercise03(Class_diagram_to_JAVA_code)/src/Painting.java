@@ -1,29 +1,20 @@
 public class Painting extends Artwork {
-    Style style;
-    PaintingType format;
-    Author author;
+    PaintingType type;
+    String format;
 
-    public Style getStyle() {
-        return style;
+    public PaintingType getType() {
+        return type;
     }
 
-    public PaintingType getFormat() {
+    public String getFormat() {
         return format;
     }
 
-    public Author getAuthor() {
-        return author;
+    public void setType(PaintingType type) {
+        this.type = type;
     }
 
-    public void setStyle(Style style) {
-        this.style = style;
-    }
-
-    public void setFormat(PaintingType format) {
+    public void setFormat(String format) {
         this.format = format;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
     }
 }
