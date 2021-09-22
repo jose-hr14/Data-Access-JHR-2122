@@ -1,7 +1,14 @@
 public class Artwork {
-    String title;
-    Author author;
-    Hall hall;
+    protected String title;
+    protected Author author;
+    protected Hall hall;
+
+
+
+    public Artwork(String title, Author author) {
+        this.title = title;
+        this.author = author;
+    }
 
     public String getTitle() {
         return title;
@@ -26,6 +33,4 @@ public class Artwork {
     public void setHall(Hall hall) {
         this.hall = hall;
     }
-
-    //funcion que recorra todas las obras y de sus datos: nombre, autor, sala, y museo, y saque unos datos u otros segun si es pintura o escultura, con instanceof
 }

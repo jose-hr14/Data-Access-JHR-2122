@@ -6,9 +6,8 @@ public class Hall {
     Museum museum;
     List<Artwork> artworkList;
 
-    public Hall(String name, Museum museum) {
+    public Hall(String name) {
         this.name = name;
-        this.museum = museum;
         this.artworkList = new ArrayList<Artwork>();
     }
 
@@ -30,6 +29,12 @@ public class Hall {
 
     public List<Artwork> getArtworkList() {
         return artworkList;
+    }
+
+    public void addArtwork(Artwork artwork)
+    {
+        artwork.setHall(this);
+        artworkList.add(artwork);
     }
 
 }

@@ -52,4 +52,13 @@ public class Museum {
         return hallList;
     }
 
+    public void addHall(Hall hall)
+    {
+        hall.setMuseum(this);
+        hallList.add(hall);
+    }
+
+    public void showArtwork(Museum museum) {
+
+    }
 }
