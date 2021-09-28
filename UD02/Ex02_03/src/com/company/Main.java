@@ -3,6 +3,21 @@ package com.company;
 import java.util.Scanner;
 
 public class Main {
+    public static void main(String[] args) {
+        Scanner keyboard = new Scanner(System.in);
+
+        String day = keyboard.next();
+        String month = keyboard.next();
+        String year = keyboard.next();
+
+        try {
+            Date date = new Date(7, 4, 1996);
+        }
+        catch (IllegalArgumentException wrongArgument){
+            System.out.println("At least one of the parameters is not a valid date");
+        }
+
+    }
     public static void Ej2_3_1()
     {
         	/*
@@ -36,7 +51,4 @@ public class Main {
             System.out.println("The month is out of range");
     }
 
-    public static void main(String[] args) {
-
-    }
 }

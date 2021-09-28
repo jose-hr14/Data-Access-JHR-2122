@@ -9,9 +9,9 @@ public class Date {
     }
 
     public Date(int day, int month, int year) {
-        this.day = day;
-        this.month = month;
-        this.year = year;
+        setDay(day);
+        setMonth(month);
+        setYear(year);
     }
 
     public int getDay() {
@@ -26,23 +26,22 @@ public class Date {
         return year;
     }
 
-    public Boolean setDay(int day) {
+    public void setDay(int day) {
         if(month < 1 || month > 12)
         {
             this.month = Integer.parseInt(null);
-            return false;
+            throw new IllegalArgumentException();
         }
 
         else if(this.month == 02 && this.day == 30)
         {
             this.day = Integer.parseInt(null);
-            return false;
+            throw new IllegalArgumentException();
         }
 
         else
         {
             this.day = day;
-            return true;
         }
 
     }
@@ -50,20 +49,18 @@ public class Date {
     public Boolean setMonth(int month) {
         if(month < 1 || month > 12)
         {
-            this.month = Integer.parseInt(null);
-            return false;
+            throw new IllegalArgumentException();
         }
 
         else if(this.month == 02 && this.day == 30)
         {
-            this.month = Integer.parseInt(null);
-            return false;
+            throw new IllegalArgumentException();
         }
 
         else
         {
             this.month = month;
-            return true;
+            throw new IllegalArgumentException();
         }
 
 

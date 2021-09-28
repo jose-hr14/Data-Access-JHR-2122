@@ -1,19 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="2a0e2d19-7606-489f-b98b-ef4508e793d6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/description.html" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/.idea/description.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/project-template.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/.idea/project-template.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UD02.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/UD02.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/UD02/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/out/production/UD02/com/company/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Date.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/src/com/company/Date.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/src/com/company/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex02_05/.idea/description.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex02_05/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex02_05/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex02_05/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex02_05/.idea/project-template.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex02_05/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex02_05/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex02_05/Ex02_05.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex02_05/out/production/Ex02_05/com/company/Ex03_05_01.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex02_05/out/production/Ex02_05/com/company/Main.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex02_05/src/com/company/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UD02Ex03_05/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UD02Ex03_05/src/com/Ex03_05/Ex03_05_01.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/Data-Access-JHR-2122.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex02_03/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex02_03/out/production/UD02/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/out/production/UD02/com/company/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex02_03/src/com/company/Date.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/src/com/company/Date.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex02_03/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_03/src/com/company/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UD02Ex03_05/out/production/UD02Ex03_05/Ex03_05_01.class" beforeDir="false" afterPath="$PROJECT_DIR$/../UD02Ex03_05/out/production/UD02Ex03_05/Ex03_05_01.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UD02Ex03_05/out/production/UD02Ex03_05/com/Ex03_05/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../UD02Ex03_05/out/production/UD02Ex03_05/com/Ex03_05/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UD02Ex03_05/src/Ex03_05_01.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ex02_05/src/com/company/Ex03_05_01.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +60,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1yftyNBuRsRscIYCsycb7UWaPpX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -32,7 +69,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Ex02_03" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -62,5 +100,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1632835290612">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1632835290612" />
   </component>
 </project>
