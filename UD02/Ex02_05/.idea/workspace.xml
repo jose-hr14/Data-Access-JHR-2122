@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -20,13 +23,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4369b71b-00e6-427c-ace6-044e9de15adb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/Ex03_05_02.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Ex02_05/com/company/Ex03_05_01.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Ex02_05/com/company/Ex03_05_01.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Ex02_05/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Ex02_05/com/company/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/Ex03_05_01.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Ex03_05_01.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -42,8 +57,15 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Ex01" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.company" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
@@ -83,46 +105,20 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1632841056551">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1632841056551" />
-    <state width="1323" height="223" key="GridCell.Tab.0.bottom" timestamp="1632841057771">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1632841057771" />
-    <state width="1323" height="223" key="GridCell.Tab.0.center" timestamp="1632841057771">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1632841057771" />
-    <state width="1323" height="223" key="GridCell.Tab.0.left" timestamp="1632841057771">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1632841057771" />
-    <state width="1323" height="223" key="GridCell.Tab.0.right" timestamp="1632841057771">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1632841057771" />
-    <state width="1323" height="223" key="GridCell.Tab.1.bottom" timestamp="1632841057771">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1632841057771" />
-    <state width="1323" height="223" key="GridCell.Tab.1.center" timestamp="1632841057771">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1632841057771" />
-    <state width="1323" height="223" key="GridCell.Tab.1.left" timestamp="1632841057771">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1632841057771" />
-    <state width="1323" height="223" key="GridCell.Tab.1.right" timestamp="1632841057771">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1632841057771" />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/company/Main.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

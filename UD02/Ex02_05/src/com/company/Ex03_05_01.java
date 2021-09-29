@@ -37,7 +37,7 @@ public class Ex03_05_01 {
                 case "47494638":
                     System.out.println("GIF");
                     break;
-                case "00000100":
+                case "0010":
                     System.out.println("ICO");
                     break;
                 case "89504e47":
