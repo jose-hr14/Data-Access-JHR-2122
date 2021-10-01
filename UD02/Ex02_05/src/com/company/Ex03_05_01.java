@@ -2,6 +2,9 @@ package com.company;
 
 import java.io.*;
 
+//Ex01 is the first attemp to solve the exercise
+
+
 public class Ex03_05_01 {
     public static void Ex01()
     {
@@ -57,6 +60,10 @@ public class Ex03_05_01 {
     public static void Ex01Aux()
     {
         try {
+            //(byte)0xFF para comparar bytes de ints signados con valores hexadecimales
+            //byte == byte -> header[0] == (byte)0x47
+            //Byte.toUnsignedInt(header[0]) == 0x47 de entero a entero
+
             //InputStream inputStream = new FileInputStream("C:\\Ficheros\\img.gif");
             InputStream inputStream = new FileInputStream("C:\\Ficheros\\img.ico");
             //InputStream inputStream = new FileInputStream("C:\\Ficheros\\img.bmp");
