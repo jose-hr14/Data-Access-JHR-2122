@@ -6,31 +6,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
-
 public class Ex03_05_03 {
     public static void Ex03()
     {
         try {
             Scanner keyboard = new Scanner(System.in);
             String docText = new String( new FileInputStream("C:\\Ficheros\\Ex030503.txt").readAllBytes() );
-
-            System.out.print("Type the word you want to search: ");
-            String word = keyboard.next();
-
-            int index = 0;
+            String word;
+            int index;
             boolean found = false;
             int startIndex = 0;
 
-            do{
+            System.out.print("Type the word you want to search: ");
+            word = keyboard.next();
+
+
+            index = docText.indexOf(word);
+            while(index != -1)
+            {
+                System.out.println("The word was found at offset " + index);
+                found = true;
+                startIndex = index + word.length();
+
                 index = docText.indexOf(word, startIndex);
-                if(index != -1)
-                {
-                    System.out.println("The word was found at offset " + (index));
-                    //System.out.println("The word was found at offset " + (index + totalIndex));
-                    found = true;
-                    startIndex = index + word.length();
-                }
-            }while(index != -1);
+            }
 
             if(!found)
             {
