@@ -1,0 +1,19 @@
+1. 
+2. compare to
+3. usa el more
+4. 3.5.3, contains por cada línea
+
+1.
+comprobar si existe el fichero
+File.exists() (en el punto 5 está)
+	Si existe, dar opcion de sobreescribir o no. File ("name of file").exists()
+	Lo del write con true or false
+	while(if no hay input de usuario, enter y cierra programa)
+	si no pide overwrite, contar lineas. podemos recorrer el fichero o una funcion que da el numero de lineas, el line count
+	Files.lines(Paths.get(filename)).Count()
+
+en lugar de usar string s == "y"
+s.equals("y")
+s.toLowerCase.equals("y"
+
+meter en el finally un flush() y un close() para evitar quebraderos de cabeza
