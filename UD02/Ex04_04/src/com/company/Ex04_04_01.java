@@ -1,6 +1,9 @@
 package com.company;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Ex04_04_01 {
@@ -9,19 +12,43 @@ public class Ex04_04_01 {
     {
         Scanner keyboard = new Scanner(System.in);
         BufferedReader reader;
-        PrintWriter writer = null;
-        boolean overwrite;
-        String yerOrNo = "";
+        PrintWriter printWriter = null;
+        boolean append = false;
+        String yerOrNo;
+        String text = "";
 
         System.out.print("Enter filename: ");
         String docName = keyboard.nextLine();
 
-        if(new File(docName).exists())
-        {
-            do{
-                System.out.print("Do you want to overwrite the content? Y/N ");
-                yerOrNo = keyboard.nextLine();
-            }while(yerOrNo != "Y" || yerOrNo != "N");
+        if(new File(docName).exists()) {
+            try {
+                do {
+                    System.out.print("The file exits, do you want to overwrite the content? Y/N ");
+                    yerOrNo = keyboard.nextLine();
+                } while (!yerOrNo.toUpperCase().equals("Y") && !yerOrNo.toUpperCase().equals("N"));
+
+                if (yerOrNo.toUpperCase().equals("N"))
+                    append = true;
+
+                printWriter = new PrintWriter(new FileWriter(docName, append));
+
+                long lines = 1;
+                if(append)
+                    lines = Files.lines(Paths.get(docName)).count() + 1;
+
+                System.out.println("Enter the text and press enter, or leave a white space and press enter to close the program");
+                text = keyboard.nextLine();
+                do {
+                    printWriter.println(lines + ". " + text);
+                    lines++;
+                    text = keyboard.nextLine();
+                } while (text != "");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                printWriter.flush();
+                printWriter.close();
+            }
 
         }
         else
@@ -30,9 +57,16 @@ public class Ex04_04_01 {
             try {
                 new FileOutputStream(docName);
 
-                writer = new PrintWriter(new FileWriter(docName));
+                printWriter = new PrintWriter(new FileWriter(docName));
+                int lines = 1;
 
-                writer.println("Hola");
+                System.out.println("Enter the text and press enter, or leave a white space and press enter to close the program");
+                text = keyboard.nextLine();
+                do {
+                    printWriter.println(lines + ". " + text);
+                    lines++;
+                    text = keyboard.nextLine();
+                } while (text != "");
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -40,8 +74,8 @@ public class Ex04_04_01 {
                 e.printStackTrace();
             }
             finally {
-                writer.flush();
-                writer.close();
+                printWriter.flush();
+                printWriter.close();
             }
         }
 
