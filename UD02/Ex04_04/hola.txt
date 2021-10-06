@@ -8,3 +8,6 @@
 8. adios
 9. ey
 10. hola
+11. david
+12. como
+13. estas

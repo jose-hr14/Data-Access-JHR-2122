@@ -22,7 +22,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4369b71b-00e6-427c-ace6-044e9de15adb" name="Default Changelist" comment="" />
+    <list default="true" id="4369b71b-00e6-427c-ace6-044e9de15adb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex02_05.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Ex03_05.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex04_04/hola.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_04/hola.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex04_04/out/production/Ex04_04/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_04/out/production/Ex04_04/com/company/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex04_04/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_04/src/com/company/Main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +69,7 @@
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.company.Main" />
-      <module name="Ex02_05" />
+      <module name="Ex03_05" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
