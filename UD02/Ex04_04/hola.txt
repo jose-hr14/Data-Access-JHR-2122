@@ -4,3 +4,7 @@
 4. mi
 5. querido
 6. pana
+7. hola
+8. adios
+9. ey
+10. hola

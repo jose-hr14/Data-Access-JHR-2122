@@ -3,12 +3,11 @@ package com.company;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Ex04_04_01 {
 
-    public static void Ex04()
+    public static void Ex01()
     {
         Scanner keyboard = new Scanner(System.in);
         BufferedReader reader;
