@@ -36,12 +36,12 @@ public class Ex04_04_01 {
                     lines = Files.lines(Paths.get(docName)).count() + 1;
 
                 System.out.println("Enter the text and press enter, write end to close the program: ");
-                while(!(text = keyboard.nextLine()).equals("end"))
+                while(!(text = keyboard.nextLine()).toLowerCase().equals("end"))
                 {
                     printWriter.println(lines + ". " + text);
                     lines++;
                 }
-                
+
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -60,7 +60,7 @@ public class Ex04_04_01 {
                 int lines = 1;
 
                 System.out.println("Enter the text and press enter, write end to close the program: ");
-                while(!(text = keyboard.nextLine()).equals("end"))
+                while(!(text = keyboard.nextLine()).toLowerCase().equals("end"))
                 {
                     printWriter.println(lines + ". " + text);
                     lines++;

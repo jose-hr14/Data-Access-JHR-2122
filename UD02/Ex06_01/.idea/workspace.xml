@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -22,7 +19,21 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4369b71b-00e6-427c-ace6-044e9de15adb" name="Default Changelist" comment="">
+    <list default="true" id="de474c60-60a9-4951-acd4-3897f63c18db" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/description.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/project-template.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex06_01.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contact.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Ex06_01/u2/ejemplo01/Contact.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Ex06_01/u2/ejemplo01/Main.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/u2/ejemplo01/Contact.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/u2/ejemplo01/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex02_05/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex02_05/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ex04_04/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_04/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ex04_04/src/com/company/Ex04_04_01.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_04/src/com/company/Ex04_04_01.java" afterDir="false" />
     </list>
@@ -41,7 +52,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectId" id="1ylqmS3mRVqgAAfyjlhKLmrldEG" />
+  <component name="ProjectId" id="1zEXsmp1AU7yBj7Sl4SdT39n1kq" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -52,20 +63,12 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Ex04_04" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.company" />
-    </key>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.company.Main" />
-      <module name="Ex03_05" />
+      <option name="MAIN_CLASS_NAME" value="u2.ejemplo01.Main" />
+      <module name="Ex06_01" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
@@ -82,11 +85,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4369b71b-00e6-427c-ace6-044e9de15adb" name="Default Changelist" comment="" />
-      <created>1632836682542</created>
+      <changelist id="de474c60-60a9-4951-acd4-3897f63c18db" name="Default Changelist" comment="" />
+      <created>1633714430955</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1632836682542</updated>
+      <updated>1633714430955</updated>
     </task>
     <servers />
   </component>
@@ -100,51 +103,30 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="463" y="105" key="FileChooserDialogImpl" timestamp="1633710854590">
+    <state x="829" y="83" key="#com.intellij.ide.util.MemberChooser" timestamp="1633714563357">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="105" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1633710854590" />
-    <state width="1323" height="128" key="GridCell.Tab.0.bottom" timestamp="1633713935523">
+    <state x="829" y="83" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1633714563357" />
+    <state width="637" height="178" key="GridCell.Tab.0.bottom" timestamp="1633715487736">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="128" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1633713935523" />
-    <state width="1323" height="128" key="GridCell.Tab.0.center" timestamp="1633713935523">
+    <state width="637" height="178" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1633715487736" />
+    <state width="637" height="178" key="GridCell.Tab.0.center" timestamp="1633715487736">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="128" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1633713935523" />
-    <state width="1323" height="128" key="GridCell.Tab.0.left" timestamp="1633713935523">
+    <state width="637" height="178" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1633715487736" />
+    <state width="637" height="178" key="GridCell.Tab.0.left" timestamp="1633715487736">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="128" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1633713935523" />
-    <state width="1323" height="128" key="GridCell.Tab.0.right" timestamp="1633713935523">
+    <state width="637" height="178" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1633715487736" />
+    <state width="637" height="178" key="GridCell.Tab.0.right" timestamp="1633715487736">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="128" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1633713935523" />
-    <state width="1323" height="223" key="GridCell.Tab.1.bottom" timestamp="1633112415124">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1633112415124" />
-    <state width="1323" height="223" key="GridCell.Tab.1.center" timestamp="1633112415124">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1633112415124" />
-    <state width="1323" height="223" key="GridCell.Tab.1.left" timestamp="1633112415124">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1633112415124" />
-    <state width="1323" height="223" key="GridCell.Tab.1.right" timestamp="1633112415124">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1633112415124" />
-    <state x="274" y="0" key="new project wizard" timestamp="1633441307239">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="274" y="0" key="new project wizard/0.0.1366.728@0.0.1366.728" timestamp="1633441307239" />
+    <state width="637" height="178" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1633715487736" />
   </component>
 </project>
