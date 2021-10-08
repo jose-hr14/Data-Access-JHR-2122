@@ -7,3 +7,17 @@ y leer punto 6 y hacer ejercicio 6.1
 reutilizable en el punto 7.2 y la final activity
 se pueden dejar en blanco todos menos el nombre completo, y este hecho será relevante en el ejercicio 7.2
 extension obj
+
+ej 2
+s1 lee
+s2 lee
+while(s1 not null o s2 not null)
+if s1 not nul y s2 not null
+{
+	si s1 es mayor que s2
+	escribir s2 y leer s2, si no, escribir s1 y leer s1
+}
+si s1 es null
+escribir s2 
+si no
+escribir s1
