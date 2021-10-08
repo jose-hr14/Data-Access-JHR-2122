@@ -1,0 +1,9 @@
+Del punto 5 sabes lo que define un fichero bien formado
+y leer punto 6 y hacer ejercicio 6.1
+
+1. leer el fichero al arrancar
+2. meter el menú con un while y opciones de menú, y cuando sea terminar, switch y fuera
+3. 
+reutilizable en el punto 7.2 y la final activity
+se pueden dejar en blanco todos menos el nombre completo, y este hecho será relevante en el ejercicio 7.2
+extension obj

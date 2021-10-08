@@ -25,11 +25,45 @@ public class Ex04_04_02 {
             reader02 = new BufferedReader(new FileReader(docName02));
             printWriterOut = new PrintWriter(new BufferedWriter(new FileWriter("sorted.txt")));
 
-            String text01 = "";
-            String text02 = "";
+            String text01 = reader01.readLine();
+            String text02 = reader02.readLine();
 
-            while((text01 = reader01.readLine()) != null)
+            while(text01 != null || text02 != null)
             {
+                if(text01 != null && text02 != null)
+                {
+                    if(text01.compareTo(text02) < 0)
+                    {
+                        printWriterOut.println(text01);
+                        text01 = reader01.readLine();
+                    }
+                    else if(text01.compareTo(text02) > 0)
+                    {
+                        printWriterOut.println(text02);
+                        text02 = reader02.readLine();
+                    }
+                    else if(text01.compareTo(text02) == 0)
+                    {
+                        printWriterOut.println(text01);
+                        printWriterOut.println(text02);
+
+                        text01 = reader01.readLine();
+                        text02 = reader02.readLine();
+                    }
+                }
+                else
+                {
+                    if(text01 == null)
+                    {
+                        printWriterOut.println(text02);
+                        text02 = reader02.readLine();
+                    }
+                    else
+                    {
+                        printWriterOut.println(text01);
+                    }
+                }
+                /*
                 text02 = reader02.readLine();
                 if(text01.compareTo(text02) < 0)
                 {
@@ -46,6 +80,8 @@ public class Ex04_04_02 {
                     printWriterOut.println(text01);
                     printWriterOut.println(text02);
                 }
+
+                 */
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

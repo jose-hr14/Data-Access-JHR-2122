@@ -35,13 +35,13 @@ public class Ex04_04_01 {
                 if(append)
                     lines = Files.lines(Paths.get(docName)).count() + 1;
 
-                System.out.println("Enter the text and press enter, or leave a white space and press enter to close the program");
-                text = keyboard.nextLine();
-                do {
+                System.out.println("Enter the text and press enter, write end to close the program: ");
+                while(!(text = keyboard.nextLine()).equals("end"))
+                {
                     printWriter.println(lines + ". " + text);
                     lines++;
-                    text = keyboard.nextLine();
-                } while (text != "");
+                }
+                
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -59,13 +59,12 @@ public class Ex04_04_01 {
                 printWriter = new PrintWriter(new FileWriter(docName));
                 int lines = 1;
 
-                System.out.println("Enter the text and press enter, or leave a white space and press enter to close the program");
-                text = keyboard.nextLine();
-                do {
+                System.out.println("Enter the text and press enter, write end to close the program: ");
+                while(!(text = keyboard.nextLine()).equals("end"))
+                {
                     printWriter.println(lines + ". " + text);
                     lines++;
-                    text = keyboard.nextLine();
-                } while (text != "");
+                }
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

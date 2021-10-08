@@ -23,11 +23,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4369b71b-00e6-427c-ace6-044e9de15adb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Ex04_04/a.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../apuntes01.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex02_05.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Ex03_05.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Ex02_05/com/company/Ex03_05_01.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Ex02_05/com/company/Ex03_05_02.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Ex02_05/com/company/Ex03_05_03.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Ex02_05/com/company/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ex04_04/hola.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_04/hola.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex04_04/out/production/Ex04_04/com/company/Ex04_04_01.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_04/out/production/Ex04_04/com/company/Ex04_04_01.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ex04_04/out/production/Ex04_04/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_04/out/production/Ex04_04/com/company/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex04_04/src/com/company/Ex04_04_01.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_04/src/com/company/Ex04_04_01.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex04_04/src/com/company/Ex04_04_02.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_04/src/com/company/Ex04_04_02.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ex04_04/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_04/src/com/company/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +67,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Ex04_04" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -110,10 +118,10 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="463" y="105" key="FileChooserDialogImpl" timestamp="1633013153448">
+    <state x="463" y="105" key="FileChooserDialogImpl" timestamp="1633710854590">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="105" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1633013153448" />
+    <state x="463" y="105" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1633710854590" />
     <state width="1323" height="128" key="GridCell.Tab.0.bottom" timestamp="1633112415128">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
