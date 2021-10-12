@@ -2,12 +2,103 @@ package u2.ejemplo01;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-//This is still practice, not the exercise resolved
+//Please, check just the main, the rest is just practice
 public class Main {
-
     public static void main(String[] args) {
+        ObjectOutputStream objectOutputStream = null;
+        ObjectInputStream objectInputStream = null;
+        List<Contact> contactList;
+        Scanner keyboard = new Scanner(System.in);
+        String option;
+
+        try {
+            if((new File("contact.dat").exists()))
+            {
+                objectInputStream = new ObjectInputStream(new FileInputStream("contact.dat"));
+                contactList = (ArrayList<Contact>) objectInputStream.readObject();
+            }
+            else
+            {
+                objectOutputStream = new ObjectOutputStream(new FileOutputStream("contact.dat"));
+                contactList = new ArrayList<>();
+            }
+
+            while(true)
+            {
+                do {
+                    System.out.println("Select an option");
+                    System.out.println("1. Save contact");
+                    System.out.println("2. Show contact list");
+                    System.out.println("3. Search contact by name");
+                    System.out.println("4. Exit");
+                    option = keyboard.nextLine();
+                }while (!option.equals("1") && !option.equals("2") && !option.equals("3") && !option.equals("4"));
+                switch (option)
+                {
+                    case "1":
+                    {
+                        String name, surname, email, phoneNumber, description;
+                        System.out.println("Type contact name");
+                        name = keyboard.nextLine();
+                        System.out.println("Type contact surname");
+                        surname = keyboard.nextLine();
+                        System.out.println("Type contact email");
+                        email = keyboard.nextLine();
+                        System.out.println("Type contact phone number");
+                        phoneNumber = keyboard.nextLine();
+                        System.out.println("Type contact description");
+                        description = keyboard.nextLine();
+
+                        contactList.add(new Contact(name, surname, email, phoneNumber, description));
+                        break;
+                    }
+                    case "2":
+                    {
+                        for(int i = 0; i < contactList.size(); i++)
+                        {
+                            System.out.println(contactList.get(i).getName());
+                        }
+                        break;
+                    }
+
+                    case "3":
+                    {
+                        System.out.print("Type a contact name: ");
+                        String name = keyboard.next();
+                        for(int i = 0; i < contactList.size(); i++)
+                        {
+                            if(contactList.get(i).getName().toLowerCase().equals(name.toLowerCase()))
+                            {
+                                System.out.print("Contact found: ");
+                                System.out.println(contactList.get(i).getName() + contactList.get(i).getSurname());
+                            }
+                            System.out.println();
+                        }
+                        break;
+                    }
+
+                    case "4":
+                        objectOutputStream = new ObjectOutputStream(new FileOutputStream("contact.dat"));
+                        objectOutputStream.writeObject(contactList);
+                        return;
+                }
+            }
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public static void aux(){
         Scanner keyboard = new Scanner(System.in);
         String option;
 
@@ -51,11 +142,19 @@ public class Main {
                         contactList.add(new Contact(name, surname, email, phoneNumber, description));
 
                         objectOutputStream.writeObject(contactList);
+                        objectOutputStream.flush();
+                        objectInputStream.close();
                         break;
                     }
                     case "2":
-
+                    {
+                        for(int i = 0; i < contactList.size(); i++)
+                        {
+                            System.out.println(contactList.get(i).getName());
+                        }
                         break;
+                    }
+
                     case "3":
                         break;
                     case "4":
@@ -67,28 +166,8 @@ public class Main {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                objectInputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                objectOutputStream.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                objectOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
-
-    }
-
-    public static void aux(){
 
     }
 
@@ -140,5 +219,54 @@ public class Main {
                 e.printStackTrace();
             }
         }
+    }
+    public static void saveContactt(){
+        ObjectOutputStream objectWriter = null;
+        List<Contact> contacts = new ArrayList<>();
+        try {
+            objectWriter = new ObjectOutputStream(new FileOutputStream("archivo.dat"));
+            contacts.add(new Contact("David"));
+            contacts.add(new Contact("Mario"));
+            objectWriter.writeObject(contacts);
+        } catch (IOException ioe) {
+
+        } finally {
+            if (objectWriter != null)
+                try {
+                    objectWriter.close();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+        }
+    }
+
+    public static void readContactt(List<Contact> contacts){
+
+        contacts = null;
+        ObjectInputStream objectReader = null;
+        try {
+            objectReader = new ObjectInputStream(new FileInputStream("archivo.dat"));
+            contacts = (ArrayList<Contact>)objectReader.readObject();
+        } catch (FileNotFoundException fnfe ) {
+            fnfe.printStackTrace();
+        } catch (ClassNotFoundException cnfe ) {
+            cnfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            if (objectReader != null)
+                try {
+                    objectReader.close();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+        }
+
+        for(int i = 0; i < contacts.size(); i++)
+        {
+            System.out.println(contacts.get(i).getName());
+        }
+
+
     }
 }
