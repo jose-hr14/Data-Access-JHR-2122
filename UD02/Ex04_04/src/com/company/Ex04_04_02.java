@@ -58,9 +58,10 @@ public class Ex04_04_02 {
                         printWriterOut.println(text02);
                         text02 = reader02.readLine();
                     }
-                    else
+                    else if(text02 == null)
                     {
-                        printWriterOut.println(text01);
+                        printWriterOut.println((text01));
+                        text01 = reader01.readLine();
                     }
                 }
                 /*
