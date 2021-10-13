@@ -23,12 +23,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de474c60-60a9-4951-acd4-3897f63c18db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/archivo.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contact.obj" beforeDir="false" afterPath="$PROJECT_DIR$/contact.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Ex06_01/u2/ejemplo01/Contact.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Ex06_01/u2/ejemplo01/Contact.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contact.dat" beforeDir="false" afterPath="$PROJECT_DIR$/contact.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Ex06_01/u2/ejemplo01/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Ex06_01/u2/ejemplo01/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/u2/ejemplo01/Contact.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/u2/ejemplo01/Contact.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/u2/ejemplo01/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/u2/ejemplo01/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -110,13 +107,18 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/u2/ejemplo01/Main.java</url>
-          <line>174</line>
+          <line>191</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/u2/ejemplo01/Main.java</url>
-          <line>202</line>
+          <line>218</line>
           <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/u2/ejemplo01/Main.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.io.StreamCorruptedException" package="java.io" />
