@@ -24,9 +24,6 @@
   <component name="ChangeListManager">
     <list default="true" id="de474c60-60a9-4951-acd4-3897f63c18db" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contact.dat" beforeDir="false" afterPath="$PROJECT_DIR$/contact.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Ex06_01/u2/ejemplo01/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Ex06_01/u2/ejemplo01/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/u2/ejemplo01/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/u2/ejemplo01/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,24 +99,15 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
+  <component name="WindowStateProjectService">
+    <state x="274" y="0" key="new project wizard" timestamp="1634149506275">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="274" y="0" key="new project wizard/0.0.1366.728@0.0.1366.728" timestamp="1634149506275" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/u2/ejemplo01/Main.java</url>
-          <line>191</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/u2/ejemplo01/Main.java</url>
-          <line>218</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/u2/ejemplo01/Main.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.io.StreamCorruptedException" package="java.io" />
           <option name="timeStamp" value="9" />
