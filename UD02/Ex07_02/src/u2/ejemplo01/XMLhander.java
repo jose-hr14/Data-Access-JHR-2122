@@ -6,10 +6,13 @@ import org.xml.sax.helpers.DefaultHandler;
 public class XMLhander extends DefaultHandler {
     protected String currentTag;
     protected String tagContent;
+    protected boolean phones = false;
 
     public void startElement(String uri, String localName, String qName, Attributes attributes)
     {
         currentTag = qName;
+        if(qName.equals("phones"))
+            phones = true;
 
     }
     public void characters(char characters[], int start, int length)
@@ -29,23 +32,21 @@ public class XMLhander extends DefaultHandler {
             {
                 System.out.println(" " + tagContent);
             }
-            if(currentTag.equals("cell") && father.equals("phones"))
+            if(currentTag.equals("cell") && phones)
             {
-
+                System.out.println(" " + tagContent);
             }
-            if(currentTag.equals("work") && father.equals("phones"))
-            {
-                System.out.println(tagContent);
-            }
-            if(currentTag.equals("home") && father.equals("phones"))
+            if(currentTag.equals("work") && phones)
             {
                 System.out.println(tagContent);
             }
+            if(currentTag.equals("home") && phones)
+            {
+                System.out.println(tagContent);
+            }
+            if(currentTag.equals("phones"))
+                phones = false;
             currentTag = "";
-        }
-        else
-        {
-            father = currentTag;
         }
     }
 }
