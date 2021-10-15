@@ -1,4 +1,4 @@
-package u2.ejemplo01;
+package u2.Ex01;
 
 import org.xml.sax.SAXException;
 

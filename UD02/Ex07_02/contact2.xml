@@ -1,0 +1,16 @@
+<contactList>
+    <contact>
+        <name>Jose</name>
+        <surname>Navarrete</surname>
+        <email>naverrete@marenostrum.com</email>
+        <phoneNumber>1234</phoneNumber>
+        <description>dam student</description>
+    </contact>
+    <contact>
+        <name>David</name>
+        <surname>Gonzalez</surname>
+        <email>ripoll@marenostrum.com</email>
+        <phoneNumber>1234</phoneNumber>
+        <description>dam student</description>
+    </contact>
+</contactList>

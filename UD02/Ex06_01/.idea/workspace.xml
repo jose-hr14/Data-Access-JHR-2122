@@ -23,7 +23,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de474c60-60a9-4951-acd4-3897f63c18db" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Ex06_01_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Ex07_02/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Ex07_02/contact2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex01/XMLhander.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex02/Contact.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex02/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex02/XmlContactHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex07_02/out/production/Ex07_02/u2/ejemplo01/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex07_02/out/production/Ex07_02/u2/ejemplo01/XMLhander.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex07_02/src/u2/ejemplo01/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex01/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex07_02/src/u2/ejemplo01/XMLhander.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +66,9 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
@@ -100,6 +114,14 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="413" y="140" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1634317503191">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="413" y="140" key="#com.intellij.ide.util.PackageChooserDialog/0.0.1366.728@0.0.1366.728" timestamp="1634317503191" />
+    <state x="163" y="0" key="SettingsEditor" timestamp="1634318123065">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1634318123065" />
     <state x="274" y="0" key="new project wizard" timestamp="1634149506275">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
