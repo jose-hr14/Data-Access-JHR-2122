@@ -23,18 +23,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de474c60-60a9-4951-acd4-3897f63c18db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Ex06_01_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex07_02/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex07_02/contact2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex01/XMLhander.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex02/Contact.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex02/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex02/XmlContactHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex07_02/out/production/Ex07_02/u2/ejemplo01/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex07_02/out/production/Ex07_02/u2/ejemplo01/XMLhander.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex07_02/src/u2/ejemplo01/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex01/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex07_02/src/u2/ejemplo01/XMLhander.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex01/XMLhander.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex01/XMLhander.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex02/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex02/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex02/XmlContactHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex07_02/src/u2/Ex02/XmlContactHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +42,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.jdks/openjdk-17/lib/src.zip!/java.base/java/io/OptionalDataException.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectId" id="1zEXsmp1AU7yBj7Sl4SdT39n1kq" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">

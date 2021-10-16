@@ -7,6 +7,9 @@ public class XMLhander extends DefaultHandler {
     protected String currentTag;
     protected String tagContent;
     protected boolean isEmail = false;
+    String cell = "";
+    String work = "";
+    String home = "";
 
     public void startElement(String uri, String localName, String qName, Attributes attributes)
     {
@@ -22,6 +25,7 @@ public class XMLhander extends DefaultHandler {
     }
     public void endElement(String uri, String localName, String qName)
     {
+
         if(currentTag.equals("name"))
         {
             System.out.print("Full name: " + tagContent);
@@ -32,19 +36,25 @@ public class XMLhander extends DefaultHandler {
         }
         if(currentTag.equals("cell") && isEmail)
         {
-            System.out.println("Cell email: " +tagContent);
+            cell = tagContent;
         }
         if(currentTag.equals("work") && isEmail)
         {
-            System.out.println("Work email: " + tagContent);
+            work = tagContent;
         }
         if(currentTag.equals("home") && isEmail)
         {
-            System.out.println("Home email: " + tagContent);
+            home = tagContent;
         }
         if(qName.equals("emails"))
             isEmail = false;
         currentTag = "";
+
+        if(qName.equals("contact"))
+        {
+            System.out.println("Emails: " + cell + " " + work + " " + home);
+
+        }
 
     }
 }

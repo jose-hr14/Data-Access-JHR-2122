@@ -1,0 +1,37 @@
+<contactList>
+	<contact>
+		<name>Jose</name>
+		<surname>Navarrete</surname>
+		<email>naverrete@marenostrum.com</email>
+		<phoneNumber>1234</phoneNumber>
+		<description>dam student</description>
+	</contact>
+	<contact>
+		<name>David</name>
+		<surname>Gonzalez</surname>
+		<email>ripoll@marenostrum.com</email>
+		<phoneNumber>1234</phoneNumber>
+		<description>dam student</description>
+	</contact>
+    <contact>
+        <name>Alexandra</name>
+        <surname>Gustafsson</surname>
+        <email>wollo@marenostrum.com</email>
+        <phoneNumber>1234</phoneNumber>
+        <description>dam student</description>
+    </contact>
+    <contact>
+        <name>Isaac</name>
+        <surname>Vives</surname>
+        <email>pollo_asado@marenostrum.com</email>
+        <phoneNumber>1234</phoneNumber>
+        <description>dam student</description>
+    </contact>
+    <contact>
+        <name>Javier</name>
+        <surname>Marín</surname>
+        <email>marin@marenostrum.com</email>
+        <phoneNumber>1234</phoneNumber>
+        <description>dam teacher</description>
+    </contact>
+</contactList>

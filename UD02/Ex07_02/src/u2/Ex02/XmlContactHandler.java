@@ -11,9 +11,11 @@ public class XmlContactHandler extends DefaultHandler {
     Contact contact;
     String currentTag;
     String tagContent;
+
     public XmlContactHandler(){
         contactList = new ArrayList<Contact>();
     }
+
     public XmlContactHandler(ArrayList<Contact> contactList){
         this.contactList = contactList;
     }
