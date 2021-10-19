@@ -1,0 +1,2 @@
+serial -> sequence 
+character varying -> VARCHAR()
