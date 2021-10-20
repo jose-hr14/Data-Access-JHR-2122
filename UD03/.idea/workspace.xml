@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8b4a2fdc-98d4-4a63-a564-995be8b093d2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Example/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/Maven-Example.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/src/main/java/com/jhr-14/unit3/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Example/src/test/java/com/jhr-14/unit3/AppTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/src/main/java/org/Ex01/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/src/main/java/org/Ex02/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/src/main/java/org/Ex03/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/src/test/java/org/Ex01/AppTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/target/classes/org/Ex01/App.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/target/classes/org/Ex02/App.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/target/classes/org/Ex03/App.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex04_01/target/test-classes/org/Ex01/AppTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Maven-Example.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jhr-14/unit3/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/jhr-14/unit3/AppTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:\Program Files (x86)\JetBrains\IntelliJ IDEA Community Edition 2020.2.1\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1zjBC78ZNlO8qVSm3S1FgydUCXY" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Example" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Example" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8b4a2fdc-98d4-4a63-a564-995be8b093d2" name="Default Changelist" comment="" />
+      <created>1634651486934</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1634651486934</updated>
+      <workItem from="1634751027497" duration="950000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>
