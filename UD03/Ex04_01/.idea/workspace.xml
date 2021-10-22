@@ -4,56 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddd21ca7-ad6b-4d9f-972b-89bcff27b2f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/Maven-Example.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/src/main/java/com/jhr-14/unit3/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/src/test/java/com/jhr-14/unit3/AppTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/Ex01/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/Ex02/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/Ex03/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/Ex01/AppTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/Ex01/App.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/Ex02/App.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/Ex03/App.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/org/Ex01/AppTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Maven-Example.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/com/jhr-14/unit3/App.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/test/java/com/jhr-14/unit3/AppTest.java" beforeDir="false" />
-    </list>
+    <list default="true" id="ddd21ca7-ad6b-4d9f-972b-89bcff27b2f9" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -145,7 +96,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1634751346608</updated>
-      <workItem from="1634751351326" duration="3867000" />
+      <workItem from="1634751351326" duration="4292000" />
     </task>
     <servers />
   </component>
