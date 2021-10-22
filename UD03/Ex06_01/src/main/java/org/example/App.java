@@ -37,7 +37,7 @@ public class App
                     System.out.print("Type subject hours: ");
                     subjectHours = scanner.nextInt();
                     scanner.nextLine();
-
+                    
                     preparedStatement.setString(1, subjectName);
                     preparedStatement.setInt(2, subjectYear);
                     preparedStatement.setInt(3, subjectHours);

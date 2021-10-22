@@ -4,53 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b85c430-dd13-4a49-b37a-8249df045352" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106/storage_v2/_src_/database/VTInstitute.9wSPpg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/public.abK9xQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106/storage_v2/_src_/database/employees.he85nQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106/storage_v2/_src_/database/employees.he85nQ/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106/storage_v2/_src_/database/employees.he85nQ/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/Ex01/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/Ex02/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/Ex03/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/Ex01/AppTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/Ex01/App.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/Ex02/App.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/org/Ex01/AppTest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/public.abK9xQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/src/main/java/org/example/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/src/test/java/org/example/AppTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/target/classes/org/example/App.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/target/test-classes/org/example/AppTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex04_01/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_01/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="5b85c430-dd13-4a49-b37a-8249df045352" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
