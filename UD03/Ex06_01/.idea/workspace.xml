@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddd21ca7-ad6b-4d9f-972b-89bcff27b2f9" name="Changes" comment="">
+    <list default="true" id="53a166c6-98f2-492a-8f76-c1ed1460251f" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/../Ex05_03/.idea/compiler.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Ex05_03/.idea/dataSources.local.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Ex05_03/.idea/dataSources.xml" afterDir="false" />
@@ -30,43 +30,36 @@
       <change afterPath="$PROJECT_DIR$/../Ex05_03/target/classes/org/Ex01/App.class" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Ex05_03/target/classes/org/Ex02/App.class" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Ex05_03/target/test-classes/org/Ex01/AppTest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/public.abK9xQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/src/main/java/org/example/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/src/test/java/org/example/AppTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/target/classes/org/example/App.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/target/test-classes/org/example/AppTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/public.abK9xQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/org/example/App.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/org/example/AppTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex04_01/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_01/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectId" id="1zmRb0UvglRJoNtO1J3etTQAnvI" />
+  <component name="ProjectId" id="1zs3RpERLJ4op3DVc1gfTZFwh79" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -86,39 +79,13 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
-  <component name="RunManager" selected="Application.App (2)">
-    <configuration name="App (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.Ex02.App" />
-      <module name="Ex04_01" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.Ex02.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="App (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.Ex03.App" />
-      <module name="Ex04_01" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.Ex03.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.Ex01.App" />
-      <module name="Ex04_01" />
+      <option name="MAIN_CLASS_NAME" value="org.example.App" />
+      <module name="Ex06_01" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.Ex01.*" />
+          <option name="PATTERN" value="org.example.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -128,8 +95,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.App (2)" />
-        <item itemvalue="Application.App (1)" />
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
@@ -137,13 +102,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ddd21ca7-ad6b-4d9f-972b-89bcff27b2f9" name="Changes" comment="" />
-      <created>1634751346608</created>
+      <changelist id="53a166c6-98f2-492a-8f76-c1ed1460251f" name="Changes" comment="" />
+      <created>1634922964677</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1634751346608</updated>
-      <workItem from="1634751351326" duration="4292000" />
-      <workItem from="1634919153988" duration="4055000" />
+      <updated>1634922964677</updated>
+      <workItem from="1634922965976" duration="2207000" />
     </task>
     <servers />
   </component>
