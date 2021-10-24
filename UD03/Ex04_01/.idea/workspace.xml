@@ -5,54 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddd21ca7-ad6b-4d9f-972b-89bcff27b2f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/Maven-Example.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/src/main/java/com/jhr-14/unit3/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Example/src/test/java/com/jhr-14/unit3/AppTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/Ex01/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/Ex02/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/Ex03/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/Ex01/AppTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/Ex01/App.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/Ex02/App.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/Ex03/App.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/org/Ex01/AppTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Maven-Example.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/com/jhr-14/unit3/App.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/test/java/com/jhr-14/unit3/AppTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/Ex01/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/Ex01/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/Ex02/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/Ex02/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/Ex03/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/Ex03/App.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +26,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
+  </component>
   <component name="ProjectId" id="1zmRb0UvglRJoNtO1J3etTQAnvI" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -84,12 +44,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
-  <component name="RunManager" selected="Application.App (2)">
+  <component name="RunManager" selected="Application.App">
     <configuration name="App (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.Ex02.App" />
       <module name="Ex04_01" />
@@ -131,9 +92,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.App" />
         <item itemvalue="Application.App (2)" />
         <item itemvalue="Application.App (1)" />
-        <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
   </component>
@@ -146,6 +107,8 @@
       <option name="presentableId" value="Default" />
       <updated>1634751346608</updated>
       <workItem from="1634751351326" duration="3867000" />
+      <workItem from="1634898786538" duration="4605000" />
+      <workItem from="1635091872517" duration="27000" />
     </task>
     <servers />
   </component>
