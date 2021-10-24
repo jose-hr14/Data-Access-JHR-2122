@@ -5,25 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b85c430-dd13-4a49-b37a-8249df045352" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/src/main/java/org/Ex02/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/src/main/java/org/Ex03/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Ex06_01/target/classes/org/Ex03/App.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ex04_01/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_01/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/Ex01/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/Ex01/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/Ex02/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/Ex02/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/Ex03/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/Ex03/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/information_schema.FNRwLQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ex06_01/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex06_01/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/src/main/java/org/Ex01/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex06_01/src/test/java/org/example/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/src/test/java/org/Ex01/AppTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex06_01/target/classes/org/example/App.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex06_01/target/test-classes/org/example/AppTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex06_01/src/main/java/org/Ex03/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/src/main/java/org/Ex03/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex06_01/target/classes/org/Ex03/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/target/classes/org/Ex03/App.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

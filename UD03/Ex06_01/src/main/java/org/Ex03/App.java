@@ -12,10 +12,9 @@ public class App {
 
     public static void main(String[] args) {
         try(Connection connection = DriverManager.getConnection(url, user, password)){
-            PreparedStatement preparedStatement = connection.prepareStatement("ALTER TABLE subjects DROP COLUMN course");
-            preparedStatement.executeUpdate();
-
-            preparedStatement = connection.prepareStatement("ALTER TABLE subjects ADD course INT");
+            //("ALTER TABLE subjects DROP COLUMN course");
+            
+            PreparedStatement preparedStatement = connection.prepareStatement("ALTER TABLE subjects ADD course INT");
             preparedStatement.executeUpdate();
 
             preparedStatement = connection.prepareStatement("UPDATE subjects SET course = ?");
@@ -24,7 +23,7 @@ public class App {
 
             preparedStatement = connection.prepareStatement("ALTER TABLE subjects ADD FOREIGN KEY (course) REFERENCES courses(code)");
             preparedStatement.executeUpdate();
-            
+
             preparedStatement.close();
 
         } catch (SQLException e) {
