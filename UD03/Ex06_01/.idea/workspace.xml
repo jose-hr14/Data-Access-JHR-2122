@@ -5,14 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="53a166c6-98f2-492a-8f76-c1ed1460251f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/Ex02/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/Ex03/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/org/Ex03/App.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ex04_01/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_01/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex05_03/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex05_03/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex05_03/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex05_03/.idea/dataSources/0e5c0d40-2184-4305-b7be-9ec301f58106.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ex05_03/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex05_03/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex05_03/src/main/java/org/Ex01/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex05_03/src/main/java/org/Ex01/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex05_03/src/main/java/org/Ex02/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex05_03/src/main/java/org/Ex02/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ex05_03/src/main/java/org/Ex03/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex05_03/src/main/java/org/Ex03/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/information_schema.FNRwLQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/068e10b0-8aaa-4d01-9cd4-e57de95c8dad/storage_v2/_src_/database/VTInstitute.9wSPpg/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/Ex01/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/Ex01/AppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/App.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/org/example/AppTest.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -32,18 +55,45 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Ex04_01" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
-  <component name="RunManager">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.App" />
+  <component name="RunManager" selected="Application.App (2)">
+    <configuration name="App (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.Ex02.App" />
       <module name="Ex06_01" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.*" />
+          <option name="PATTERN" value="org.Ex02.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="App (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.Ex03.App" />
+      <module name="Ex06_01" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.Ex03.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.Ex01.App" />
+      <module name="Ex06_01" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.Ex01.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -53,6 +103,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.App (2)" />
+        <item itemvalue="Application.App (1)" />
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
@@ -66,11 +118,23 @@
       <option name="presentableId" value="Default" />
       <updated>1634922964677</updated>
       <workItem from="1634922965976" duration="2383000" />
+      <workItem from="1635092019691" duration="7574000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

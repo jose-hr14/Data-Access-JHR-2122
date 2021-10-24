@@ -14,8 +14,7 @@ public class App
     public static void main( String[] args )
     {
         try(Connection con = DriverManager.getConnection(url, user, password);
-            Statement statement = con.createStatement())
-        {
+            Statement statement = con.createStatement()) {
             boolean isExecuted = statement.execute("ALTER TABLE subjects ADD hours int");
             System.out.println("Executed successfully: " + isExecuted);
         }
