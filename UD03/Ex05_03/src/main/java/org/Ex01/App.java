@@ -12,8 +12,7 @@ public class App
     {
         try(Connection con = DriverManager.getConnection(url, user, password);
             Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM subjects ORDER BY code"))
-        {
+            ResultSet rs = statement.executeQuery("SELECT * FROM subjects ORDER BY code")) {
             System.out.println("Code" + "\t" + "Year"+ "\t" + "Name");
             System.out.println("-------------------------------------------");
             while (rs.next())

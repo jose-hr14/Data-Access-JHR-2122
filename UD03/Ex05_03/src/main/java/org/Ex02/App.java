@@ -14,8 +14,7 @@ public class App
     public static void main( String[] args )
     {
         try(Connection connection = DriverManager.getConnection(url, user, password);
-            Statement statement = connection.createStatement())
-        {
+            Statement statement = connection.createStatement()) {
             int executedUpdates = statement.executeUpdate("INSERT INTO subjects VALUES (DEFAULT , 'MARKUP LANGUAGES',  1)");
             System.out.println("Number of updates done: " + executedUpdates);
         }
