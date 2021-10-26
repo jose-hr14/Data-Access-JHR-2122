@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b85c430-dd13-4a49-b37a-8249df045352" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Ex04_01/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex04_01/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex06_01/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex06_01/src/main/java/org/Ex03/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/src/main/java/org/Ex03/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Ex06_01/target/classes/org/Ex03/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Ex06_01/target/classes/org/Ex03/App.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +35,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -77,6 +74,7 @@
       <workItem from="1634920109637" duration="3034000" />
       <workItem from="1635097076610" duration="638000" />
       <workItem from="1635098325340" duration="1681000" />
+      <workItem from="1635275956103" duration="22000" />
     </task>
     <servers />
   </component>
