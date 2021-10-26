@@ -1,0 +1,11 @@
+-- Ex01
+CREATE OR REPLACE FUNCTION public.listEmployeesByJob (jobs varchar)
+RETURNS SETOF employee
+LANGUAGE 'plpgsql'
+AS $BODY$
+    DECLARE employees employee;
+        BEGIN
+        SELECT * INTO employees FROM employee WHERE job = jobs;
+        RETURN NEXT employee;
+        END;
+    $BODY$;
