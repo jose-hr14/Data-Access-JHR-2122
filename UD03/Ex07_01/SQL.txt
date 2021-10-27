@@ -1,11 +1,23 @@
 -- Ex01
-CREATE OR REPLACE FUNCTION public.listEmployeesByJob (jobs varchar)
-RETURNS SETOF employee
-LANGUAGE 'plpgsql'
-AS $BODY$
-    DECLARE employees employee;
-        BEGIN
-        SELECT * INTO employees FROM employee WHERE job = jobs;
-        RETURN NEXT employee;
-        END;
-    $BODY$;
+DECLARE
+employees employee;
+BEGIN  
+FOR employees IN 
+SELECT * FROM employee 
+WHERE job = jobs
+LOOP     
+RETURN NEXT employees;   
+END LOOP;  
+END;
+
+-- Ex02
+DECLARE
+employees employee;
+BEGIN  
+FOR employees IN 
+SELECT * FROM employee 
+WHERE deptno = thedeparment
+LOOP     
+RETURN NEXT employees;   
+END LOOP;  
+END;
