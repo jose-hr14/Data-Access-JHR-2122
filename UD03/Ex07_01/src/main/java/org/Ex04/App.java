@@ -13,7 +13,10 @@ public class App {
         String option = "";
         while(!option.equals("0"))
         {
-            System.out.print("Choose an option: ");
+            System.out.println("Choose an option: ");
+            System.out.println("1.- Search employees by job");
+            System.out.println("2.- Search employees by department number");
+            System.out.println("3.- Search employees by name letter");
             option = keyboard.nextLine();
             switch (option)
             {
@@ -24,6 +27,7 @@ public class App {
                     Ex02Handler();
                     break;
                 case "3":
+                    Ex03Handler();
                     break;
                 case "0":
                     break;
@@ -53,6 +57,13 @@ public class App {
         }
 
     }
+    public static void Ex03Handler(){
+        Scanner keyboard = new Scanner(System.in);
+        System.out.print("Type a letter to show the employees whose name starts by that letter ");
+        String letter = new Scanner(System.in).nextLine();
+        Ex03(letter);
+        System.out.println();
+    }
     public static void Ex01(String job) {
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
@@ -81,10 +92,10 @@ public class App {
         }
     }
 
-    public static void Ex03(String name) {
+    public static void Ex03(String letter) {
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
-            CallableStatement callableStatement = connection.prepareCall("SELECT ex03(" + "'" + name + "'" + ")");
+            CallableStatement callableStatement = connection.prepareCall("SELECT ex03(" + "'" + letter + "'" + ")");
             ResultSet resultSet = callableStatement.executeQuery();
             while (resultSet.next()) {
                 String[] resultado = resultSet.getString(1).split(",");
