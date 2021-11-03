@@ -1,7 +1,7 @@
 package org.example;
 
-import javax.swing.*;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database {
     static final String url = "jdbc:postgresql://localhost:5432/VTInstitute";
@@ -40,39 +40,73 @@ public class Database {
         }
     }
 
-    public JComboBox chargeStudentComboBox(JComboBox comboBox) throws SQLException {
+    public ArrayList<Student> retrieveStudentList(){
+        ArrayList<Student> studentList = new ArrayList<Student>();
         try(Connection connection = DriverManager.getConnection(url, user, password)){
-            comboBox = new JComboBox();
-
-            PreparedStatement statement = connection.prepareStatement("select * from student");
+            PreparedStatement statement = connection.prepareStatement("SELECT * from student");
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                //comboBox.addItem(new Student(result.getString(1),result.getString(2), result.getInt(3), result.getString(4),result.getString(5) ));
-                comboBox.addItem(result.getString(1));
+                studentList.add(new Student(result.getString(1),result.getString(2), result.getInt(3), result.getString(4),result.getString(5) ));
             }
-
-            statement.close();
-            result.close();
-
-            return comboBox;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
+        return studentList;
     }
 
-    public JComboBox chargeCourseComboBox(JComboBox comboBox) throws SQLException {
+    public ArrayList<Course> retrieveCourseList(){
+        ArrayList<Course> courseList = new ArrayList<Course>();
         try(Connection connection = DriverManager.getConnection(url, user, password)){
-            comboBox = new JComboBox();
-
-            PreparedStatement statement = connection.prepareStatement("select * from course");
+            PreparedStatement statement = connection.prepareStatement("SELECT * from course");
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                comboBox.addItem(new Course(result.getInt(1), result.getString(2)));
+                courseList.add(new Course(result.getInt(1),result.getString(2)));
             }
-
-            statement.close();
-            result.close();
-
-            return comboBox;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
+        return courseList;
+    }
+
+    public ArrayList<Subject> retrieveSubjectList(){
+        ArrayList<Subject> subjectList = new ArrayList<Subject>();
+        try(Connection connection = DriverManager.getConnection(url, user, password)){
+            PreparedStatement statement = connection.prepareStatement("SELECT * from subjects");
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                subjectList.add(new Subject(result.getInt(1),result.getString(2), result.getInt(3), result.getInt(4), result.getInt(5)));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return subjectList;
+    }
+
+    public ArrayList<Subject> retrieveSubjectList(int courseID){
+        ArrayList<Subject> subjectList = new ArrayList<Subject>();
+        try(Connection connection = DriverManager.getConnection(url, user, password)){
+            PreparedStatement statement = connection.prepareStatement("SELECT * from subjects where courseid = ?");
+            statement.setInt(1, courseID);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                subjectList.add(new Subject(result.getInt(1),result.getString(2), result.getInt(3), result.getInt(4), result.getInt(5)));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return subjectList;
+    }
+
+    public ResultSet queryTool(String sql){
+        ResultSet resultSet = null;
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
     }
 
 

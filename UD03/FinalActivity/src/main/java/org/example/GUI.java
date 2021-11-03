@@ -3,9 +3,6 @@ package org.example;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 public class GUI {
     private JPanel panel;
@@ -24,37 +21,25 @@ public class GUI {
     private JComboBox comboBox1;
     private JComboBox comboBox2;
     private JButton enrrollButton;
-    private JComboBox comboBox3;
 
     public GUI() {
-
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
-                    if(!textField1.getText().isBlank() || !textField2.getText().isBlank() || !textField3.getText().isBlank() || !textField4.getText().isBlank() || !textField5.getText().isBlank())
-                    {
+                try {
+                    if (!textField1.getText().isBlank() || !textField2.getText().isBlank() || !textField3.getText().isBlank() || !textField4.getText().isBlank() || !textField5.getText().isBlank()) {
                         Student student = new Student(textField1.getText(), textField2.getText(), Integer.parseInt(textField3.getText()),
                                 textField4.getText(), textField5.getText());
 
                         new Database().addStudent(student);
                         resultLabel.setText("Student saved correctly");
-                    }
-                    else {
+                    } else {
                         resultLabel.setText("One or more textbox is blank");
                     }
 
-                }
-                catch (NumberFormatException numberFormatException)
-                {
+                } catch (NumberFormatException numberFormatException) {
                     resultLabel.setText("ID Card must be a number");
                 }
-            }
-        });
-        comboBox1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Student student = (Student) comboBox1.getItemAt(comboBox1.getSelectedIndex());
             }
         });
         enrrollButton.addActionListener(new ActionListener() {
@@ -62,21 +47,10 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
 
                 Student student = (Student) comboBox1.getSelectedItem();
-                Course course = (Course) comboBox2.getItemAt(comboBox2.getSelectedIndex());
+                Course course = (Course) comboBox2.getSelectedItem();
 
                 new Database().enrollStudent(student, course);
-                String cosas = (String) comboBox3.getSelectedItem();
-            }
-        });
-        comboBox1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                try {
-                    comboBox1 = new Database().chargeStudentComboBox(comboBox1);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                
             }
         });
     }
@@ -92,25 +66,13 @@ public class GUI {
     }
 
     private void createUIComponents() {
-        try {
-            comboBox1 = new JComboBox();
-            comboBox1.setModel(new DefaultComboBoxModel());
-            comboBox1 = new Database().chargeStudentComboBox(comboBox1);
-
-            comboBox2 = new JComboBox();
-            comboBox2.setModel(new DefaultComboBoxModel());
-            comboBox2 = new Database().chargeCourseComboBox(comboBox2);
-
-            comboBox3 = new JComboBox();
-            comboBox3.addItem("Hola");
-            comboBox3.addItem("Adios");
-            comboBox3.addItem("Ey");
-
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        comboBox1 = new JComboBox();
+        for (Student student : new Database().retrieveStudentList()) {
+            comboBox1.addItem(student);
         }
-
+        comboBox2 = new JComboBox();
+        for (Course course : new Database().retrieveCourseList()) {
+            comboBox2.addItem(course);
+        }
     }
 }
