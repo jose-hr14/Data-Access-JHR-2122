@@ -5,8 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
-
+//.setModel(new DefaultComboBox(arrayList.toArray()=
 public class GUI {
     private JPanel panel;
     private JTabbedPane tabbedPane1;
@@ -26,6 +30,7 @@ public class GUI {
     private JButton enrrollButton;
     private JComboBox comboBox3;
     private JTextPane textPane1;
+    private JButton printButton;
 
 
     public GUI() {
@@ -63,7 +68,27 @@ public class GUI {
         comboBox3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                Student student = (Student) comboBox3.getSelectedItem();
+                String report = new Database().retrieveReport(student);
+                textPane1.setText(report);
+            }
+        });
+        printButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser jFileChooser = new JFileChooser();
+                jFileChooser.showSaveDialog(new JFrame());
+                File file = jFileChooser.getSelectedFile();
+                jFileChooser.setName("a");
+                FileWriter fileWriter = null;
+                try {
+                    fileWriter = new FileWriter(file);
+                    fileWriter.write(textPane1.getText());
+                    fileWriter.close();
+                } catch (IOException ex) {
+
+                }
+
             }
         });
     }
@@ -74,21 +99,19 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setSize(320, 300);
+        frame.setSize(500, 500);
         frame.setVisible(true);
     }
 
     private void createUIComponents() {
         comboBox1 = new JComboBox();
-        comboBox3 = new JComboBox();
-        for (Student student : new Database().retrieveStudentList()) {
-            comboBox1.addItem(student);
-            comboBox3.addItem(student);
-        }
         comboBox2 = new JComboBox();
-        for (Course course : new Database().retrieveCourseList()) {
-            comboBox2.addItem(course);
-        }
+        comboBox3 = new JComboBox();
 
+        ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
+        ComboBoxModel courseModel = new DefaultComboBoxModel(new Database().retrieveCourseList().toArray());
+        comboBox1.setModel(studentModel);
+        comboBox2.setModel(courseModel);
+        comboBox3.setModel(studentModel);
     }
 }

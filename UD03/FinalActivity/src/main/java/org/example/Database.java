@@ -54,17 +54,18 @@ public class Database {
     }
     public String retrieveReport(Student student){
         ArrayList<String> report = new ArrayList<>();
+        String reportt = "";
         try(Connection connection = DriverManager.getConnection(url, user, password)){
-            PreparedStatement statement = connection.prepareStatement("select c.name, s.name, s2.score from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid inner join scores s2 on enrollment.code = s2.enrollmentid where enrollment.student = ?");
+            PreparedStatement statement = connection.prepareStatement("select c.name, s2.name, s.score from enrollment inner join scores s on enrollment.code = s.enrollmentid inner join subjects s2 on s2.code = s.subjectid inner join course c on c.code = s2.courseid where enrollment.student = ?");
             statement.setInt(1, student.getIdCard());
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                report.add(result.getString(1) + result.getString(2) + result.getInt(3));
+                reportt += result.getString(1) + " - " + result.getString(2) + ": " + result.getInt(3) + " \r\n";
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return "studentList";
+        return reportt;
     }
 
     public ArrayList<Student> retrieveStudentList(){
