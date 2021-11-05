@@ -52,6 +52,20 @@ public class Database {
             throwables.printStackTrace();
         }
     }
+    public String retrieveReport(Student student){
+        ArrayList<String> report = new ArrayList<>();
+        try(Connection connection = DriverManager.getConnection(url, user, password)){
+            PreparedStatement statement = connection.prepareStatement("select c.name, s.name, s2.score from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid inner join scores s2 on enrollment.code = s2.enrollmentid where enrollment.student = ?");
+            statement.setInt(1, student.getIdCard());
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                report.add(result.getString(1) + result.getString(2) + result.getInt(3));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return "studentList";
+    }
 
     public ArrayList<Student> retrieveStudentList(){
         ArrayList<Student> studentList = new ArrayList<Student>();

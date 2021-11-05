@@ -24,6 +24,8 @@ public class GUI {
     private JComboBox comboBox1;
     private JComboBox comboBox2;
     private JButton enrrollButton;
+    private JComboBox comboBox3;
+    private JTextPane textPane1;
 
 
     public GUI() {
@@ -58,6 +60,12 @@ public class GUI {
                 //select c.name, s.name, s2.score from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid inner join scores s2 on enrollment.code = s2.enrollmentid
             }
         });
+        comboBox3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -72,12 +80,15 @@ public class GUI {
 
     private void createUIComponents() {
         comboBox1 = new JComboBox();
+        comboBox3 = new JComboBox();
         for (Student student : new Database().retrieveStudentList()) {
             comboBox1.addItem(student);
+            comboBox3.addItem(student);
         }
         comboBox2 = new JComboBox();
         for (Course course : new Database().retrieveCourseList()) {
             comboBox2.addItem(course);
         }
+
     }
 }
