@@ -3,31 +3,21 @@ package org.example;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 public class GUI {
+
     private JPanel panel;
     private JTabbedPane tabbedPane1;
-    private JPanel studentsTab;
-    private JPanel enrollmentsTab;
-    private JPanel reportsTab;
-    private JPanel utilitiesTab;
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
     private JTextField textField4;
     private JTextField textField5;
-    private JButton addButton;
+    private JButton button1;
     private JLabel resultLabel;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
-    private JButton enrrollButton;
-
 
     public GUI() {
-        addButton.addActionListener(new ActionListener() {
+        button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -46,17 +36,6 @@ public class GUI {
                 }
             }
         });
-        enrrollButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                Student student = (Student) comboBox1.getSelectedItem();
-                Course course = (Course) comboBox2.getSelectedItem();
-
-                new Database().enrollStudent(student, course);
-                
-            }
-        });
     }
 
     public static void main(String[] args) {
@@ -64,19 +43,6 @@ public class GUI {
         frame.setContentPane(new GUI().panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setSize(320, 300);
         frame.setVisible(true);
-    }
-
-    private void createUIComponents() {
-        comboBox1 = new JComboBox();
-        for (Student student : new Database().retrieveStudentList()) {
-            comboBox1.addItem(student);
-        }
-        comboBox2 = new JComboBox();
-        for (Course course : new Database().retrieveCourseList()) {
-            comboBox2.addItem(course);
-        }
     }
 }

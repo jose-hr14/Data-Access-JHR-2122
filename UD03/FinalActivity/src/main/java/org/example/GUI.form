@@ -110,14 +110,6 @@
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
-              <component id="b3277" class="javax.swing.JButton" binding="addButton" default-binding="true">
-                <constraints>
-                  <grid row="5" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Add"/>
-                </properties>
-              </component>
               <hspacer id="64996">
                 <constraints>
                   <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -129,6 +121,14 @@
                 </constraints>
                 <properties>
                   <text value=""/>
+                </properties>
+              </component>
+              <component id="bd148" class="javax.swing.JButton" binding="addButton">
+                <constraints>
+                  <grid row="5" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Button"/>
                 </properties>
               </component>
             </children>
