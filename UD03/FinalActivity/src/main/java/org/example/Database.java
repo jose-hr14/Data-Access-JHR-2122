@@ -39,20 +39,6 @@ public class Database {
             throwables.printStackTrace();
         }
     }
-    public void addScore(Student student)
-    {
-        //insert into scores select enrollment.code, s.code, 0 from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid
-        try(Connection connection = DriverManager.getConnection(url, user, password))
-        {
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into scores select enrollment.code, s.code, 0 from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid where enrollment.student = ?");
-            preparedStatement.setInt(1, student.getIdCard());
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-    }
 
     public ArrayList<Student> retrieveStudentList(){
         ArrayList<Student> studentList = new ArrayList<Student>();
@@ -122,4 +108,6 @@ public class Database {
         }
         return resultSet;
     }
+
+
 }
