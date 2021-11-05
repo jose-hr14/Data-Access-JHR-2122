@@ -50,6 +50,7 @@ public class GUI {
                 Course course = (Course) comboBox2.getSelectedItem();
 
                 new Database().enrollStudent(student, course);
+                new Database().addScore(student);
                 
             }
         });
