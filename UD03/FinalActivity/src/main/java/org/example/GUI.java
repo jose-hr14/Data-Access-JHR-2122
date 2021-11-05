@@ -88,7 +88,6 @@ public class GUI {
                 } catch (IOException ex) {
 
                 }
-
             }
         });
     }
