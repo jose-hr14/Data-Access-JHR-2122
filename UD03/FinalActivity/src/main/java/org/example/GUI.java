@@ -55,7 +55,7 @@ public class GUI {
 
                 new Database().enrollStudent(student, course);
                 new Database().addScore(student);
-                
+                //select c.name, s.name, s2.score from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid inner join scores s2 on enrollment.code = s2.enrollmentid
             }
         });
     }
