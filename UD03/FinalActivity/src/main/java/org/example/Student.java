@@ -3,14 +3,14 @@ package org.example;
 public class Student {
     String firstName;
     String lastName;
-    int idCard;
+    String idCard;
     String email;
     String phone;
 
     public Student() {
     }
 
-    public Student(String firstName, String lastName, int idCard, String email, String phone) {
+    public Student(String firstName, String lastName, String idCard, String email, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.idCard = idCard;
@@ -34,11 +34,11 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public int getIdCard() {
+    public String getIdCard() {
         return idCard;
     }
 
-    public void setIdCard(int idCard) {
+    public void setIdCard(String idCard) {
         this.idCard = idCard;
     }
 

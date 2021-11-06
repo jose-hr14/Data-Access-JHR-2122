@@ -1,16 +1,20 @@
 package org.example;
 
+import org.xml.sax.SAXException;
+
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
-//.setModel(new DefaultComboBox(arrayList.toArray()=
+import java.util.ArrayList;
+
+//.setModel(new DefaultComboBox(arrayList.toArray())=
 public class GUI {
     private JPanel panel;
     private JTabbedPane tabbedPane1;
@@ -31,25 +35,28 @@ public class GUI {
     private JComboBox comboBox3;
     private JTextPane textPane1;
     private JButton printButton;
-
+    private JButton importXMLButton;
 
     public GUI() {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (!textField1.getText().isBlank() || !textField2.getText().isBlank() || !textField3.getText().isBlank() || !textField4.getText().isBlank() || !textField5.getText().isBlank()) {
-                        Student student = new Student(textField1.getText(), textField2.getText(), Integer.parseInt(textField3.getText()),
-                                textField4.getText(), textField5.getText());
-
+                    if (!textField1.getText().isBlank() || !textField2.getText().isBlank() || !textField3.getText().isBlank() || !textField4.getText().isBlank() || !textField5.getText().isBlank())
+                    {
+                        Student student = new Student(textField1.getText(), textField2.getText(), textField3.getText(), textField4.getText(), textField5.getText());
                         new Database().addStudent(student);
                         resultLabel.setText("Student saved correctly");
-                    } else {
+                        createUIComponents();
+                    }
+                    else
+                    {
                         resultLabel.setText("One or more textbox is blank");
                     }
-
                 } catch (NumberFormatException numberFormatException) {
                     resultLabel.setText("ID Card must be a number");
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
             }
         });
@@ -79,14 +86,47 @@ public class GUI {
                 JFileChooser jFileChooser = new JFileChooser();
                 jFileChooser.showSaveDialog(new JFrame());
                 File file = jFileChooser.getSelectedFile();
-                jFileChooser.setName("a");
-                FileWriter fileWriter = null;
-                try {
-                    fileWriter = new FileWriter(file);
-                    fileWriter.write(textPane1.getText());
-                    fileWriter.close();
-                } catch (IOException ex) {
+                if(file != null)
+                {
+                    try {
+                        FileWriter fileWriter = new FileWriter(file);
+                        fileWriter.write(textPane1.getText());
+                        fileWriter.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+        importXMLButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser jFileChooser = new JFileChooser();
+                jFileChooser.showOpenDialog(new JFrame());
+                File file = jFileChooser.getSelectedFile();
+                if(file != null)
+                {
+                    try {
+                        SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+                        XMLReader xmlReader = new XMLReader();
+                        saxParser.parse(file, xmlReader);
+                        Database database = new Database();
+                        ArrayList<Student> studentList = xmlReader.getStudentList();
+                        ArrayList<Course> courseList = xmlReader.getCourseList();
+                        ArrayList<Subject> subjectList = xmlReader.getSubjectList();
+                        database.addStudentList(studentList);
+                        database.addCourseList(courseList);
+                        database.addSubjectList(subjectList);
 
+                    } catch (FileNotFoundException ex) {
+                        ex.printStackTrace();
+                    } catch (ParserConfigurationException parserConfigurationException) {
+                        parserConfigurationException.printStackTrace();
+                    } catch (SAXException saxException) {
+                        saxException.printStackTrace();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                 }
             }
         });
@@ -100,6 +140,14 @@ public class GUI {
         frame.setLocationRelativeTo(null);
         frame.setSize(500, 500);
         frame.setVisible(true);
+
+        try {
+            SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+            saxParser.parse("import.xml", new XMLReader());
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        }
+
     }
 
     private void createUIComponents() {

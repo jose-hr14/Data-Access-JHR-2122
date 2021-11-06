@@ -4,11 +4,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Database {
-    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute";
+    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute2";
     static final String user = "postgres";
     static final String password = "postgres";
 
-    public void addStudent(Student student){
+    public void addStudent(Student student) throws SQLException {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO student VALUES(?, ?, ?, ?, ?)");
             preparedStatement.setString(1,student.getFirstName());
@@ -21,8 +21,62 @@ public class Database {
             throwable.printStackTrace();
             if(throwable.getSQLState().equals("23505"))
             {
-                System.out.println("This student already exits in the datebase");
+                throw throwable;
             }
+        }
+    }
+
+    public void addCourse(Course course) {
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO course VALUES(DEFAULT, ?)");
+            //preparedStatement.setInt(1,course.getCode());
+            preparedStatement.setString(1, course.getName());
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+    }
+
+    public void addSubject(Subject subject) {
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO subjects VALUES(?, ?, ?, ?, ?)");
+            preparedStatement.setInt(1,subject.getCode());
+            preparedStatement.setString(2, subject.getName());
+            preparedStatement.setInt(3, subject.getCourseID());
+            preparedStatement.setInt(4, subject.getHours());
+            preparedStatement.setInt(5, subject.getYear());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+    }
+
+    public void addStudentList(ArrayList<Student> studentList)
+    {
+        for (Student student:studentList)
+        {
+            try {
+                addStudent(student);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void addCourseList(ArrayList<Course> courseList)
+    {
+        for (Course course: courseList)
+        {
+            addCourse(course);
+        }
+    }
+
+    public void addSubjectList(ArrayList<Subject> subjectList)
+    {
+        for (Subject subject: subjectList)
+        {
+            addSubject(subject);
         }
     }
 
