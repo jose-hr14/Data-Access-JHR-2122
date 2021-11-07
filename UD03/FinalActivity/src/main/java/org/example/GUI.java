@@ -47,7 +47,7 @@ public class GUI {
                         Student student = new Student(textField1.getText(), textField2.getText(), textField3.getText(), textField4.getText(), textField5.getText());
                         new Database().addStudent(student);
                         resultLabel.setText("Student saved correctly");
-                        createUIComponents();
+                        refreshComboBox();
                     }
                     else
                     {
@@ -66,10 +66,15 @@ public class GUI {
 
                 Student student = (Student) comboBox1.getSelectedItem();
                 Course course = (Course) comboBox2.getSelectedItem();
+                Database database = new Database();
 
-                new Database().enrollStudent(student, course);
-                new Database().addScore(student);
-                //select c.name, s.name, s2.score from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid inner join scores s2 on enrollment.code = s2.enrollmentid
+                if(!database.isEnrrolled(student, course) || database.hasPassedCourse(student))
+                {
+                    new Database().enrollStudent(student, course);
+                    new Database().addScore(student, course);
+                }
+
+                refreshComboBox();
             }
         });
         comboBox3.addActionListener(new ActionListener() {
@@ -117,7 +122,7 @@ public class GUI {
                         database.addStudentList(studentList);
                         database.addCourseList(courseList);
                         database.addSubjectList(subjectList);
-
+                        refreshComboBox();
                     } catch (FileNotFoundException ex) {
                         ex.printStackTrace();
                     } catch (ParserConfigurationException parserConfigurationException) {
@@ -148,6 +153,18 @@ public class GUI {
             e.printStackTrace();
         }
 
+    }
+    private void refreshComboBox()
+    {
+        comboBox1 = new JComboBox();
+        comboBox2 = new JComboBox();
+        comboBox3 = new JComboBox();
+
+        ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
+        ComboBoxModel courseModel = new DefaultComboBoxModel(new Database().retrieveCourseList().toArray());
+        comboBox1.setModel(studentModel);
+        comboBox2.setModel(courseModel);
+        comboBox3.setModel(studentModel);
     }
 
     private void createUIComponents() {

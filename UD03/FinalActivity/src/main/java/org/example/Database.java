@@ -13,7 +13,7 @@ public class Database {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO student VALUES(?, ?, ?, ?, ?)");
             preparedStatement.setString(1,student.getFirstName());
             preparedStatement.setString(2, student.getLastName());
-            preparedStatement.setInt(3, student.getIdCard());
+            preparedStatement.setString(3, student.getIdCard());
             preparedStatement.setString(4, student.getEmail());
             preparedStatement.setString(5, student.getPhone());
             preparedStatement.executeUpdate();
@@ -28,9 +28,9 @@ public class Database {
 
     public void addCourse(Course course) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO course VALUES(DEFAULT, ?)");
-            //preparedStatement.setInt(1,course.getCode());
-            preparedStatement.setString(1, course.getName());
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO course VALUES(?, ?)");
+            preparedStatement.setInt(1,course.getCode());
+            preparedStatement.setString(2, course.getName());
             preparedStatement.executeUpdate();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -42,9 +42,10 @@ public class Database {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO subjects VALUES(?, ?, ?, ?, ?)");
             preparedStatement.setInt(1,subject.getCode());
             preparedStatement.setString(2, subject.getName());
-            preparedStatement.setInt(3, subject.getCourseID());
-            preparedStatement.setInt(4, subject.getHours());
-            preparedStatement.setInt(5, subject.getYear());
+            preparedStatement.setInt(3, subject.getYear());
+            preparedStatement.setInt(4, subject.getCourseID());
+            preparedStatement.setInt(5, subject.getHours());
+
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException throwable) {
@@ -85,7 +86,7 @@ public class Database {
         try(Connection connection = DriverManager.getConnection(url, user, password))
         {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO enrollment VALUES(DEFAULT, ?, ?)");
-            preparedStatement.setInt(1, student.getIdCard());
+            preparedStatement.setString(1, student.getIdCard());
             preparedStatement.setInt(2, course.getCode());
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -93,13 +94,14 @@ public class Database {
             throwables.printStackTrace();
         }
     }
-    public void addScore(Student student)
+    public void addScore(Student student, Course course)
     {
         //insert into scores select enrollment.code, s.code, 0 from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid
         try(Connection connection = DriverManager.getConnection(url, user, password))
         {
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into scores select enrollment.code, s.code, 0 from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid where enrollment.student = ?");
-            preparedStatement.setInt(1, student.getIdCard());
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into scores select enrollmentid, s2.code, 0 from enrollment inner join scores s on enrollment.code = s.enrollmentid inner join subjects s2 on s2.code = s.subjectid where student = ? and course = ?");
+            preparedStatement.setString(1, student.getIdCard());
+            preparedStatement.setInt(2, course.getCode());
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException throwables) {
@@ -111,7 +113,7 @@ public class Database {
         String reportt = "";
         try(Connection connection = DriverManager.getConnection(url, user, password)){
             PreparedStatement statement = connection.prepareStatement("select c.name, s2.name, s.score from enrollment inner join scores s on enrollment.code = s.enrollmentid inner join subjects s2 on s2.code = s.subjectid inner join course c on c.code = s2.courseid where enrollment.student = ?");
-            statement.setInt(1, student.getIdCard());
+            statement.setString(1, student.getIdCard());
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 reportt += result.getString(1) + " - " + result.getString(2) + ": " + result.getInt(3) + " \r\n";
@@ -128,7 +130,7 @@ public class Database {
             PreparedStatement statement = connection.prepareStatement("SELECT * from student");
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                studentList.add(new Student(result.getString(1),result.getString(2), result.getInt(3), result.getString(4),result.getString(5) ));
+                studentList.add(new Student(result.getString(1),result.getString(2), result.getString(3), result.getString(4),result.getString(5) ));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -177,6 +179,50 @@ public class Database {
             throwables.printStackTrace();
         }
         return subjectList;
+    }
+
+    public boolean isEnrrolled(Student student, Course course)
+    {
+        boolean isEnrrolled = true;
+        try(Connection connection = DriverManager.getConnection(url, user, password))
+        {
+            PreparedStatement preparedStatement = connection.prepareStatement("select count(*) from enrollment where course = ? AND student = ?");
+            preparedStatement.setInt(1, course.getCode());
+            preparedStatement.setString(2, student.getIdCard());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            if(resultSet.getInt(1) == 0)
+            {
+                isEnrrolled = false;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return  isEnrrolled;
+    }
+
+    public boolean hasPassedCourse(Student student)
+    {
+        boolean hasPassed = false;
+        try(Connection connection = DriverManager.getConnection(url, user, password))
+        {
+            PreparedStatement preparedStatement = connection.prepareStatement("select s.score from enrollment inner join scores s on enrollment.code = s.enrollmentid inner join subjects s2 on s2.code = s.subjectid where student = ?");
+            preparedStatement.setString(1, student.getIdCard());
+            //preparedStatement.setInt(2, course.getCode());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int counter = 0;
+            int marks = 0;
+            while(resultSet.next())
+            {
+                counter++;
+                marks += resultSet.getInt(1);
+            }
+            if(marks / counter >= 5)
+                hasPassed = true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return  hasPassed;
     }
 
     public ResultSet queryTool(String sql){

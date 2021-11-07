@@ -61,7 +61,7 @@ public class XMLReader extends DefaultHandler {
         {
             isStudent = true;
             student = new Student();
-            student.setIdCard(Integer.parseInt(attributes.getValue("id")));
+            student.setIdCard(attributes.getValue("id"));
         }
         if(qName.equalsIgnoreCase("courses"))
         {
