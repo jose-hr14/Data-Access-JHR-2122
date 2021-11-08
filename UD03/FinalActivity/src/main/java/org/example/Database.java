@@ -99,7 +99,7 @@ public class Database {
         //insert into scores select enrollment.code, s.code, 0 from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid
         try(Connection connection = DriverManager.getConnection(url, user, password))
         {
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into scores select enrollmentid, s2.code, 0 from enrollment inner join scores s on enrollment.code = s.enrollmentid inner join subjects s2 on s2.code = s.subjectid where student = ? and course = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into scores select enrollment.code, s.code, 0 from enrollment inner join course c on c.code = enrollment.course inner join subjects s on enrollment.course = s.courseid where student = ? and course = ?");
             preparedStatement.setString(1, student.getIdCard());
             preparedStatement.setInt(2, course.getCode());
             preparedStatement.executeUpdate();

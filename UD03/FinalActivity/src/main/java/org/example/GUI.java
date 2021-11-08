@@ -80,21 +80,26 @@ public class GUI {
         comboBox3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Student student = (Student) comboBox3.getSelectedItem();
-                String report = new Database().retrieveReport(student);
-                textPane1.setText(report);
+                refreshReportsPane();
             }
         });
         printButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser jFileChooser = new JFileChooser();
-                jFileChooser.showSaveDialog(new JFrame());
-                File file = jFileChooser.getSelectedFile();
+                File file = null;
+                if(!textPane1.getText().isBlank())
+                {
+                    JFileChooser jFileChooser = new JFileChooser();
+                    jFileChooser.showSaveDialog(new JFrame());
+                    file = jFileChooser.getSelectedFile();
+                }
+
                 if(file != null)
                 {
                     try {
                         FileWriter fileWriter = new FileWriter(file);
+                        Student student = (Student) comboBox3.getSelectedItem();
+                        fileWriter.write("-- " + student.firstName + " " + student.lastName + " Marks -- \r\n");
                         fileWriter.write(textPane1.getText());
                         fileWriter.close();
                     } catch (IOException ex) {
@@ -135,6 +140,14 @@ public class GUI {
                 }
             }
         });
+        refreshReportsPane();
+    }
+
+    public void refreshReportsPane()
+    {
+        Student student = (Student) comboBox3.getSelectedItem();
+        String report = new Database().retrieveReport(student);
+        textPane1.setText(report);
     }
 
     public static void main(String[] args) {
