@@ -8,8 +8,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,34 +15,35 @@ import java.util.ArrayList;
 //.setModel(new DefaultComboBox(arrayList.toArray())=
 public class GUI {
     private JPanel panel;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabbedPane;
     private JPanel studentsTab;
     private JPanel enrollmentsTab;
     private JPanel reportsTab;
     private JPanel utilitiesTab;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
+    private JTextField studentFirstNameTextField;
+    private JTextField studentLastNameTextField;
+    private JTextField studentIDTextField;
+    private JTextField studentEmailTextField;
+    private JTextField studentPhoneTextField;
     private JButton addButton;
     private JLabel resultLabel;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
+    private JComboBox studentComboBox;
+    private JComboBox courseComboBox;
     private JButton enrrollButton;
-    private JComboBox comboBox3;
-    private JTextPane textPane1;
+    private JComboBox studentReportComboBox;
+    private JTextPane reportsTextPane;
     private JButton printButton;
     private JButton importXMLButton;
+    private JLabel xmlImportLabel;
 
     public GUI() {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (!textField1.getText().isBlank() || !textField2.getText().isBlank() || !textField3.getText().isBlank() || !textField4.getText().isBlank() || !textField5.getText().isBlank())
+                    if (!studentFirstNameTextField.getText().isBlank() || !studentLastNameTextField.getText().isBlank() || !studentIDTextField.getText().isBlank() || !studentEmailTextField.getText().isBlank() || !studentPhoneTextField.getText().isBlank())
                     {
-                        Student student = new Student(textField1.getText(), textField2.getText(), textField3.getText(), textField4.getText(), textField5.getText());
+                        Student student = new Student(studentFirstNameTextField.getText(), studentLastNameTextField.getText(), studentIDTextField.getText(), studentEmailTextField.getText(), studentPhoneTextField.getText());
                         new Database().addStudent(student);
                         resultLabel.setText("Student saved correctly");
                         refreshComboBox();
@@ -64,8 +63,8 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Student student = (Student) comboBox1.getSelectedItem();
-                Course course = (Course) comboBox2.getSelectedItem();
+                Student student = (Student) studentComboBox.getSelectedItem();
+                Course course = (Course) courseComboBox.getSelectedItem();
                 Database database = new Database();
 
                 if(!database.isEnrrolled(student, course) || database.hasPassedCourse(student))
@@ -77,7 +76,7 @@ public class GUI {
                 refreshComboBox();
             }
         });
-        comboBox3.addActionListener(new ActionListener() {
+        studentReportComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 refreshReportsPane();
@@ -87,7 +86,7 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 File file = null;
-                if(!textPane1.getText().isBlank())
+                if(!reportsTextPane.getText().isBlank())
                 {
                     JFileChooser jFileChooser = new JFileChooser();
                     jFileChooser.showSaveDialog(new JFrame());
@@ -98,9 +97,9 @@ public class GUI {
                 {
                     try {
                         FileWriter fileWriter = new FileWriter(file);
-                        Student student = (Student) comboBox3.getSelectedItem();
+                        Student student = (Student) studentReportComboBox.getSelectedItem();
                         fileWriter.write("-- " + student.firstName + " " + student.lastName + " Marks -- \r\n");
-                        fileWriter.write(textPane1.getText());
+                        fileWriter.write(reportsTextPane.getText());
                         fileWriter.close();
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -145,9 +144,9 @@ public class GUI {
 
     public void refreshReportsPane()
     {
-        Student student = (Student) comboBox3.getSelectedItem();
+        Student student = (Student) studentReportComboBox.getSelectedItem();
         String report = new Database().retrieveReport(student);
-        textPane1.setText(report);
+        reportsTextPane.setText(report);
     }
 
     public static void main(String[] args) {
@@ -169,26 +168,26 @@ public class GUI {
     }
     private void refreshComboBox()
     {
-        comboBox1 = new JComboBox();
-        comboBox2 = new JComboBox();
-        comboBox3 = new JComboBox();
+        studentComboBox = new JComboBox();
+        courseComboBox = new JComboBox();
+        studentReportComboBox = new JComboBox();
 
         ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
         ComboBoxModel courseModel = new DefaultComboBoxModel(new Database().retrieveCourseList().toArray());
-        comboBox1.setModel(studentModel);
-        comboBox2.setModel(courseModel);
-        comboBox3.setModel(studentModel);
+        studentComboBox.setModel(studentModel);
+        courseComboBox.setModel(courseModel);
+        studentReportComboBox.setModel(studentModel);
     }
 
     private void createUIComponents() {
-        comboBox1 = new JComboBox();
-        comboBox2 = new JComboBox();
-        comboBox3 = new JComboBox();
+        studentComboBox = new JComboBox();
+        courseComboBox = new JComboBox();
+        studentReportComboBox = new JComboBox();
 
         ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
         ComboBoxModel courseModel = new DefaultComboBoxModel(new Database().retrieveCourseList().toArray());
-        comboBox1.setModel(studentModel);
-        comboBox2.setModel(courseModel);
-        comboBox3.setModel(studentModel);
+        studentComboBox.setModel(studentModel);
+        courseComboBox.setModel(courseModel);
+        studentReportComboBox.setModel(studentModel);
     }
 }
