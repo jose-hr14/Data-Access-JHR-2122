@@ -221,18 +221,4 @@ public class Database {
         }
         return true;
     }
-
-    public ResultSet queryTool(String sql){
-        ResultSet resultSet = null;
-        try {
-            Connection connection = DriverManager.getConnection(url, user, password);
-            PreparedStatement statement = connection.prepareStatement(sql);
-            resultSet = statement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return resultSet;
-    }
-
-
 }
