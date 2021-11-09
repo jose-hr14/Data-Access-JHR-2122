@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Database {
-    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute2";
+    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute";
     static final String user = "postgres";
     static final String password = "postgres";
 
@@ -203,26 +203,23 @@ public class Database {
 
     public boolean hasPassedCourse(Student student)
     {
-        boolean hasPassed = false;
         try(Connection connection = DriverManager.getConnection(url, user, password))
         {
             PreparedStatement preparedStatement = connection.prepareStatement("select s.score from enrollment inner join scores s on enrollment.code = s.enrollmentid inner join subjects s2 on s2.code = s.subjectid where student = ?");
             preparedStatement.setString(1, student.getIdCard());
             //preparedStatement.setInt(2, course.getCode());
             ResultSet resultSet = preparedStatement.executeQuery();
-            int counter = 0;
-            int marks = 0;
             while(resultSet.next())
             {
-                counter++;
-                marks += resultSet.getInt(1);
+                if(resultSet.getInt(1) < 5)
+                {
+                    return false;
+                }
             }
-            if(marks / counter >= 5)
-                hasPassed = true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return  hasPassed;
+        return true;
     }
 
     public ResultSet queryTool(String sql){

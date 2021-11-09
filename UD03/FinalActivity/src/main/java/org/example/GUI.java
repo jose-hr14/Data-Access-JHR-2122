@@ -35,6 +35,7 @@ public class GUI {
     private JButton printButton;
     private JButton importXMLButton;
     private JLabel xmlImportLabel;
+    private JLabel enrollmentLabel;
 
     public GUI() {
         addButton.addActionListener(new ActionListener() {
@@ -55,7 +56,7 @@ public class GUI {
                 } catch (NumberFormatException numberFormatException) {
                     resultLabel.setText("ID Card must be a number");
                 } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                    resultLabel.setText("Student already exits");
                 }
             }
         });
@@ -67,11 +68,14 @@ public class GUI {
                 Course course = (Course) courseComboBox.getSelectedItem();
                 Database database = new Database();
 
-                if(!database.isEnrrolled(student, course) || database.hasPassedCourse(student))
+                if(!database.isEnrrolled(student, course) && database.hasPassedCourse(student))
                 {
                     new Database().enrollStudent(student, course);
                     new Database().addScore(student, course);
+                    enrollmentLabel.setText("Student enrolled successfully");
                 }
+                else
+                    enrollmentLabel.setText("Student is already enrolled in this course o hasn't passed a previous courses");
 
                 refreshComboBox();
             }
