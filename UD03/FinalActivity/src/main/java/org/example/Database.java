@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Database {
-    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute";
+    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute2";
     static final String user = "postgres";
     static final String password = "postgres";
 
