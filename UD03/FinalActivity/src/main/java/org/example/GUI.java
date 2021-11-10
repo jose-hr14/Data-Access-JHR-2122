@@ -79,7 +79,6 @@ public class GUI {
                 }
                 else
                     enrollmentLabel.setText("Student is already enrolled in this course o hasn't passed a previous courses");
-                refreshComboBox();
             }
         });
         studentReportComboBox.addActionListener(new ActionListener() {
