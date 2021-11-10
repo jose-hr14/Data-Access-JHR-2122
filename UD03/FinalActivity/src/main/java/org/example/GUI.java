@@ -1,6 +1,5 @@
 package org.example;
 
-import org.postgresql.util.PSQLException;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -9,7 +8,9 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -39,6 +40,7 @@ public class GUI {
     private JLabel enrollmentLabel;
 
     public GUI() {
+        refreshComboBox();
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,7 +50,7 @@ public class GUI {
                         Student student = new Student(studentFirstNameTextField.getText(), studentLastNameTextField.getText(), studentIDTextField.getText(), studentEmailTextField.getText(), studentPhoneTextField.getText());
                         new Database().addStudent(student);
                         resultLabel.setText("Student saved correctly");
-                        refreshComboBox();
+                        createUIComponents();
                     }
                     else
                     {
@@ -64,7 +66,6 @@ public class GUI {
         enrrollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 Student student = (Student) studentComboBox.getSelectedItem();
                 Course course = (Course) courseComboBox.getSelectedItem();
                 Database database = new Database();
@@ -84,6 +85,7 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 refreshReportsPane();
+                reportsTextPane.setText("a");
             }
         });
         printButton.addActionListener(new ActionListener() {
@@ -139,9 +141,7 @@ public class GUI {
                 }
             }
         });
-        refreshReportsPane();
     }
-
     public void refreshReportsPane()
     {
         Student student = (Student) studentReportComboBox.getSelectedItem();
