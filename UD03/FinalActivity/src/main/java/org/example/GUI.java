@@ -1,5 +1,6 @@
 package org.example;
 
+import org.postgresql.util.PSQLException;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -42,7 +43,7 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (!studentFirstNameTextField.getText().isBlank() || !studentLastNameTextField.getText().isBlank() || !studentIDTextField.getText().isBlank() || !studentEmailTextField.getText().isBlank() || !studentPhoneTextField.getText().isBlank())
+                    if (!studentFirstNameTextField.getText().isBlank() || !studentLastNameTextField.getText().isBlank() || !studentIDTextField.getText().isBlank())
                     {
                         Student student = new Student(studentFirstNameTextField.getText(), studentLastNameTextField.getText(), studentIDTextField.getText(), studentEmailTextField.getText(), studentPhoneTextField.getText());
                         new Database().addStudent(student);
@@ -127,18 +128,13 @@ public class GUI {
                         ArrayList<Course> courseList = xmlReader.getCourseList();
                         ArrayList<Subject> subjectList = xmlReader.getSubjectList();
                         database.importXML(studentList, courseList, subjectList);
-                        //database.addStudentList(studentList);
-                        //database.addCourseList(courseList);
-                        //database.addSubjectList(subjectList);
                         refreshComboBox();
-                    } catch (FileNotFoundException ex) {
+                        xmlImportLabel.setText("Data imported successfully");
+                    } catch (ParserConfigurationException | SAXException | IOException ex) {
                         ex.printStackTrace();
-                    } catch (ParserConfigurationException parserConfigurationException) {
-                        parserConfigurationException.printStackTrace();
-                    } catch (SAXException saxException) {
-                        saxException.printStackTrace();
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
+                    } catch (SQLException throwable) {
+                        throwable.printStackTrace();
+                        xmlImportLabel.setText("Data couldn't be imported, aborting transaction");
                     }
                 }
             }
