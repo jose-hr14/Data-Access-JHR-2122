@@ -177,15 +177,5 @@ public class GUI {
         studentReportComboBox.setModel(studentModel);
     }
 
-    private void createUIComponents() {
-        studentComboBox = new JComboBox();
-        courseComboBox = new JComboBox();
-        studentReportComboBox = new JComboBox();
 
-        ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
-        ComboBoxModel courseModel = new DefaultComboBoxModel(new Database().retrieveCourseList().toArray());
-        studentComboBox.setModel(studentModel);
-        courseComboBox.setModel(courseModel);
-        studentReportComboBox.setModel(studentModel);
-    }
 }
