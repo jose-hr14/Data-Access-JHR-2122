@@ -68,7 +68,7 @@ public class GUI {
                 Course course = (Course) courseComboBox.getSelectedItem();
                 Database database = new Database();
 
-                if(!database.isEnrrolled(student, course) && database.hasPassedCourse(student))
+                if(!database.isEnrrolled(student, course) && database.hasPassedCourses(student))
                 {
                     new Database().enrollStudent(student, course);
                     new Database().addScore(student, course);
@@ -76,7 +76,6 @@ public class GUI {
                 }
                 else
                     enrollmentLabel.setText("Student is already enrolled in this course o hasn't passed a previous courses");
-
                 refreshComboBox();
             }
         });
@@ -127,9 +126,10 @@ public class GUI {
                         ArrayList<Student> studentList = xmlReader.getStudentList();
                         ArrayList<Course> courseList = xmlReader.getCourseList();
                         ArrayList<Subject> subjectList = xmlReader.getSubjectList();
-                        database.addStudentList(studentList);
-                        database.addCourseList(courseList);
-                        database.addSubjectList(subjectList);
+                        database.importXML(studentList, courseList, subjectList);
+                        //database.addStudentList(studentList);
+                        //database.addCourseList(courseList);
+                        //database.addSubjectList(subjectList);
                         refreshComboBox();
                     } catch (FileNotFoundException ex) {
                         ex.printStackTrace();

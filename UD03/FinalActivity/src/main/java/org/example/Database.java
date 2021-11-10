@@ -4,9 +4,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Database {
-    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute";
+    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute2";
     static final String user = "postgres";
     static final String password = "postgres";
+    Connection connection;
 
     public void addStudent(Student student) throws SQLException {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
@@ -108,6 +109,61 @@ public class Database {
             throwables.printStackTrace();
         }
     }
+    public void importXML(ArrayList<Student> studentList, ArrayList<Course> courseList, ArrayList<Subject> subjectList)
+    {
+        try(Connection connection = DriverManager.getConnection(url, user, password))
+        {
+            connection.setAutoCommit(false);
+            for (Student student:studentList) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO student VALUES(?, ?, ?, ?, ?)");
+                    preparedStatement.setString(1,student.getFirstName());
+                    preparedStatement.setString(2, student.getLastName());
+                    preparedStatement.setString(3, student.getIdCard());
+                    preparedStatement.setString(4, student.getEmail());
+                    preparedStatement.setString(5, student.getPhone());
+                    preparedStatement.executeUpdate();
+                    preparedStatement.close();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+            for (Course course: courseList) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO course VALUES(?, ?)");
+                    preparedStatement.setInt(1,course.getCode());
+                    preparedStatement.setString(2, course.getName());
+                    preparedStatement.executeUpdate();
+                    preparedStatement.close();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+            for (Subject subject: subjectList) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO subjects VALUES(?, ?, ?, ?, ?)");
+                    preparedStatement.setInt(1,subject.getCode());
+                    preparedStatement.setString(2, subject.getName());
+                    preparedStatement.setInt(3, subject.getYear());
+                    preparedStatement.setInt(4, subject.getCourseID());
+                    preparedStatement.setInt(5, subject.getHours());
+                    preparedStatement.executeUpdate();
+                    preparedStatement.close();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+            connection.commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
     public String retrieveReport(Student student){
         ArrayList<String> report = new ArrayList<>();
         String reportt = "";
@@ -201,7 +257,7 @@ public class Database {
         return  isEnrrolled;
     }
 
-    public boolean hasPassedCourse(Student student)
+    public boolean hasPassedCourses(Student student)
     {
         try(Connection connection = DriverManager.getConnection(url, user, password))
         {
