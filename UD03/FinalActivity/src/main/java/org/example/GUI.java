@@ -41,6 +41,7 @@ public class GUI {
 
     public GUI() {
         refreshComboBox();
+        refreshReportsPane();
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,7 +51,7 @@ public class GUI {
                         Student student = new Student(studentFirstNameTextField.getText(), studentLastNameTextField.getText(), studentIDTextField.getText(), studentEmailTextField.getText(), studentPhoneTextField.getText());
                         new Database().addStudent(student);
                         resultLabel.setText("Student saved correctly");
-                        createUIComponents();
+                        refreshComboBox();
                     }
                     else
                     {
@@ -85,7 +86,6 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 refreshReportsPane();
-                reportsTextPane.setText("a");
             }
         });
         printButton.addActionListener(new ActionListener() {
@@ -158,6 +158,7 @@ public class GUI {
         frame.setSize(500, 500);
         frame.setVisible(true);
 
+        /*
         try {
             SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
             saxParser.parse("import.xml", new XMLReader());
@@ -165,13 +166,11 @@ public class GUI {
             e.printStackTrace();
         }
 
+         */
+
     }
     private void refreshComboBox()
     {
-        studentComboBox = new JComboBox();
-        courseComboBox = new JComboBox();
-        studentReportComboBox = new JComboBox();
-
         ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
         ComboBoxModel courseModel = new DefaultComboBoxModel(new Database().retrieveCourseList().toArray());
         studentComboBox.setModel(studentModel);
