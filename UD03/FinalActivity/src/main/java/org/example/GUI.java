@@ -3,6 +3,7 @@ package org.example;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -38,6 +39,7 @@ public class GUI {
     private JButton importXMLButton;
     private JLabel xmlImportLabel;
     private JLabel enrollmentLabel;
+    private JLabel printResult;
 
     public GUI() {
         refreshComboBox();
@@ -79,6 +81,7 @@ public class GUI {
                 }
                 else
                     enrollmentLabel.setText("Student is already enrolled in this course o hasn't passed a previous courses");
+                refreshComboBox();
             }
         });
         studentReportComboBox.addActionListener(new ActionListener() {
@@ -91,24 +94,29 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 File file = null;
+                Student student = (Student) studentReportComboBox.getSelectedItem();
                 if(!reportsTextPane.getText().isBlank())
                 {
                     JFileChooser jFileChooser = new JFileChooser();
-                    jFileChooser.showSaveDialog(new JFrame());
+                    jFileChooser.setSelectedFile(new File(student.firstName + "_" + student.getLastName() + "_Marks.txt"));
+                    jFileChooser.setFileFilter(new FileNameExtensionFilter("txt file","txt"));
+                    int dialogResult = jFileChooser.showSaveDialog(new JFrame());
                     file = jFileChooser.getSelectedFile();
-                }
 
-                if(file != null)
-                {
-                    try {
-                        FileWriter fileWriter = new FileWriter(file);
-                        Student student = (Student) studentReportComboBox.getSelectedItem();
-                        fileWriter.write("-- " + student.firstName + " " + student.lastName + " Marks -- \r\n");
-                        fileWriter.write(reportsTextPane.getText());
-                        fileWriter.close();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
+                    if(dialogResult == JFileChooser.APPROVE_OPTION)
+                    {
+                        try {
+                            FileWriter fileWriter = new FileWriter(file);
+                            fileWriter.write("-- " + student.firstName + " " + student.lastName + " Marks -- \r\n");
+                            fileWriter.write(reportsTextPane.getText());
+                            fileWriter.close();
+                            printResult.setText("Student saved successfully");
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                     }
+                    else
+                        printResult.setText("");
                 }
             }
         });
@@ -116,9 +124,10 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser jFileChooser = new JFileChooser();
-                jFileChooser.showOpenDialog(new JFrame());
+                jFileChooser.setFileFilter(new FileNameExtensionFilter("XML file","xml"));
+                int dialogResult = jFileChooser.showOpenDialog(new JFrame());
                 File file = jFileChooser.getSelectedFile();
-                if(file != null)
+                if(dialogResult == JFileChooser.APPROVE_OPTION)
                 {
                     try {
                         SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
@@ -156,25 +165,15 @@ public class GUI {
         frame.setLocationRelativeTo(null);
         frame.setSize(500, 500);
         frame.setVisible(true);
-
-        /*
-        try {
-            SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-            saxParser.parse("import.xml", new XMLReader());
-        } catch ( Exception e ) {
-            e.printStackTrace();
-        }
-
-         */
-
     }
     private void refreshComboBox()
     {
         ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
         ComboBoxModel courseModel = new DefaultComboBoxModel(new Database().retrieveCourseList().toArray());
+        ComboBoxModel enrrolledStudentsModel = new DefaultComboBoxModel(new Database().retrieveEnrolledStudentsList().toArray());
         studentComboBox.setModel(studentModel);
         courseComboBox.setModel(courseModel);
-        studentReportComboBox.setModel(studentModel);
+        studentReportComboBox.setModel(enrrolledStudentsModel);
     }
 
 

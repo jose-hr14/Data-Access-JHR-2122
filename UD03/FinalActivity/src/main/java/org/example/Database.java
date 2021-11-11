@@ -136,8 +136,8 @@ public class Database {
                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO subjects VALUES(?, ?, ?, ?, ?)");
                 preparedStatement.setInt(1,subject.getCode());
                 preparedStatement.setString(2, subject.getName());
-                preparedStatement.setInt(3, subject.getCourseID());
-                preparedStatement.setInt(4, subject.getHours());
+                preparedStatement.setInt(3, subject.getHours());
+                preparedStatement.setInt(4, subject.getCourseID());
                 preparedStatement.setInt(5, subject.getYear());
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
@@ -176,6 +176,22 @@ public class Database {
             PreparedStatement statement = connection.prepareStatement("SELECT * from student");
             ResultSet result = statement.executeQuery();
             while (result.next()) {
+                studentList.add(new Student(result.getString(1),result.getString(2), result.getString(3), result.getString(4),result.getString(5) ));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return studentList;
+    }
+
+    public ArrayList<Student> retrieveEnrolledStudentsList()
+    {
+        ArrayList<Student> studentList = new ArrayList<>();
+        try(Connection connection = DriverManager.getConnection(url, user, password)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from student inner join enrollment e on student.idcard = e.student;");
+            ResultSet result = preparedStatement.executeQuery();
+            while(result.next())
+            {
                 studentList.add(new Student(result.getString(1),result.getString(2), result.getString(3), result.getString(4),result.getString(5) ));
             }
         } catch (SQLException throwables) {
