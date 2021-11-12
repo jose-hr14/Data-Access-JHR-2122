@@ -163,7 +163,7 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setSize(500, 500);
+        frame.setSize(320, 300);
         frame.setVisible(true);
     }
     private void refreshComboBox()
