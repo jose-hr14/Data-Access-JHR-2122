@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Database {
-    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute2";
+    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute";
     static final String user = "postgres";
     static final String password = "postgres";
 
@@ -248,9 +248,10 @@ public class Database {
         boolean isEnrrolled = true;
         try(Connection connection = DriverManager.getConnection(url, user, password))
         {
-            PreparedStatement preparedStatement = connection.prepareStatement("select count(*) from enrollment where course = ? AND student = ?");
-            preparedStatement.setInt(1, course.getCode());
-            preparedStatement.setString(2, student.getIdCard());
+            //PreparedStatement preparedStatement = connection.prepareStatement("select count(*) from enrollment where student = ? AND course = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("select isenrolled(?, ?)");
+            preparedStatement.setString(1, student.getIdCard());
+            preparedStatement.setInt(2, course.getCode());
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             if(resultSet.getInt(1) == 0)
@@ -267,10 +268,15 @@ public class Database {
     {
         try(Connection connection = DriverManager.getConnection(url, user, password))
         {
-            PreparedStatement preparedStatement = connection.prepareStatement("select s.score from enrollment inner join scores s on enrollment.code = s.enrollmentid inner join subjects s2 on s2.code = s.subjectid where student = ?");
+            //PreparedStatement preparedStatement = connection.prepareStatement("select s.score from enrollment inner join scores s on enrollment.code = s.enrollmentid inner join subjects s2 on s2.code = s.subjectid where student = ? and s.score < 5");
+            PreparedStatement preparedStatement = connection.prepareStatement("select failedsubjects(?)");
             preparedStatement.setString(1, student.getIdCard());
             //preparedStatement.setInt(2, course.getCode());
             ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            if(resultSet.getInt(1) == 0)
+                return true;
+            /*
             while(resultSet.next())
             {
                 if(resultSet.getInt(1) < 5)
@@ -278,9 +284,11 @@ public class Database {
                     return false;
                 }
             }
+            */
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return true;
+        return false;
     }
 }

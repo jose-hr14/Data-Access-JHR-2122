@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-//.setModel(new DefaultComboBox(arrayList.toArray())=
 public class GUI {
     private JPanel panel;
     private JTabbedPane tabbedPane;
@@ -42,7 +41,7 @@ public class GUI {
     private JLabel printResult;
 
     public GUI() {
-        refreshComboBox();
+        refreshComboBoxes();
         refreshReportsPane();
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -53,7 +52,7 @@ public class GUI {
                         Student student = new Student(studentFirstNameTextField.getText(), studentLastNameTextField.getText(), studentIDTextField.getText(), studentEmailTextField.getText(), studentPhoneTextField.getText());
                         new Database().addStudent(student);
                         resultLabel.setText("Student saved correctly");
-                        refreshComboBox();
+                        refreshStudentComboBox();
                     }
                     else
                     {
@@ -75,13 +74,13 @@ public class GUI {
 
                 if(!database.isEnrrolled(student, course) && database.hasPassedCourses(student))
                 {
-                    new Database().enrollStudent(student, course);
-                    new Database().addScore(student, course);
+                    database.enrollStudent(student, course);
+                    database.addScore(student, course);
                     enrollmentLabel.setText("Student enrolled successfully");
                 }
                 else
                     enrollmentLabel.setText("Student is already enrolled in this course o hasn't passed a previous courses");
-                refreshComboBox();
+                refreshEnrrolledStudentComboBox();
             }
         });
         studentReportComboBox.addActionListener(new ActionListener() {
@@ -138,7 +137,7 @@ public class GUI {
                         ArrayList<Course> courseList = xmlReader.getCourseList();
                         ArrayList<Subject> subjectList = xmlReader.getSubjectList();
                         database.importXML(studentList, courseList, subjectList);
-                        refreshComboBox();
+                        refreshStudentComboBox();
                         xmlImportLabel.setText("Data imported successfully");
                     } catch (ParserConfigurationException | SAXException | IOException ex) {
                         ex.printStackTrace();
@@ -166,14 +165,29 @@ public class GUI {
         frame.setSize(320, 300);
         frame.setVisible(true);
     }
-    private void refreshComboBox()
+    private void refreshStudentComboBox()
     {
         ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
-        ComboBoxModel courseModel = new DefaultComboBoxModel(new Database().retrieveCourseList().toArray());
-        ComboBoxModel enrrolledStudentsModel = new DefaultComboBoxModel(new Database().retrieveEnrolledStudentsList().toArray());
         studentComboBox.setModel(studentModel);
+    }
+
+    private void refreshCourseComboBox()
+    {
+        ComboBoxModel courseModel = new DefaultComboBoxModel(new Database().retrieveCourseList().toArray());
         courseComboBox.setModel(courseModel);
+    }
+
+    private void refreshEnrrolledStudentComboBox()
+    {
+        ComboBoxModel enrrolledStudentsModel = new DefaultComboBoxModel(new Database().retrieveEnrolledStudentsList().toArray());
         studentReportComboBox.setModel(enrrolledStudentsModel);
+    }
+
+    private void refreshComboBoxes()
+    {
+        refreshStudentComboBox();
+        refreshCourseComboBox();
+        refreshEnrrolledStudentComboBox();
     }
 
 
