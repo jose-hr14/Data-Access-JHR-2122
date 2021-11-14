@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Database {
-    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute";
+    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute2";
     static final String user = "postgres";
     static final String password = "postgres";
 
@@ -27,62 +27,6 @@ public class Database {
             }
         }
     }
-
-    public void addCourse(Course course) {
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO course VALUES(?, ?)");
-            preparedStatement.setInt(1,course.getCode());
-            preparedStatement.setString(2, course.getName());
-            preparedStatement.executeUpdate();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
-    }
-
-    public void addSubject(Subject subject) {
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO subjects VALUES(?, ?, ?, ?, ?)");
-            preparedStatement.setInt(1,subject.getCode());
-            preparedStatement.setString(2, subject.getName());
-            preparedStatement.setInt(3, subject.getYear());
-            preparedStatement.setInt(4, subject.getCourseID());
-            preparedStatement.setInt(5, subject.getHours());
-
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
-    }
-
-    public void addStudentList(ArrayList<Student> studentList)
-    {
-        for (Student student:studentList)
-        {
-            try {
-                addStudent(student);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void addCourseList(ArrayList<Course> courseList)
-    {
-        for (Course course: courseList)
-        {
-            addCourse(course);
-        }
-    }
-
-    public void addSubjectList(ArrayList<Subject> subjectList)
-    {
-        for (Subject subject: subjectList)
-        {
-            addSubject(subject);
-        }
-    }
-
     public void enrollStudent(Student student, Course course)
     {
         try(Connection connection = DriverManager.getConnection(url, user, password))
@@ -212,35 +156,6 @@ public class Database {
             throwables.printStackTrace();
         }
         return courseList;
-    }
-
-    public ArrayList<Subject> retrieveSubjectList(){
-        ArrayList<Subject> subjectList = new ArrayList<Subject>();
-        try(Connection connection = DriverManager.getConnection(url, user, password)){
-            PreparedStatement statement = connection.prepareStatement("SELECT * from subjects");
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                subjectList.add(new Subject(result.getInt(1),result.getString(2), result.getInt(3), result.getInt(4), result.getInt(5)));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return subjectList;
-    }
-
-    public ArrayList<Subject> retrieveSubjectList(int courseID){
-        ArrayList<Subject> subjectList = new ArrayList<Subject>();
-        try(Connection connection = DriverManager.getConnection(url, user, password)){
-            PreparedStatement statement = connection.prepareStatement("SELECT * from subjects where courseid = ?");
-            statement.setInt(1, courseID);
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                subjectList.add(new Subject(result.getInt(1),result.getString(2), result.getInt(3), result.getInt(4), result.getInt(5)));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return subjectList;
     }
 
     public boolean isEnrrolled(Student student, Course course)
