@@ -1,6 +1,4 @@
-package org.example;
-
-import org.postgresql.util.PSQLException;
+package org.final_activity;
 
 import java.sql.*;
 import java.util.ArrayList;

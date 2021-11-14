@@ -1,4 +1,4 @@
-package org.example;
+package org.final_activity;
 
 import org.xml.sax.SAXException;
 
@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * This class controls everything related to the graphical user interface
+ * @author José Hernández Riquelme
+ */
 public class GUI {
     private JPanel panel;
     private JTabbedPane tabbedPane;
@@ -40,9 +44,15 @@ public class GUI {
     private JLabel enrollmentLabel;
     private JLabel printResult;
 
+    /**
+     * Graphical user interface constructor
+     */
     public GUI() {
         refreshComboBoxes();
         refreshReportsPane();
+        /**
+         * Listener of the add student button. It creates a new student and saves them in the database
+         */
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,6 +75,12 @@ public class GUI {
                 }
             }
         });
+        /**
+         * Enrollment button listener. It takes a student id and a course code, and saves them
+         * in the enrollment table of the database. Furthermore, saves all the subjects of the selected course
+         * within the scores table, with the enrollmentid and the and the score of each subject, that will be 0
+         * by default.
+         */
         enrrollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,12 +99,20 @@ public class GUI {
                 refreshEnrrolledStudentComboBox();
             }
         });
+        /**
+         * Student report comboBox listener. When a enrrolled student is selected, it prints their result
+         * into de textpane.
+         */
         studentReportComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 refreshReportsPane();
             }
         });
+        /**
+         * Scores print button listener. When clicked, it opens a filechooser that allows the user to save
+         * the selected student score into a txt file.
+         */
         printButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -119,6 +143,7 @@ public class GUI {
                 }
             }
         });
+
         importXMLButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

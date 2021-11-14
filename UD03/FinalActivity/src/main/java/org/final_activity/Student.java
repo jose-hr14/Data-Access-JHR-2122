@@ -1,4 +1,10 @@
-package org.example;
+package org.final_activity;
+
+/**
+ * @author José Hernández Riquelme
+ * Student class. Class used for storing the data related to the students
+ * read from or written to the database.
+ */
 
 public class Student {
     String firstName;
@@ -8,6 +14,7 @@ public class Student {
     String phone;
 
     public Student() {
+        
     }
 
     public Student(String firstName, String lastName, String idCard, String email, String phone) {
@@ -58,6 +65,11 @@ public class Student {
         this.phone = phone;
     }
 
+    /**
+     * This functions returns the string that will be printed
+     * in the student comboBox
+     * @return Student's first name, last name and idCard
+     */
     @Override
     public String toString() {
         return firstName + " " + lastName + " " + idCard;
