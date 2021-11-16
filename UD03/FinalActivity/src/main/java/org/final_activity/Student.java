@@ -2,8 +2,9 @@ package org.final_activity;
 
 /**
  * @author José Hernández Riquelme
- * Student class. Class used for storing the data related to the students
- * read from or written to the database.
+ * Student class. Class used to facilitate working with the information
+ * read from the date base and to facilitate it's writing to the
+ * database as well.
  */
 
 public class Student {
@@ -67,7 +68,7 @@ public class Student {
 
     /**
      * This functions returns the string that will be printed
-     * in the student comboBox
+     * in the student comboBox and the enrolled student comboBox
      * @return Student's first name, last name and idCard
      */
     @Override

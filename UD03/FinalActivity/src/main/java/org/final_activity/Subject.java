@@ -1,5 +1,12 @@
 package org.final_activity;
 
+/**
+ * @author José Hernández Riquelme
+ * Subject class. Class used to facilitate working with the information
+ * read from the date base and to facilitate it's writing to the
+ * database as well.
+ */
+
 public class Subject {
     int code;
     String name;
