@@ -49,7 +49,6 @@ public class GUI {
      */
     public GUI() {
         refreshComboBoxes();
-        refreshReportsPane();
         /**
          * Listener of the add student button. It creates a new student and saves them in the database
          */
@@ -88,14 +87,20 @@ public class GUI {
                 Course course = (Course) courseComboBox.getSelectedItem();
                 Database database = new Database();
 
-                if(!database.isEnrrolled(student, course) && database.hasPassedCourses(student))
+                if(database.isEnrrolled(student, course))
+                {
+                    enrollmentLabel.setText("Student is already enrolled in this course");
+                }
+                else if(!database.hasPassedCourses(student))
+                {
+                    enrollmentLabel.setText("Student hasn't passed previous courses");
+                }
+                else
                 {
                     database.enrollStudent(student, course);
                     database.addScore(student, course);
                     enrollmentLabel.setText("Student enrolled successfully");
                 }
-                else
-                    enrollmentLabel.setText("Student is already enrolled in this course o hasn't passed a previous courses");
                 refreshEnrrolledStudentComboBox();
             }
         });
@@ -164,10 +169,11 @@ public class GUI {
                         database.importXML(studentList, courseList, subjectList);
                         refreshStudentComboBox();
                         xmlImportLabel.setText("Data imported successfully");
+                        refreshStudentComboBox();
+                        refreshCourseComboBox();
                     } catch (ParserConfigurationException | SAXException | IOException ex) {
-                        ex.printStackTrace();
+                        xmlImportLabel.setText("Data couldn't be imported, aborting transaction");
                     } catch (SQLException throwable) {
-                        throwable.printStackTrace();
                         xmlImportLabel.setText("Data couldn't be imported, aborting transaction");
                     }
                 }

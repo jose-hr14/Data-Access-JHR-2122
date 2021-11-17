@@ -17,12 +17,6 @@ public class Database {
             preparedStatement.setString(4, student.getEmail());
             preparedStatement.setString(5, student.getPhone());
             preparedStatement.executeUpdate();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-            if(throwable.getSQLState().equals("23505"))
-            {
-                throw throwable;
-            }
         }
     }
     public void enrollStudent(Student student, Course course)
@@ -86,9 +80,10 @@ public class Database {
             }
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
             try {
-                connection.rollback();
+                if (connection != null) {
+                    connection.rollback();
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -97,23 +92,22 @@ public class Database {
 
     }
     public String retrieveReport(Student student){
-        ArrayList<String> report = new ArrayList<>();
-        String reportt = "";
+        StringBuilder report = new StringBuilder();
         try(Connection connection = DriverManager.getConnection(url, user, password)){
             PreparedStatement statement = connection.prepareStatement("select c.name, s2.name, s.score from enrollment inner join scores s on enrollment.code = s.enrollmentid inner join subjects s2 on s2.code = s.subjectid inner join course c on c.code = s2.courseid where enrollment.student = ?");
             statement.setString(1, student.getIdCard());
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                reportt += result.getString(1) + " - " + result.getString(2) + ": " + result.getInt(3) + " \r\n";
+                report.append(result.getString(1)).append(" - ").append(result.getString(2)).append(": ").append(result.getInt(3)).append(" \r\n");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return reportt;
+        return report.toString();
     }
 
     public ArrayList<Student> retrieveStudentList(){
-        ArrayList<Student> studentList = new ArrayList<Student>();
+        ArrayList<Student> studentList = new ArrayList<>();
         try(Connection connection = DriverManager.getConnection(url, user, password)){
             PreparedStatement statement = connection.prepareStatement("SELECT * from student");
             ResultSet result = statement.executeQuery();
@@ -132,9 +126,20 @@ public class Database {
         try(Connection connection = DriverManager.getConnection(url, user, password)) {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from student inner join enrollment e on student.idcard = e.student;");
             ResultSet result = preparedStatement.executeQuery();
+            boolean exits;
             while(result.next())
             {
-                studentList.add(new Student(result.getString(1),result.getString(2), result.getString(3), result.getString(4),result.getString(5) ));
+                exits = false;
+                Student student = new Student(result.getString(1),result.getString(2), result.getString(3), result.getString(4),result.getString(5) );
+                for (Student studentCompare: studentList) {
+                    if(student.getIdCard().equals(studentCompare.getIdCard()))
+                    {
+                        exits = true;
+                        break;
+                    }
+                }
+                if(!exits)
+                    studentList.add(student);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -143,7 +148,7 @@ public class Database {
     }
 
     public ArrayList<Course> retrieveCourseList(){
-        ArrayList<Course> courseList = new ArrayList<Course>();
+        ArrayList<Course> courseList = new ArrayList<>();
         try(Connection connection = DriverManager.getConnection(url, user, password)){
             PreparedStatement statement = connection.prepareStatement("SELECT * from course");
             ResultSet result = statement.executeQuery();
