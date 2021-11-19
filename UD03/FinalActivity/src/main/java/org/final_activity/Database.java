@@ -3,11 +3,22 @@ package org.final_activity;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * @author José Hernández Riquelme
+ * This class handles everything related with the database, including reading from the database and writing to the
+ * database.
+ */
 public class Database {
     static final String url = "jdbc:postgresql://localhost:5432/VTInstitute";
     static final String user = "postgres";
     static final String password = "postgres";
 
+    /**
+     * Adds a new student to the database. If the student already exits, throws a SQL Exception that will be
+     * caught from the main form to inform the user.
+     * @param student
+     * @throws SQLException
+     */
     public void addStudent(Student student) throws SQLException {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO student VALUES(?, ?, ?, ?, ?)");
@@ -19,6 +30,12 @@ public class Database {
             preparedStatement.executeUpdate();
         }
     }
+
+    /**
+     * Enrolls a new student in the database, saving its student id and course code in the enrollment table.
+     * @param student
+     * @param course
+     */
     public void enrollStudent(Student student, Course course)
     {
         try(Connection connection = DriverManager.getConnection(url, user, password))
@@ -28,10 +45,14 @@ public class Database {
             preparedStatement.setInt(2, course.getCode());
             preparedStatement.executeUpdate();
             preparedStatement.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        } catch (SQLException throwable) {}
     }
+
+    /**
+     * Saves all the subjects from the enrolled course, together with the enrolment id of the student.
+     * @param student
+     * @param course
+     */
     public void addScore(Student student, Course course)
     {
         //insert into scores select enrollment.code, s.code, 0 from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid
@@ -46,7 +67,15 @@ public class Database {
             throwables.printStackTrace();
         }
     }
-    public void importXML(ArrayList<Student> studentList, ArrayList<Course> courseList, ArrayList<Subject> subjectList) throws SQLException {
+
+    /**
+     * Saves
+     * @param studentList
+     * @param courseList
+     * @param subjectList
+     * @throws SQLException
+     */
+    public void transactionalListImport(ArrayList<Student> studentList, ArrayList<Course> courseList, ArrayList<Subject> subjectList) throws SQLException {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url, user, password);
@@ -89,7 +118,6 @@ public class Database {
             }
             throw e;
         }
-
     }
     public String retrieveReport(Student student){
         StringBuilder report = new StringBuilder();
@@ -194,16 +222,6 @@ public class Database {
             resultSet.next();
             if(resultSet.getInt(1) == 0)
                 return true;
-            /*
-            while(resultSet.next())
-            {
-                if(resultSet.getInt(1) < 5)
-                {
-                    return false;
-                }
-            }
-            */
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

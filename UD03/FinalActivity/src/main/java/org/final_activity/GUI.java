@@ -44,6 +44,16 @@ public class GUI {
     private JLabel enrollmentLabel;
     private JLabel printResult;
 
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("GUI");
+        frame.setContentPane(new GUI().panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setSize(320, 300);
+        frame.setVisible(true);
+    }
+
     /**
      * Graphical user interface constructor
      */
@@ -148,7 +158,11 @@ public class GUI {
                 }
             }
         });
-
+        /**
+         * Import XML button listener. It reads a xml file and saves the students, courses or subjects written on it.
+         * The importing operation will be transactional, this means that if the importing of one or more element fails
+         * the whole operation will be aborted.
+         */
         importXMLButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -166,60 +180,60 @@ public class GUI {
                         ArrayList<Student> studentList = xmlReader.getStudentList();
                         ArrayList<Course> courseList = xmlReader.getCourseList();
                         ArrayList<Subject> subjectList = xmlReader.getSubjectList();
-                        database.importXML(studentList, courseList, subjectList);
+                        database.transactionalListImport(studentList, courseList, subjectList);
                         refreshStudentComboBox();
                         xmlImportLabel.setText("Data imported successfully");
                         refreshStudentComboBox();
                         refreshCourseComboBox();
                     } catch (ParserConfigurationException | SAXException | IOException ex) {
-                        xmlImportLabel.setText("Data couldn't be imported, aborting transaction");
+                        xmlImportLabel.setText("Data couldn't be imported, aborting operation");
                     } catch (SQLException throwable) {
-                        xmlImportLabel.setText("Data couldn't be imported, aborting transaction");
+                        xmlImportLabel.setText("Data couldn't be imported, aborting operation");
                     }
                 }
             }
         });
     }
+    /**
+     * This function refreshes the reports' pane with the selected index from the enrolled students comboBox.
+     */
     public void refreshReportsPane()
     {
         Student student = (Student) studentReportComboBox.getSelectedItem();
         String report = new Database().retrieveReport(student);
         reportsTextPane.setText(report);
     }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("GUI");
-        frame.setContentPane(new GUI().panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setSize(320, 300);
-        frame.setVisible(true);
-    }
+    /**
+     * This function refreshes the student comboBox overwriting its current comboBox model
+     */
     private void refreshStudentComboBox()
     {
         ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
         studentComboBox.setModel(studentModel);
     }
-
+    /**
+     * This function refreshes the course comboBox overwriting its current comboBox model
+     */
     private void refreshCourseComboBox()
     {
         ComboBoxModel courseModel = new DefaultComboBoxModel(new Database().retrieveCourseList().toArray());
         courseComboBox.setModel(courseModel);
     }
-
+    /**
+     * This function refreshes the enrolled students comboBox overwriting its current model
+     */
     private void refreshEnrrolledStudentComboBox()
     {
         ComboBoxModel enrrolledStudentsModel = new DefaultComboBoxModel(new Database().retrieveEnrolledStudentsList().toArray());
         studentReportComboBox.setModel(enrrolledStudentsModel);
     }
-
+    /**
+     * This function refreshes all the comboBoxes calling their respective functions
+     */
     private void refreshComboBoxes()
     {
         refreshStudentComboBox();
         refreshCourseComboBox();
         refreshEnrrolledStudentComboBox();
     }
-
-
 }
