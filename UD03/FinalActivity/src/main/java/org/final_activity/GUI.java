@@ -180,7 +180,7 @@ public class GUI {
                         ArrayList<Student> studentList = xmlReader.getStudentList();
                         ArrayList<Course> courseList = xmlReader.getCourseList();
                         ArrayList<Subject> subjectList = xmlReader.getSubjectList();
-                        database.transactionalListImport(studentList, courseList, subjectList);
+                        database.importXML(studentList, courseList, subjectList);
                         refreshStudentComboBox();
                         xmlImportLabel.setText("Data imported successfully");
                         refreshStudentComboBox();

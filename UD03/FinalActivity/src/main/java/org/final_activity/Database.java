@@ -4,9 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * @author José Hernández Riquelme
  * This class handles everything related with the database, including reading from the database and writing to the
  * database.
+ * @author José Hernández Riquelme
  */
 public class Database {
     static final String url = "jdbc:postgresql://localhost:5432/VTInstitute";
@@ -69,13 +69,15 @@ public class Database {
     }
 
     /**
-     * Saves
+     * It parses the read xml file to extract the students, courses or subjects read on it, and saves them in the 
+     * database using a transaction. If the parsing fails or an SQL Exception occurs, it will throw and exception
+     * that will be caught in the main form to inform the user.
      * @param studentList
      * @param courseList
      * @param subjectList
      * @throws SQLException
      */
-    public void transactionalListImport(ArrayList<Student> studentList, ArrayList<Course> courseList, ArrayList<Subject> subjectList) throws SQLException {
+    public void importXML(ArrayList<Student> studentList, ArrayList<Course> courseList, ArrayList<Subject> subjectList) throws SQLException {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url, user, password);

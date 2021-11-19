@@ -6,6 +6,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.ArrayList;
 
+/**
+ * The xml handler that will read the xml that contains students, courses and subject that will be saved in the
+ * database later
+ * @author José Hernández Riquelme
+ */
 public class XMLReader extends DefaultHandler {
     protected String currentTag;
     protected String tagContent;
