@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 /**
  * This class controls everything related to the graphical user interface
+ *
  * @author José Hernández Riquelme
  */
 public class GUI {
@@ -44,18 +45,24 @@ public class GUI {
     private JLabel enrollmentLabel;
     private JLabel printResult;
 
+    /**
+     * The main method that sets de form and shows it to the user.
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         JFrame frame = new JFrame("GUI");
         frame.setContentPane(new GUI().panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setSize(320, 300);
+        frame.setSize(620, 600);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 
     /**
-     * Graphical user interface constructor
+     * Graphical user interface constructor. It holds every component listener, managing the whole GUI behaviour.
      */
     public GUI() {
         refreshComboBoxes();
@@ -66,15 +73,12 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (!studentFirstNameTextField.getText().isBlank() || !studentLastNameTextField.getText().isBlank() || !studentIDTextField.getText().isBlank())
-                    {
+                    if (!studentFirstNameTextField.getText().isBlank() || !studentLastNameTextField.getText().isBlank() || !studentIDTextField.getText().isBlank()) {
                         Student student = new Student(studentFirstNameTextField.getText(), studentLastNameTextField.getText(), studentIDTextField.getText(), studentEmailTextField.getText(), studentPhoneTextField.getText());
                         new Database().addStudent(student);
                         resultLabel.setText("Student saved correctly");
                         refreshStudentComboBox();
-                    }
-                    else
-                    {
+                    } else {
                         resultLabel.setText("One or more textbox is blank");
                     }
                 } catch (NumberFormatException numberFormatException) {
@@ -87,7 +91,7 @@ public class GUI {
         /**
          * Enrollment button listener. It takes a student id and a course code, and saves them
          * in the enrollment table of the database. Furthermore, saves all the subjects of the selected course
-         * within the scores table, with the enrollmentid and the and the score of each subject, that will be 0
+         * within the scores table, with the enrollment id and the and the score of each subject, that will be 0
          * by default.
          */
         enrrollButton.addActionListener(new ActionListener() {
@@ -97,16 +101,11 @@ public class GUI {
                 Course course = (Course) courseComboBox.getSelectedItem();
                 Database database = new Database();
 
-                if(database.isEnrrolled(student, course))
-                {
+                if (database.isEnrrolled(student, course)) {
                     enrollmentLabel.setText("Student is already enrolled in this course");
-                }
-                else if(!database.hasPassedCourses(student))
-                {
+                } else if (!database.hasPassedCourses(student)) {
                     enrollmentLabel.setText("Student hasn't passed previous courses");
-                }
-                else
-                {
+                } else {
                     database.enrollStudent(student, course);
                     database.addScore(student, course);
                     enrollmentLabel.setText("Student enrolled successfully");
@@ -133,16 +132,14 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 File file = null;
                 Student student = (Student) studentReportComboBox.getSelectedItem();
-                if(!reportsTextPane.getText().isBlank())
-                {
+                if (!reportsTextPane.getText().isBlank()) {
                     JFileChooser jFileChooser = new JFileChooser();
                     jFileChooser.setSelectedFile(new File(student.firstName + "_" + student.getLastName() + "_Marks.txt"));
-                    jFileChooser.setFileFilter(new FileNameExtensionFilter("txt file","txt"));
+                    jFileChooser.setFileFilter(new FileNameExtensionFilter("txt file", "txt"));
                     int dialogResult = jFileChooser.showSaveDialog(new JFrame());
                     file = jFileChooser.getSelectedFile();
 
-                    if(dialogResult == JFileChooser.APPROVE_OPTION)
-                    {
+                    if (dialogResult == JFileChooser.APPROVE_OPTION) {
                         try {
                             FileWriter fileWriter = new FileWriter(file);
                             fileWriter.write("-- " + student.firstName + " " + student.lastName + " Marks -- \r\n");
@@ -152,8 +149,7 @@ public class GUI {
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
-                    }
-                    else
+                    } else
                         printResult.setText("");
                 }
             }
@@ -167,11 +163,10 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser jFileChooser = new JFileChooser();
-                jFileChooser.setFileFilter(new FileNameExtensionFilter("XML file","xml"));
+                jFileChooser.setFileFilter(new FileNameExtensionFilter("XML file", "xml"));
                 int dialogResult = jFileChooser.showOpenDialog(new JFrame());
                 File file = jFileChooser.getSelectedFile();
-                if(dialogResult == JFileChooser.APPROVE_OPTION)
-                {
+                if (dialogResult == JFileChooser.APPROVE_OPTION) {
                     try {
                         SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
                         XMLReader xmlReader = new XMLReader();
@@ -185,53 +180,69 @@ public class GUI {
                         xmlImportLabel.setText("Data imported successfully");
                         refreshStudentComboBox();
                         refreshCourseComboBox();
-                    } catch (ParserConfigurationException | SAXException | IOException ex) {
-                        xmlImportLabel.setText("Data couldn't be imported, aborting operation");
+                    } catch (ParserConfigurationException parserConfigurationException) {
+                    } catch (SAXException saxException) {
+                        saxException.printStackTrace();
+                        if (!file.getName().contains(".xml")) {
+                            xmlImportLabel.setText("The opened file is not a xml file");
+                        } else {
+                            xmlImportLabel.setText("The opened xml file doesn't match the required format or is empty");
+                        }
+                    } catch (IOException ex) {
                     } catch (SQLException throwable) {
-                        xmlImportLabel.setText("Data couldn't be imported, aborting operation");
+                        xmlImportLabel.setText("Data couldn't be imported, aborting transaction");
+                        if(throwable.getMessage().contains("ERROR: llave duplicada viola restricción de unicidad «student_pkey»"))
+                            xmlImportLabel.setText("One or more students alredy exits");
+                        if(throwable.getMessage().contains("ERROR: llave duplicada viola restricción de unicidad «course_pkey»"))
+                            xmlImportLabel.setText("One or more courses already exits");
+                        if(throwable.getMessage().contains("ERROR: llave duplicada viola restricción de unicidad «subjects_pkey»"))
+                            xmlImportLabel.setText("One or more subjects already exits");
+                        if(throwable.getMessage().contains("ERROR: inserción o actualización en la tabla «subjects» viola la llave foránea «fk_courseid»"))
+                            xmlImportLabel.setText("One or more subjects are from a course that doest not exits");
+                        throwable.printStackTrace();
                     }
                 }
             }
         });
     }
+
     /**
      * This function refreshes the reports' pane with the selected index from the enrolled students comboBox.
      */
-    public void refreshReportsPane()
-    {
+    public void refreshReportsPane() {
         Student student = (Student) studentReportComboBox.getSelectedItem();
         String report = new Database().retrieveReport(student);
         reportsTextPane.setText(report);
     }
+
     /**
      * This function refreshes the student comboBox overwriting its current comboBox model
      */
-    private void refreshStudentComboBox()
-    {
+    private void refreshStudentComboBox() {
         ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
         studentComboBox.setModel(studentModel);
     }
+
     /**
      * This function refreshes the course comboBox overwriting its current comboBox model
      */
-    private void refreshCourseComboBox()
-    {
+    private void refreshCourseComboBox() {
         ComboBoxModel courseModel = new DefaultComboBoxModel(new Database().retrieveCourseList().toArray());
         courseComboBox.setModel(courseModel);
     }
+
     /**
      * This function refreshes the enrolled students comboBox overwriting its current model
      */
-    private void refreshEnrrolledStudentComboBox()
-    {
+    private void refreshEnrrolledStudentComboBox() {
         ComboBoxModel enrrolledStudentsModel = new DefaultComboBoxModel(new Database().retrieveEnrolledStudentsList().toArray());
         studentReportComboBox.setModel(enrrolledStudentsModel);
     }
+
     /**
      * This function refreshes all the comboBoxes calling their respective functions
      */
-    private void refreshComboBoxes()
-    {
+    private void refreshComboBoxes() {
         refreshStudentComboBox();
         refreshCourseComboBox();
         refreshEnrrolledStudentComboBox();

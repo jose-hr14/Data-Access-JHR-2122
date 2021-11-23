@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * The xml handler that will read the xml that contains students, courses and subject that will be saved in the
- * database later
+ * database later.
  * @author José Hernández Riquelme
  */
 public class XMLReader extends DefaultHandler {
@@ -25,32 +25,41 @@ public class XMLReader extends DefaultHandler {
     ArrayList<Course> courseList;
     ArrayList<Subject> subjectList;
 
+    /**
+     * Returns a list of students read from a xml file that the object of this class saves within itself
+     * after parsing the xml.
+     * @return A list of students
+     */
     public ArrayList<Student> getStudentList() {
         return studentList;
     }
 
-    public void setStudentList(ArrayList<Student> studentList) {
-        this.studentList = studentList;
-    }
-
+    /**
+     * Returns a list of courses read from a xml file that the object of this class saves within itself
+     * after parsing the xml.
+     * @return A list of courses
+     */
     public ArrayList<Course> getCourseList() {
         return courseList;
     }
 
-    public void setCourseList(ArrayList<Course> courseList) {
-        this.courseList = courseList;
-    }
-
+    /**
+     * Returns a list of subjects read from a xml file that the object of this class saves within itself
+     * after parsing the xml.
+     * @return A list of subjects
+     */
     public ArrayList<Subject> getSubjectList() {
         return subjectList;
     }
 
-    public void setSubjectList(ArrayList<Subject> subjectList) {
-        this.subjectList = subjectList;
-    }
-
-    // Tag opening found
-    //
+    /**
+     * This method defines de behaviour of the parser when parses an opening tag.
+     * @param uri
+     * @param localName
+     * @param qName Tag name
+     * @param attributes Tag attributes
+     * @throws SAXException This exception will be thrown to be caught in the main form and inform the user of the error.
+     */
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
     {
         currentTag = qName;
@@ -90,13 +99,28 @@ public class XMLReader extends DefaultHandler {
             subject.setCourseID(Integer.parseInt(attributes.getValue("course")));
         }
     }
-    // Tag content, usually CDATA
-    //
+
+    /**
+     * This method defines de behaviour of the parser when parses the characters withing a tag.
+     * @param ch
+     * @param start
+     * @param length
+     * @throws SAXException This exception will be thrown to be caught in the main form and inform the user of the error.
+     */
     public void characters( char ch[], int start, int length ) throws SAXException {
         tagContent = new String( ch, start, length );
     }
-    // Tag ending
-    //
+
+
+    /**
+     * This method defines de behaviour of the parser when parses a closing tag. It creates the students,
+     * courses of subjects with the data read from the xml file, and adds them to its respective list.
+     * The form can easily retrieve de data calling the lists getters from this class.
+     * @param uri
+     * @param localName
+     * @param qName Tag name
+     * @throws SAXException This exception will be thrown to be caught in the main form and inform the user of the error.
+     */
     public void endElement(String uri, String localName, String qName) throws SAXException {
         if ( !currentTag.isBlank() ) {
             if (isVTInstitute)
@@ -157,6 +181,10 @@ public class XMLReader extends DefaultHandler {
                 {
                     isSubject = false;
                     subjectList.add(subject);
+                }
+                if(qName.equalsIgnoreCase("VTInstitute"))
+                {
+                    isVTInstitute = false;
                 }
             }
         }

@@ -1,7 +1,7 @@
 package org.final_activity;
 
 /**
- * Subject class. Class used to facilitate working with the information
+ * Class used to facilitate working with the information
  * read from the date base and to facilitate it's writing to the
  * database as well.
  * @author José Hernández Riquelme
