@@ -58,7 +58,6 @@ public class GUI {
         frame.setResizable(false);
         frame.setVisible(true);
     }
-
     /**
      * Graphical user interface constructor. It holds every component listener, managing the whole GUI behaviour.
      */
@@ -231,7 +230,6 @@ public class GUI {
             }
         });
     }
-
     /**
      * This function refreshes the reports' pane with the selected index from the enrolled students comboBox.
      */
@@ -240,7 +238,6 @@ public class GUI {
         String report = new Database().retrieveReport(student);
         reportsTextPane.setText(report);
     }
-
     /**
      * This function refreshes the student comboBox overwriting its current comboBox model
      */
@@ -248,7 +245,6 @@ public class GUI {
         ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
         studentComboBox.setModel(studentModel);
     }
-
     /**
      * This function refreshes the course comboBox overwriting its current comboBox model
      */
@@ -264,7 +260,6 @@ public class GUI {
         ComboBoxModel enrrolledStudentsModel = new DefaultComboBoxModel(new Database().retrieveEnrolledStudentsList().toArray());
         studentReportComboBox.setModel(enrrolledStudentsModel);
     }
-
     /**
      * This function refreshes all the comboBoxes calling their respective functions
      */

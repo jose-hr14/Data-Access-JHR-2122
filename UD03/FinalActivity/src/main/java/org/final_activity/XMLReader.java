@@ -33,7 +33,6 @@ public class XMLReader extends DefaultHandler {
     public ArrayList<Student> getStudentList() {
         return studentList;
     }
-
     /**
      * Returns a list of courses read from a xml file that the object of this class saves within itself
      * after parsing the xml.
@@ -42,7 +41,6 @@ public class XMLReader extends DefaultHandler {
     public ArrayList<Course> getCourseList() {
         return courseList;
     }
-
     /**
      * Returns a list of subjects read from a xml file that the object of this class saves within itself
      * after parsing the xml.
@@ -51,7 +49,6 @@ public class XMLReader extends DefaultHandler {
     public ArrayList<Subject> getSubjectList() {
         return subjectList;
     }
-
     /**
      * This method defines de behaviour of the parser when parses an opening tag.
      * @param uri
@@ -99,7 +96,6 @@ public class XMLReader extends DefaultHandler {
             subject.setCourseID(Integer.parseInt(attributes.getValue("course")));
         }
     }
-
     /**
      * This method defines de behaviour of the parser when parses the characters withing a tag.
      * @param ch
@@ -110,8 +106,6 @@ public class XMLReader extends DefaultHandler {
     public void characters( char ch[], int start, int length ) throws SAXException {
         tagContent = new String( ch, start, length );
     }
-
-
     /**
      * This method defines de behaviour of the parser when parses a closing tag. It creates the students,
      * courses of subjects with the data read from the xml file, and adds them to its respective list.
@@ -189,5 +183,4 @@ public class XMLReader extends DefaultHandler {
             }
         }
     }
-
 }

@@ -121,6 +121,11 @@ public class Database {
             throw e;
         }
     }
+    /**
+     * Retrieves the report of the students that receives as parameter and returns it
+     * @param student student whose reports will be returned
+     * @return a string with the whole report of the student
+     */
     public String retrieveReport(Student student){
         StringBuilder report = new StringBuilder();
         try(Connection connection = DriverManager.getConnection(url, user, password)){
@@ -136,6 +141,10 @@ public class Database {
         return report.toString();
     }
 
+    /**
+     * 
+     * @return
+     */
     public ArrayList<Student> retrieveStudentList(){
         ArrayList<Student> studentList = new ArrayList<>();
         try(Connection connection = DriverManager.getConnection(url, user, password)){
