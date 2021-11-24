@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 /**
  * This class controls everything related to the graphical user interface
- *
  * @author José Hernández Riquelme
  */
 public class GUI {
@@ -47,7 +46,6 @@ public class GUI {
 
     /**
      * The main method that sets de form and shows it to the user.
-     *
      * @param args
      */
     public static void main(String[] args) {
@@ -56,7 +54,7 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setSize(620, 600);
+        frame.setSize(320, 300);
         frame.setResizable(false);
         frame.setVisible(true);
     }
@@ -73,18 +71,24 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (!studentFirstNameTextField.getText().isBlank() || !studentLastNameTextField.getText().isBlank() || !studentIDTextField.getText().isBlank()) {
-                        Student student = new Student(studentFirstNameTextField.getText(), studentLastNameTextField.getText(), studentIDTextField.getText(), studentEmailTextField.getText(), studentPhoneTextField.getText());
+                    if (!studentFirstNameTextField.getText().isBlank() || !studentLastNameTextField.getText().isBlank()
+                            || !studentIDTextField.getText().isBlank()) {
+                        Student student = new Student(studentFirstNameTextField.getText(),
+                                studentLastNameTextField.getText(),
+                                studentIDTextField.getText(), studentEmailTextField.getText(),
+                                studentPhoneTextField.getText());
                         new Database().addStudent(student);
                         resultLabel.setText("Student saved correctly");
                         refreshStudentComboBox();
                     } else {
-                        resultLabel.setText("One or more textbox is blank");
+                        //resultLabel.setText("One or more textbox is blank");
+                        JOptionPane.showMessageDialog(new JFrame(), "One or more mandatory textboxes are blank " +
+                                "(first name, last name and ID)", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                } catch (NumberFormatException numberFormatException) {
-                    resultLabel.setText("ID Card must be a number");
-                } catch (SQLException throwables) {
-                    resultLabel.setText("Student already exits");
+                }
+                catch (SQLException throwables) {
+                    //resultLabel.setText("Student already exits");
+                    JOptionPane.showMessageDialog(new JFrame(), throwables.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -102,9 +106,13 @@ public class GUI {
                 Database database = new Database();
 
                 if (database.isEnrrolled(student, course)) {
-                    enrollmentLabel.setText("Student is already enrolled in this course");
+                    //enrollmentLabel.setText("Student is already enrolled in this course");
+                    JOptionPane.showMessageDialog(new JFrame(), "Student is already enrolled in this course",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                 } else if (!database.hasPassedCourses(student)) {
-                    enrollmentLabel.setText("Student hasn't passed previous courses");
+                    //enrollmentLabel.setText("Student hasn't passed previous courses");
+                    JOptionPane.showMessageDialog(new JFrame(), "Student hasn't passed previous courses",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     database.enrollStudent(student, course);
                     database.addScore(student, course);
@@ -114,7 +122,7 @@ public class GUI {
             }
         });
         /**
-         * Student report comboBox listener. When a enrrolled student is selected, it prints their result
+         * Student report comboBox listener. When a enrolled student is selected, it prints their result
          * into de textpane.
          */
         studentReportComboBox.addActionListener(new ActionListener() {
@@ -134,7 +142,8 @@ public class GUI {
                 Student student = (Student) studentReportComboBox.getSelectedItem();
                 if (!reportsTextPane.getText().isBlank()) {
                     JFileChooser jFileChooser = new JFileChooser();
-                    jFileChooser.setSelectedFile(new File(student.firstName + "_" + student.getLastName() + "_Marks.txt"));
+                    jFileChooser.setSelectedFile(new File(student.firstName + "_" + student.getLastName()
+                            + "_Marks.txt"));
                     jFileChooser.setFileFilter(new FileNameExtensionFilter("txt file", "txt"));
                     int dialogResult = jFileChooser.showSaveDialog(new JFrame());
                     file = jFileChooser.getSelectedFile();
@@ -147,7 +156,7 @@ public class GUI {
                             fileWriter.close();
                             printResult.setText("Student saved successfully");
                         } catch (IOException ex) {
-                            ex.printStackTrace();
+                            JOptionPane.showMessageDialog(new JFrame(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     } else
                         printResult.setText("");
@@ -181,25 +190,42 @@ public class GUI {
                         refreshStudentComboBox();
                         refreshCourseComboBox();
                     } catch (ParserConfigurationException parserConfigurationException) {
+                        JOptionPane.showMessageDialog(new JFrame(), parserConfigurationException.getMessage(),
+                                "Error", JOptionPane.ERROR_MESSAGE);
                     } catch (SAXException saxException) {
-                        saxException.printStackTrace();
-                        if (!file.getName().contains(".xml")) {
+                        JOptionPane.showMessageDialog(new JFrame(), saxException.getMessage(), "Error",
+                                JOptionPane.ERROR_MESSAGE);
+/*                        if (!file.getName().contains(".xml")) {
                             xmlImportLabel.setText("The opened file is not a xml file");
+                            JOptionPane.showMessageDialog(new JFrame(), "The opened file is not a xml file", "Error", JOptionPane.ERROR_MESSAGE);
                         } else {
                             xmlImportLabel.setText("The opened xml file doesn't match the required format or is empty");
-                        }
+                            JOptionPane.showMessageDialog(new JFrame(), "The opened xml file doesn't match the required format or is empty", "Error", JOptionPane.ERROR_MESSAGE);
+                        }*/
                     } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(new JFrame(), ex.getMessage(), "Error",
+                                JOptionPane.ERROR_MESSAGE);
                     } catch (SQLException throwable) {
+                        JOptionPane.showMessageDialog(new JFrame(), throwable.getMessage(), "Error",
+                                JOptionPane.ERROR_MESSAGE);
+/*
                         xmlImportLabel.setText("Data couldn't be imported, aborting transaction");
+
                         if(throwable.getMessage().contains("ERROR: llave duplicada viola restricción de unicidad «student_pkey»"))
-                            xmlImportLabel.setText("One or more students alredy exits");
+                            JOptionPane.showMessageDialog(new JFrame(), "One or more students already exits", "Error", JOptionPane.ERROR_MESSAGE);
+                            //xmlImportLabel.setText("One or more students already exits");
                         if(throwable.getMessage().contains("ERROR: llave duplicada viola restricción de unicidad «course_pkey»"))
-                            xmlImportLabel.setText("One or more courses already exits");
+                            JOptionPane.showMessageDialog(new JFrame(), "One or more courses already exits", "Error", JOptionPane.ERROR_MESSAGE);
+                            //xmlImportLabel.setText("One or more courses already exits");
                         if(throwable.getMessage().contains("ERROR: llave duplicada viola restricción de unicidad «subjects_pkey»"))
-                            xmlImportLabel.setText("One or more subjects already exits");
+                            JOptionPane.showMessageDialog(new JFrame(), "One or more subjects already exits", "Error", JOptionPane.ERROR_MESSAGE);
+                            //xmlImportLabel.setText("One or more subjects already exits");
                         if(throwable.getMessage().contains("ERROR: inserción o actualización en la tabla «subjects» viola la llave foránea «fk_courseid»"))
-                            xmlImportLabel.setText("One or more subjects are from a course that doest not exits");
-                        throwable.printStackTrace();
+                            JOptionPane.showMessageDialog(new JFrame(), "One or more subjects are from a course that doest not exits", "Error", JOptionPane.ERROR_MESSAGE);
+                        else
+                            JOptionPane.showMessageDialog(new JFrame(), "Data couldn't be imported, aborting transaction", "Error", JOptionPane.ERROR_MESSAGE);
+                            //xmlImportLabel.setText("One or more subjects are from a course that doest not exits");
+*/
                     }
                 }
             }
