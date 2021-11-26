@@ -142,7 +142,7 @@ public class Database {
     }
 
     /**
-     * 
+     *
      * @return
      */
     public ArrayList<Student> retrieveStudentList(){
