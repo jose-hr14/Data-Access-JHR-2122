@@ -15,6 +15,9 @@ public class XMLReader extends DefaultHandler {
     protected String currentTag;
     protected String tagContent;
     boolean isVTInstitute = false;
+    boolean isStudents = false;
+    boolean isSubjects = false;
+    boolean isCourses = false;
     boolean isStudent = false;
     boolean isSubject = false;
     boolean isCourse = false;
@@ -24,6 +27,12 @@ public class XMLReader extends DefaultHandler {
     ArrayList<Student> studentList;
     ArrayList<Course> courseList;
     ArrayList<Subject> subjectList;
+
+    public XMLReader() {
+        studentList = new ArrayList<>();
+        courseList = new ArrayList<>();
+        subjectList = new ArrayList<>();
+    }
 
     /**
      * Returns a list of students read from a xml file that the object of this class saves within itself
@@ -57,43 +66,66 @@ public class XMLReader extends DefaultHandler {
      * @param attributes Tag attributes
      * @throws SAXException This exception will be thrown to be caught in the main form and inform the user of the error.
      */
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
-    {
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         currentTag = qName;
-        if (qName.equalsIgnoreCase("VTInstitute"))
+        if (qName.equalsIgnoreCase("vtinstitute"))
         {
             isVTInstitute = true;
         }
         if(qName.equalsIgnoreCase("students"))
         {
-            studentList = new ArrayList<>();
+            if(!isStudents)
+                isStudents = true;
+            else
+                throw new SAXException("XML file not valid");
         }
         if(qName.equalsIgnoreCase("student"))
         {
-            isStudent = true;
-            student = new Student();
-            student.setIdCard(attributes.getValue("id"));
+            if(!isCourse)
+            {
+                isStudent = true;
+                student = new Student();
+                student.setIdCard(attributes.getValue("id"));
+            }
+            else
+                throw new SAXException("XML file not valid");
         }
         if(qName.equalsIgnoreCase("courses"))
         {
-            courseList = new ArrayList<>();
+            if(!isCourses)
+                isCourses = true;
+            else
+                throw new SAXException("XML file not valid");
         }
         if(qName.equalsIgnoreCase("course"))
         {
-            isCourse = true;
-            course = new Course();
-            course.setCode(Integer.parseInt(attributes.getValue("id")));
+            if(!isCourse)
+            {
+                isCourse = true;
+                course = new Course();
+                course.setCode(Integer.parseInt(attributes.getValue("id")));
+            }
+            else
+                throw new SAXException("XML file not valid");
         }
         if(qName.equalsIgnoreCase("subjects"))
         {
-            subjectList = new ArrayList<>();
+            if(!isSubjects)
+                isSubjects = true;
+            else
+                throw new SAXException("XML file not valid");
         }
         if(qName.equalsIgnoreCase("subject"))
         {
-            isSubject = true;
-            subject = new Subject();
-            subject.setCode(Integer.parseInt(attributes.getValue("id")));
-            subject.setCourseID(Integer.parseInt(attributes.getValue("course")));
+            if(!isSubject)
+            {
+                isSubject = true;
+                subject = new Subject();
+                subject.setCode(Integer.parseInt(attributes.getValue("id")));
+                subject.setCourseID(Integer.parseInt(attributes.getValue("course")));
+            }
+            else
+                throw new SAXException("XML file not valid");
         }
     }
     /**
@@ -119,7 +151,7 @@ public class XMLReader extends DefaultHandler {
         if ( !currentTag.isBlank() ) {
             if (isVTInstitute)
             {
-                if(isStudent)
+                if(isStudent && isStudents)
                 {
                     if(qName.equalsIgnoreCase("firstname"))
                     {
@@ -138,14 +170,14 @@ public class XMLReader extends DefaultHandler {
                         student.setPhone(tagContent);
                     }
                 }
-                if(isCourse)
+                if(isCourse && isCourses)
                 {
                     if(qName.equalsIgnoreCase("name"))
                     {
                         course.setName(tagContent);
                     }
                 }
-                if(isSubject)
+                if(isSubject && isSubjects)
                 {
                     if(qName.equalsIgnoreCase("name"))
                     {
@@ -160,25 +192,71 @@ public class XMLReader extends DefaultHandler {
                         subject.setYear(Integer.parseInt(tagContent));
                     }
                 }
-
                 if(qName.equalsIgnoreCase("student"))
                 {
-                    isStudent = false;
-                    studentList.add(student);
+                    if(isStudent)
+                    {
+                        isStudent = false;
+                        studentList.add(student);
+                    }
+                    else
+                        throw new SAXException("XML file not valid");
+                }
+                if(qName.equalsIgnoreCase("students"))
+                {
+                    if(isStudents)
+                    {
+                        isStudents = false;
+                    }
+                    else
+                        throw new SAXException("XML file not valid");
                 }
                 if(qName.equalsIgnoreCase("course"))
                 {
-                    isCourse = false;
-                    courseList.add(course);
+                    if(isCourse)
+                    {
+                        isCourse = false;
+                        courseList.add(course);
+                    }
+                    else
+                        throw new SAXException("XML file not valid");
+                }
+                if(qName.equalsIgnoreCase("courses"))
+                {
+                    if(isCourses)
+                    {
+                        isCourses = false;
+                    }
+                    else
+                        throw new SAXException("XML file not valid");
                 }
                 if(qName.equalsIgnoreCase("subject"))
                 {
-                    isSubject = false;
-                    subjectList.add(subject);
+                    if(isSubject)
+                    {
+                        isSubject = false;
+                        subjectList.add(subject);
+                    }
+                    else
+                        throw new SAXException("XML file not valid");
                 }
-                if(qName.equalsIgnoreCase("VTInstitute"))
+                if(qName.equalsIgnoreCase("subjects"))
                 {
-                    isVTInstitute = false;
+                    if(isSubjects)
+                    {
+                        isSubjects = false;
+                    }
+                    else
+                        throw new SAXException("XML file not valid");
+                }
+                if(qName.equalsIgnoreCase("vtinstitute"))
+                {
+                    if(isVTInstitute)
+                    {
+                        isVTInstitute = false;
+                    }
+                    else
+                        throw new SAXException("XML file not valid");
                 }
             }
         }

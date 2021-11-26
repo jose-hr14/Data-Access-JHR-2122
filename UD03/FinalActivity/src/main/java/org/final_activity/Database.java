@@ -16,7 +16,7 @@ public class Database {
     /**
      * Adds a new student to the database. If the student already exits, throws a SQL Exception that will be
      * caught from the main form to inform the user.
-     * @param student
+     * @param student The student you want to add in the database
      * @throws SQLException
      */
     public void addStudent(Student student) throws SQLException {

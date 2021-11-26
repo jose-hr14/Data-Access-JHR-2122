@@ -7,6 +7,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -70,8 +71,8 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (!studentFirstNameTextField.getText().isBlank() || !studentLastNameTextField.getText().isBlank()
-                            || !studentIDTextField.getText().isBlank()) {
+                    if (!studentFirstNameTextField.getText().isEmpty() && !studentLastNameTextField.getText().isEmpty()
+                            && !studentIDTextField.getText().isEmpty()) {
                         Student student = new Student(studentFirstNameTextField.getText(),
                                 studentLastNameTextField.getText(),
                                 studentIDTextField.getText(), studentEmailTextField.getText(),
@@ -148,15 +149,27 @@ public class GUI {
                     file = jFileChooser.getSelectedFile();
 
                     if (dialogResult == JFileChooser.APPROVE_OPTION) {
-                        try {
-                            FileWriter fileWriter = new FileWriter(file);
-                            fileWriter.write("-- " + student.firstName + " " + student.lastName + " Marks -- \r\n");
-                            fileWriter.write(reportsTextPane.getText());
-                            fileWriter.close();
-                            printResult.setText("Student saved successfully");
-                        } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(new JFrame(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        boolean overwrite = false;
+                        if(file.exists())
+                        {
+                            int overwriteResult = JOptionPane.showConfirmDialog(jFileChooser, "Do you want to overwrite the file?", "Overwrite", JOptionPane.YES_NO_OPTION);
+                            if(overwriteResult == 1)
+                                overwrite = true;
                         }
+                        if(!overwrite)
+                        {
+                            try {
+                                FileWriter fileWriter = new FileWriter(file);
+                                fileWriter.write("-- " + student.firstName + " " + student.lastName + " Marks -- \r\n");
+                                fileWriter.write(reportsTextPane.getText());
+                                fileWriter.close();
+                                printResult.setText("Student saved successfully");
+                            } catch (IOException ex) {
+                                JOptionPane.showMessageDialog(new JFrame(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                        else
+                            printResult.setText("");
                     } else
                         printResult.setText("");
                 }
