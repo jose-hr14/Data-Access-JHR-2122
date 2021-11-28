@@ -64,7 +64,6 @@ public class Student {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
     /**
      * This functions returns the string that will be printed
      * in the student comboBox and the enrolled student comboBox

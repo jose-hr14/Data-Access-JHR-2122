@@ -34,6 +34,11 @@ public class Course {
         this.name = name;
     }
 
+    /**
+     * This functions returns the string that will be printed
+     * in the course comboBox
+     * @return Course name
+     */
     @Override
     public String toString() {
         return name;

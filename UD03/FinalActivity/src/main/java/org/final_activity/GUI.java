@@ -220,24 +220,6 @@ public class GUI {
                     } catch (SQLException throwable) {
                         JOptionPane.showMessageDialog(new JFrame(), throwable.getMessage(), "Error",
                                 JOptionPane.ERROR_MESSAGE);
-/*
-                        xmlImportLabel.setText("Data couldn't be imported, aborting transaction");
-
-                        if(throwable.getMessage().contains("ERROR: llave duplicada viola restricción de unicidad «student_pkey»"))
-                            JOptionPane.showMessageDialog(new JFrame(), "One or more students already exits", "Error", JOptionPane.ERROR_MESSAGE);
-                            //xmlImportLabel.setText("One or more students already exits");
-                        if(throwable.getMessage().contains("ERROR: llave duplicada viola restricción de unicidad «course_pkey»"))
-                            JOptionPane.showMessageDialog(new JFrame(), "One or more courses already exits", "Error", JOptionPane.ERROR_MESSAGE);
-                            //xmlImportLabel.setText("One or more courses already exits");
-                        if(throwable.getMessage().contains("ERROR: llave duplicada viola restricción de unicidad «subjects_pkey»"))
-                            JOptionPane.showMessageDialog(new JFrame(), "One or more subjects already exits", "Error", JOptionPane.ERROR_MESSAGE);
-                            //xmlImportLabel.setText("One or more subjects already exits");
-                        if(throwable.getMessage().contains("ERROR: inserción o actualización en la tabla «subjects» viola la llave foránea «fk_courseid»"))
-                            JOptionPane.showMessageDialog(new JFrame(), "One or more subjects are from a course that doest not exits", "Error", JOptionPane.ERROR_MESSAGE);
-                        else
-                            JOptionPane.showMessageDialog(new JFrame(), "Data couldn't be imported, aborting transaction", "Error", JOptionPane.ERROR_MESSAGE);
-                            //xmlImportLabel.setText("One or more subjects are from a course that doest not exits");
-*/
                     }
                 }
             }
