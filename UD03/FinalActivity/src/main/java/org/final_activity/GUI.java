@@ -200,6 +200,8 @@ public class GUI {
     {
         ComboBoxModel studentModel = new DefaultComboBoxModel((new Database().retrieveStudentList().toArray()));
         studentComboBox.setModel(studentModel);
+        //ComboBoxModel modeloComboBox = new DefaultComboBoxModel(listaDeElementos.toArray());
+        //miComboBox.setModel(modeloComboBox);
     }
 
     private void refreshCourseComboBox()
