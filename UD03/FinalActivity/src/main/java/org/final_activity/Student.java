@@ -1,12 +1,11 @@
 package org.final_activity;
 
 /**
- * @author José Hernández Riquelme
- * Student class. Class used to facilitate working with the information
+ * Class used to facilitate working with the information
  * read from the date base and to facilitate it's writing to the
  * database as well.
+ * @author José Hernández Riquelme
  */
-
 public class Student {
     String firstName;
     String lastName;
@@ -65,7 +64,6 @@ public class Student {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
     /**
      * This functions returns the string that will be printed
      * in the student comboBox and the enrolled student comboBox

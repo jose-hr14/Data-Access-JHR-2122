@@ -2,12 +2,21 @@ package org.final_activity;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+/**
+ * This class handles everything related with the database, including reading from the database and writing to the
+ * database.
+ * @author José Hernández Riquelme
+ */
 public class Database {
     static final String url = "jdbc:postgresql://localhost:5432/VTInstitute";
     static final String user = "postgres";
     static final String password = "postgres";
-
+    /**
+     * Adds a new student to the database. If the student already exits, throws a SQL Exception that will be
+     * caught from the main form to inform the user.
+     * @param student The student you want to add in the database
+     * @throws SQLException
+     */
     public void addStudent(Student student) throws SQLException {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO student VALUES(?, ?, ?, ?, ?)");
@@ -19,6 +28,11 @@ public class Database {
             preparedStatement.executeUpdate();
         }
     }
+    /**
+     * Enrolls a new student in the database, saving its student id and course code in the enrollment table.
+     * @param student The student we want to add to the database
+     * @param course The course in which we want to enroll the student
+     */
     public void enrollStudent(Student student, Course course)
     {
         try(Connection connection = DriverManager.getConnection(url, user, password))
@@ -28,10 +42,13 @@ public class Database {
             preparedStatement.setInt(2, course.getCode());
             preparedStatement.executeUpdate();
             preparedStatement.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        } catch (SQLException throwable) {}
     }
+    /**
+     * Saves all the subjects from the enrolled course, together with the enrolment id of the student.
+     * @param student The student whose marks will be added
+     * @param course The course whose subjects we want to add
+     */
     public void addScore(Student student, Course course)
     {
         //insert into scores select enrollment.code, s.code, 0 from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid
@@ -46,6 +63,15 @@ public class Database {
             throwables.printStackTrace();
         }
     }
+    /**
+     * It parses the read xml file to extract the students, courses or subjects read on it, and saves them in the 
+     * database using a transaction. If the parsing fails or an SQL Exception occurs, it will throw and exception
+     * that will be caught in the main form to inform the user.
+     * @param studentList The student list we want to add to the database from the xml
+     * @param courseList The subject list we want to add to the database from the xml
+     * @param subjectList The subject list we want to add to the database from the xml
+     * @throws SQLException
+     */
     public void importXML(ArrayList<Student> studentList, ArrayList<Course> courseList, ArrayList<Subject> subjectList) throws SQLException {
         Connection connection = null;
         try {
@@ -89,8 +115,12 @@ public class Database {
             }
             throw e;
         }
-
     }
+    /**
+     * Retrieves the report of the students that receives as parameter and returns it
+     * @param student Student whose reports will be returned
+     * @return A string with the whole report of the student
+     */
     public String retrieveReport(Student student){
         StringBuilder report = new StringBuilder();
         try(Connection connection = DriverManager.getConnection(url, user, password)){
@@ -105,7 +135,10 @@ public class Database {
         }
         return report.toString();
     }
-
+    /**
+     * Retrieves a list with all the students read from the database, used to fill the student combo box
+     * @return Student list
+     */
     public ArrayList<Student> retrieveStudentList(){
         ArrayList<Student> studentList = new ArrayList<>();
         try(Connection connection = DriverManager.getConnection(url, user, password)){
@@ -119,7 +152,11 @@ public class Database {
         }
         return studentList;
     }
-
+    /**
+     * Retrieves a list with all the enrolled students read from the database. Used to fill the enrolled students
+     * combo box from the reports tab
+     * @return Enrolled student list
+     */
     public ArrayList<Student> retrieveEnrolledStudentsList()
     {
         ArrayList<Student> studentList = new ArrayList<>();
@@ -146,7 +183,11 @@ public class Database {
         }
         return studentList;
     }
-
+    /**
+     * Retrieves a list with all the courser saved in the database. Used to fill the course combo box from the
+     * enrollment tab
+     * @return A list with all the courses
+     */
     public ArrayList<Course> retrieveCourseList(){
         ArrayList<Course> courseList = new ArrayList<>();
         try(Connection connection = DriverManager.getConnection(url, user, password)){
@@ -160,7 +201,13 @@ public class Database {
         }
         return courseList;
     }
-
+    /**
+     * Returns true if students is enrolled in the course that the function receive as parameter, and false if is not
+     * enrolled
+     * @param student The student we want to know if is enrolled
+     * @param course The course in which we want to know if is enrolled
+     * @return
+     */
     public boolean isEnrrolled(Student student, Course course)
     {
         boolean isEnrrolled = true;
@@ -181,7 +228,11 @@ public class Database {
         }
         return  isEnrrolled;
     }
-
+    /**
+     * This functions returns true if the student it receives as parameter has passed all previous courses or not
+     * @param student The student we want to know if he has passed all previous courses
+     * @return
+     */
     public boolean hasPassedCourses(Student student)
     {
         try(Connection connection = DriverManager.getConnection(url, user, password))
@@ -194,16 +245,6 @@ public class Database {
             resultSet.next();
             if(resultSet.getInt(1) == 0)
                 return true;
-            /*
-            while(resultSet.next())
-            {
-                if(resultSet.getInt(1) < 5)
-                {
-                    return false;
-                }
-            }
-            */
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

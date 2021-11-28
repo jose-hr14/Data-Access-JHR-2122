@@ -1,12 +1,11 @@
 package org.final_activity;
 
 /**
- * @author José Hernández Riquelme
- * Course class. Class used to facilitate working with the information
+ * Class used to facilitate working with the information
  * read from the date base and to facilitate it's writing to the
  * database as well.
+ * @author José Hernández Riquelme
  */
-
 public class Course {
     int code;
     String name;
@@ -35,6 +34,11 @@ public class Course {
         this.name = name;
     }
 
+    /**
+     * This functions returns the string that will be printed
+     * in the course comboBox
+     * @return Course name
+     */
     @Override
     public String toString() {
         return name;
