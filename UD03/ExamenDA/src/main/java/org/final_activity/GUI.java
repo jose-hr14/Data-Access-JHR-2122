@@ -2,6 +2,7 @@ package org.final_activity;
 
 import org.xml.sax.SAXException;
 
+import javax.management.MBeanRegistrationException;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
@@ -76,13 +77,41 @@ public class GUI {
                 try {
                     if (!studentFirstNameTextField.getText().isEmpty() && !studentLastNameTextField.getText().isEmpty()
                             && !studentIDTextField.getText().isEmpty()) {
-                        Student student = new Student(studentFirstNameTextField.getText(),
-                                studentLastNameTextField.getText(),
-                                studentIDTextField.getText(), studentEmailTextField.getText(),
-                                studentPhoneTextField.getText());
-                        new Database().addStudent(student);
-                        resultLabel.setText("Student saved correctly");
-                        refreshStudentComboBox();
+                        String errorMessage = "";
+                        boolean verified = true;
+                        if(!studentEmailTextField.getText().isEmpty())
+                        {
+                            int arrobaIndex = studentEmailTextField.getText().indexOf('@');
+                            int dotIndex = studentEmailTextField.getText().indexOf('.', arrobaIndex);
+
+                            if(studentEmailTextField.getText().contains("@") && studentEmailTextField.getText().contains(".")
+                                    && !((dotIndex - arrobaIndex) > 1))
+                            {
+                                verified = false;
+                                errorMessage += "Invalid email \n";
+                            }
+                        }
+                        if(!studentPhoneTextField.getText().isEmpty())
+                        {
+                            if(!studentPhoneTextField.getText().matches("[0-9]{9}"))
+                            {
+                                verified = false;
+                                errorMessage += "Invalid phone";
+                            }
+                        }
+
+                        if(verified)
+                        {
+                            Student student = new Student(studentFirstNameTextField.getText(),
+                                    studentLastNameTextField.getText(),
+                                    studentIDTextField.getText(), studentEmailTextField.getText(),
+                                    studentPhoneTextField.getText());
+                            new Database().addStudent(student);
+                            resultLabel.setText("Student saved correctly");
+                            refreshStudentComboBox();
+                        }
+                        else
+                            JOptionPane.showMessageDialog(new JFrame(), errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         //resultLabel.setText("One or more textbox is blank");
                         JOptionPane.showMessageDialog(new JFrame(), "One or more mandatory textboxes are blank " +
