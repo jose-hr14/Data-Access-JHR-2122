@@ -81,14 +81,18 @@ public class GUI {
                         boolean verified = true;
                         if(!studentEmailTextField.getText().isEmpty())
                         {
-                            int arrobaIndex = studentEmailTextField.getText().indexOf('@');
-                            int dotIndex = studentEmailTextField.getText().indexOf('.', arrobaIndex);
+                            int arrobaIndex = studentEmailTextField.getText().indexOf('@') +1;
+                            int dotIndex = studentEmailTextField.getText().indexOf('.', arrobaIndex) + 1;
 
-                            if(studentEmailTextField.getText().contains("@") && studentEmailTextField.getText().contains(".")
-                                    && !((dotIndex - arrobaIndex) > 1))
+                            if(!studentEmailTextField.getText().contains("@") && !studentEmailTextField.getText().contains("."))
                             {
                                 verified = false;
-                                errorMessage += "Invalid email \n";
+                                errorMessage = "Invalid email \n";
+                            }
+                            else if(!((dotIndex - arrobaIndex) > 1))
+                            {
+                                verified = false;
+                                errorMessage = "Invalid email \n";
                             }
                         }
                         if(!studentPhoneTextField.getText().isEmpty())
