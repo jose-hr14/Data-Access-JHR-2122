@@ -1,0 +1,274 @@
+package org.final_activity;
+
+import java.sql.*;
+import java.util.ArrayList;
+/**
+ * This class handles everything related with the database, including reading from the database and writing to the
+ * database.
+ * @author José Hernández Riquelme
+ */
+public class Database {
+    static final String url = "jdbc:postgresql://localhost:5432/VTInstitute";
+    static final String user = "postgres";
+    static final String password = "postgres";
+    /**
+     * Adds a new student to the database. If the student already exits, throws a SQL Exception that will be
+     * caught from the main form to inform the user.
+     * @param student The student you want to add in the database
+     * @throws SQLException
+     */
+    public void addStudent(Student student) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO student VALUES(?, ?, ?, ?, ?)");
+            preparedStatement.setString(1,student.getFirstName());
+            preparedStatement.setString(2, student.getLastName());
+            preparedStatement.setString(3, student.getIdCard());
+            preparedStatement.setString(4, student.getEmail());
+            preparedStatement.setString(5, student.getPhone());
+            preparedStatement.executeUpdate();
+        }
+    }
+    /**
+     * Enrolls a new student in the database, saving its student id and course code in the enrollment table.
+     * @param student The student we want to add to the database
+     * @param course The course in which we want to enroll the student
+     */
+    public void enrollStudent(Student student, Course course)
+    {
+        try(Connection connection = DriverManager.getConnection(url, user, password))
+        {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO enrollment VALUES(DEFAULT, ?, ?)");
+            preparedStatement.setString(1, student.getIdCard());
+            preparedStatement.setInt(2, course.getCode());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException throwable) {}
+    }
+    /**
+     * Saves all the subjects from the enrolled course, together with the enrolment id of the student.
+     * @param student The student whose marks will be added
+     * @param course The course whose subjects we want to add
+     */
+    public void addScore(Student student, Course course)
+    {
+        //insert into scores select enrollment.code, s.code, 0 from enrollment inner join course c on enrollment.course = c.code inner join subjects s on c.code = s.courseid
+        try(Connection connection = DriverManager.getConnection(url, user, password))
+        {
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into scores select enrollment.code, s.code, 0 from enrollment inner join course c on c.code = enrollment.course inner join subjects s on enrollment.course = s.courseid where student = ? and course = ?");
+            preparedStatement.setString(1, student.getIdCard());
+            preparedStatement.setInt(2, course.getCode());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    /**
+     * It parses the read xml file to extract the students, courses or subjects read on it, and saves them in the 
+     * database using a transaction. If the parsing fails or an SQL Exception occurs, it will throw and exception
+     * that will be caught in the main form to inform the user.
+     * @param studentList The student list we want to add to the database from the xml
+     * @param courseList The subject list we want to add to the database from the xml
+     * @param subjectList The subject list we want to add to the database from the xml
+     * @throws SQLException
+     */
+    public void importXML(ArrayList<Student> studentList, ArrayList<Course> courseList, ArrayList<Subject> subjectList) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url, user, password);
+            connection.setAutoCommit(false);
+            for (Student student:studentList) {
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO student VALUES(?, ?, ?, ?, ?)");
+                preparedStatement.setString(1,student.getFirstName());
+                preparedStatement.setString(2, student.getLastName());
+                preparedStatement.setString(3, student.getIdCard());
+                preparedStatement.setString(4, student.getEmail());
+                preparedStatement.setString(5, student.getPhone());
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+            }
+            for (Course course: courseList) {
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO course VALUES(?, ?)");
+                preparedStatement.setInt(1,course.getCode());
+                preparedStatement.setString(2, course.getName());
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+            }
+            for (Subject subject: subjectList) {
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO subjects VALUES(?, ?, ?, ?, ?)");
+                preparedStatement.setInt(1,subject.getCode());
+                preparedStatement.setString(2, subject.getName());
+                preparedStatement.setInt(3, subject.getHours());
+                preparedStatement.setInt(4, subject.getCourseID());
+                preparedStatement.setInt(5, subject.getYear());
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            throw e;
+        }
+    }
+    /**
+     * Retrieves the report of the students that receives as parameter and returns it
+     * @param student Student whose reports will be returned
+     * @return A string with the whole report of the student
+     */
+    public String retrieveReport(Student student){
+        StringBuilder report = new StringBuilder();
+        float media = 0;
+        int subjectsCount = 0;
+        try(Connection connection = DriverManager.getConnection(url, user, password)){
+            PreparedStatement statement = connection.prepareStatement("select c.name, s2.name, s.score from enrollment inner join scores s on enrollment.code = s.enrollmentid inner join subjects s2 on s2.code = s.subjectid inner join course c on c.code = s2.courseid where enrollment.student = ?");
+            statement.setString(1, student.getIdCard());
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                report.append(result.getString(1)).append(" - ").append(result.getString(2)).append(": ").append(result.getInt(3)).append(" \r\n");
+                subjectsCount++;
+                media += result.getInt(3);
+            }
+            media /= subjectsCount;
+            report.append("Average Score: " + media);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return report.toString();
+    }
+    /**
+     * Retrieves a list with all the students read from the database, used to fill the student combo box
+     * @return Student list
+     */
+    public ArrayList<Student> retrieveStudentList(){
+        ArrayList<Student> studentList = new ArrayList<>();
+        try(Connection connection = DriverManager.getConnection(url, user, password)){
+            PreparedStatement statement = connection.prepareStatement("SELECT * from student");
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                studentList.add(new Student(result.getString(1),result.getString(2), result.getString(3), result.getString(4),result.getString(5) ));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return studentList;
+    }
+    /**
+     * Retrieves a list with all the enrolled students read from the database. Used to fill the enrolled students
+     * combo box from the reports tab
+     * @return Enrolled student list
+     */
+    public ArrayList<Student> retrieveEnrolledStudentsList()
+    {
+        ArrayList<Student> studentList = new ArrayList<>();
+        try(Connection connection = DriverManager.getConnection(url, user, password)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from student inner join enrollment e on student.idcard = e.student;");
+            ResultSet result = preparedStatement.executeQuery();
+            boolean exits;
+            while(result.next())
+            {
+                exits = false;
+                Student student = new Student(result.getString(1),result.getString(2), result.getString(3), result.getString(4),result.getString(5) );
+                for (Student studentCompare: studentList) {
+                    if(student.getIdCard().equals(studentCompare.getIdCard()))
+                    {
+                        exits = true;
+                        break;
+                    }
+                }
+                if(!exits)
+                    studentList.add(student);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return studentList;
+    }
+    public String returnStudentNameByID(String studentID)
+    {
+        try(Connection connection = DriverManager.getConnection(url, user, password)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from student");
+            ResultSet result = preparedStatement.executeQuery();
+            while(result.next())
+            {
+                if(result.getString(3).equalsIgnoreCase(studentID))
+                    return result.getString(1);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return "Student not found";
+    }
+    /**
+     * Retrieves a list with all the courser saved in the database. Used to fill the course combo box from the
+     * enrollment tab
+     * @return A list with all the courses
+     */
+    public ArrayList<Course> retrieveCourseList(){
+        ArrayList<Course> courseList = new ArrayList<>();
+        try(Connection connection = DriverManager.getConnection(url, user, password)){
+            PreparedStatement statement = connection.prepareStatement("SELECT * from course");
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                courseList.add(new Course(result.getInt(1),result.getString(2)));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return courseList;
+    }
+    /**
+     * Returns true if students is enrolled in the course that the function receive as parameter, and false if is not
+     * enrolled
+     * @param student The student we want to know if is enrolled
+     * @param course The course in which we want to know if is enrolled
+     * @return
+     */
+    public boolean isEnrrolled(Student student, Course course)
+    {
+        boolean isEnrrolled = true;
+        try(Connection connection = DriverManager.getConnection(url, user, password))
+        {
+            //PreparedStatement preparedStatement = connection.prepareStatement("select count(*) from enrollment where student = ? AND course = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("select isenrolled(?, ?)");
+            preparedStatement.setString(1, student.getIdCard());
+            preparedStatement.setInt(2, course.getCode());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            if(resultSet.getInt(1) == 0)
+            {
+                isEnrrolled = false;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return  isEnrrolled;
+    }
+    /**
+     * This functions returns true if the student it receives as parameter has passed all previous courses or not
+     * @param student The student we want to know if he has passed all previous courses
+     * @return
+     */
+    public boolean hasPassedCourses(Student student)
+    {
+        try(Connection connection = DriverManager.getConnection(url, user, password))
+        {
+            //PreparedStatement preparedStatement = connection.prepareStatement("select s.score from enrollment inner join scores s on enrollment.code = s.enrollmentid inner join subjects s2 on s2.code = s.subjectid where student = ? and s.score < 5");
+            PreparedStatement preparedStatement = connection.prepareStatement("select failedsubjects(?)");
+            preparedStatement.setString(1, student.getIdCard());
+            //preparedStatement.setInt(2, course.getCode());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            if(resultSet.getInt(1) == 0)
+                return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
+}
