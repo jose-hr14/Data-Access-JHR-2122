@@ -59,7 +59,7 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setSize(320, 300);
+        frame.setSize(380, 300);
         frame.setResizable(false);
         frame.setVisible(true);
     }
