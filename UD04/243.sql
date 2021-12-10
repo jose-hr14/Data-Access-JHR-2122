@@ -5,7 +5,7 @@
 -- Dumped from database version 13.4
 -- Dumped by pg_dump version 13.4
 
--- Started on 2021-12-10 19:29:32
+-- Started on 2021-12-10 19:53:57
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,7 +20,7 @@ SET row_security = off;
 
 DROP DATABASE "2.4.3";
 --
--- TOC entry 3037 (class 1262 OID 16747)
+-- TOC entry 3041 (class 1262 OID 16747)
 -- Name: 2.4.3; Type: DATABASE; Schema: -; Owner: postgres
 --
 
@@ -41,6 +41,17 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- TOC entry 663 (class 1247 OID 16897)
+-- Name: authorcode; Type: DOMAIN; Schema: public; Owner: postgres
+--
+
+CREATE DOMAIN public.authorcode AS character varying
+	CONSTRAINT regex CHECK (((VALUE)::text ~~ '[A-Z]{1,3}[0-9]{1,4}'::text));
+
+
+ALTER DOMAIN public.authorcode OWNER TO postgres;
 
 --
 -- TOC entry 648 (class 1247 OID 16825)
@@ -201,7 +212,7 @@ INHERITS (public.artwork);
 ALTER TABLE public.sculpture OWNER TO postgres;
 
 --
--- TOC entry 3027 (class 0 OID 16756)
+-- TOC entry 3031 (class 0 OID 16756)
 -- Dependencies: 201
 -- Data for Name: artwork; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -209,7 +220,7 @@ ALTER TABLE public.sculpture OWNER TO postgres;
 
 
 --
--- TOC entry 3026 (class 0 OID 16748)
+-- TOC entry 3030 (class 0 OID 16748)
 -- Dependencies: 200
 -- Data for Name: author; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -217,7 +228,7 @@ ALTER TABLE public.sculpture OWNER TO postgres;
 
 
 --
--- TOC entry 3031 (class 0 OID 16868)
+-- TOC entry 3035 (class 0 OID 16868)
 -- Dependencies: 206
 -- Data for Name: painting; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -225,7 +236,7 @@ ALTER TABLE public.sculpture OWNER TO postgres;
 
 
 --
--- TOC entry 3030 (class 0 OID 16855)
+-- TOC entry 3034 (class 0 OID 16855)
 -- Dependencies: 205
 -- Data for Name: sculpture; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -233,7 +244,7 @@ ALTER TABLE public.sculpture OWNER TO postgres;
 
 
 --
--- TOC entry 3038 (class 0 OID 0)
+-- TOC entry 3042 (class 0 OID 0)
 -- Dependencies: 204
 -- Name: artwork_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -242,7 +253,7 @@ SELECT pg_catalog.setval('public.artwork_code_seq', 1, false);
 
 
 --
--- TOC entry 3039 (class 0 OID 0)
+-- TOC entry 3043 (class 0 OID 0)
 -- Dependencies: 203
 -- Name: artworkcode; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -251,7 +262,7 @@ SELECT pg_catalog.setval('public.artworkcode', 1, false);
 
 
 --
--- TOC entry 2886 (class 2606 OID 16755)
+-- TOC entry 2890 (class 2606 OID 16755)
 -- Name: author author_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -260,7 +271,7 @@ ALTER TABLE ONLY public.author
 
 
 --
--- TOC entry 2888 (class 2606 OID 16854)
+-- TOC entry 2892 (class 2606 OID 16854)
 -- Name: artwork code; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -269,7 +280,7 @@ ALTER TABLE ONLY public.artwork
 
 
 --
--- TOC entry 2892 (class 2606 OID 16875)
+-- TOC entry 2896 (class 2606 OID 16875)
 -- Name: painting painting_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -278,7 +289,7 @@ ALTER TABLE ONLY public.painting
 
 
 --
--- TOC entry 2890 (class 2606 OID 16862)
+-- TOC entry 2894 (class 2606 OID 16862)
 -- Name: sculpture sculpture_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -287,7 +298,7 @@ ALTER TABLE ONLY public.sculpture
 
 
 --
--- TOC entry 2893 (class 2606 OID 16798)
+-- TOC entry 2897 (class 2606 OID 16798)
 -- Name: artwork fk_artwork; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -296,7 +307,7 @@ ALTER TABLE ONLY public.artwork
 
 
 --
--- TOC entry 2895 (class 2606 OID 16876)
+-- TOC entry 2899 (class 2606 OID 16876)
 -- Name: painting painting_authorcode_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -305,7 +316,7 @@ ALTER TABLE ONLY public.painting
 
 
 --
--- TOC entry 2894 (class 2606 OID 16863)
+-- TOC entry 2898 (class 2606 OID 16863)
 -- Name: sculpture sculpture_authorcode_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313,7 +324,7 @@ ALTER TABLE ONLY public.sculpture
     ADD CONSTRAINT sculpture_authorcode_fkey FOREIGN KEY (authorcode) REFERENCES public.author(code);
 
 
--- Completed on 2021-12-10 19:29:32
+-- Completed on 2021-12-10 19:53:57
 
 --
 -- PostgreSQL database dump complete
