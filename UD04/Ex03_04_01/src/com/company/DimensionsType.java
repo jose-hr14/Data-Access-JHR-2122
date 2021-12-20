@@ -4,6 +4,9 @@ public class DimensionsType {
     private double width;
     private double height;
 
+    public DimensionsType() {
+    }
+
     public DimensionsType(double width, double height) {
         this.width = width;
         this.height = height;
