@@ -27,6 +27,6 @@ public class Main {
         System.out.print("Introduce author name: ");
         author.setName(scanner.nextLine());
         System.out.println("Introduce author nationality");
-        
+
     }
 }
