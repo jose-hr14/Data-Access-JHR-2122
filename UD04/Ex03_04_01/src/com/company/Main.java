@@ -1,10 +1,8 @@
 package com.company;
 
 
-import com.db4o.Db4o;
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
@@ -18,7 +16,7 @@ public class Main {
         db.store(new Author("1", "Smith", "German"));
         db.commit();
         db.close();*/
-        createArtwork();
+        createPainting();
     }
 
     public static void createAuthor()
@@ -63,8 +61,75 @@ public class Main {
         db.close();
     }
 
-    public void createPainting()
+    public static void createPainting()
     {
-        
+        ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "museum.dat");
+        Scanner scanner = new Scanner(System.in);
+        Painting painting = new Painting();
+        System.out.print("Introduce artwork code: ");
+        painting.setCode(scanner.nextInt());
+        scanner.nextLine();
+        System.out.print("Introduce artwork tittle: ");
+        painting.setTitle(scanner.nextLine());
+        System.out.print("Introduce artwork date in dd-MM-yyyy format: ");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            painting.setDate(format.parse(scanner.nextLine()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.print("Introduce a style (GRECOROMAN,NEOCLASSIC or CUBISM): ");
+        painting.setStyle(Styles.valueOf(scanner.nextLine().toUpperCase()));
+        System.out.print("Introduce and author code: ");
+        painting.setAuthorCode(scanner.nextInt());
+        scanner.nextLine();
+        System.out.print("Enter the painting type (OILPAINTING, WATERCOLOUR, PASTEL): ");
+        painting.setPaintingType(PaintingTypes.valueOf(scanner.nextLine().toUpperCase()));
+        DimensionsType dimensions = new DimensionsType();
+        System.out.print("Introduce painting width: ");
+        dimensions.setWidth(scanner.nextFloat());
+        scanner.nextLine();
+        System.out.print("Introduce painting height: ");
+        dimensions.setHeight(scanner.nextFloat());
+        painting.setDimensionsType(dimensions);
+        db.store(painting);
+        db.commit();
+        db.close();
+    }
+
+    public static void createPainting()
+    {
+        ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "museum.dat");
+        Scanner scanner = new Scanner(System.in);
+        Painting painting = new Painting();
+        System.out.print("Introduce artwork code: ");
+        painting.setCode(scanner.nextInt());
+        scanner.nextLine();
+        System.out.print("Introduce artwork tittle: ");
+        painting.setTitle(scanner.nextLine());
+        System.out.print("Introduce artwork date in dd-MM-yyyy format: ");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            painting.setDate(format.parse(scanner.nextLine()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.print("Introduce a style (GRECOROMAN,NEOCLASSIC or CUBISM): ");
+        painting.setStyle(Styles.valueOf(scanner.nextLine().toUpperCase()));
+        System.out.print("Introduce and author code: ");
+        painting.setAuthorCode(scanner.nextInt());
+        scanner.nextLine();
+        System.out.print("Enter the painting type (OILPAINTING, WATERCOLOUR, PASTEL): ");
+        painting.setPaintingType(PaintingTypes.valueOf(scanner.nextLine().toUpperCase()));
+        DimensionsType dimensions = new DimensionsType();
+        System.out.print("Introduce painting width: ");
+        dimensions.setWidth(scanner.nextFloat());
+        scanner.nextLine();
+        System.out.print("Introduce painting height: ");
+        dimensions.setHeight(scanner.nextFloat());
+        painting.setDimensionsType(dimensions);
+        db.store(painting);
+        db.commit();
+        db.close();
     }
 }
