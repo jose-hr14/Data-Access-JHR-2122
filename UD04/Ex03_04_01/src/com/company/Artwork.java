@@ -7,12 +7,12 @@ public class Artwork {
     protected String title;
     protected Date date;
     protected Styles style;
-    protected int authorCode;
+    protected String authorCode;
 
     public Artwork() {
     }
 
-    public Artwork(int code, String title, Date date, Styles style, int authorCode) {
+    public Artwork(int code, String title, Date date, Styles style, String authorCode) {
         this.code = code;
         this.title = title;
         this.date = date;
@@ -52,11 +52,11 @@ public class Artwork {
         this.style = style;
     }
 
-    public int getAuthorCode() {
+    public String getAuthorCode() {
         return authorCode;
     }
 
-    public void setAuthorCode(int authorCode) {
+    public void setAuthorCode(String authorCode) {
         this.authorCode = authorCode;
     }
 }

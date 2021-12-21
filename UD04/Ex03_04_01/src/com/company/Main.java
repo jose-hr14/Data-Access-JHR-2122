@@ -3,6 +3,8 @@ package com.company;
 
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
@@ -10,40 +12,107 @@ import java.util.Scanner;
 //El proyecto usa el JDK 1.8 de Java, ya que el JDK 16 me daba error al escribir objetos con enums en la base de datos
 public class Main {
     public static void main(String[] args) {
-/*        ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "museum.dat");
-        db.store(new Author("1", "Smith", "German"));
-        db.store(new Author("1", "Smith", "German"));
-        db.store(new Author("1", "Smith", "German"));
-        db.commit();
-        db.close();*/
-        createPainting();
+        System.out.println("--- Museum Database Management ---");
+        System.out.println();
+        String option = "";
+        do{
+            System.out.println("Choose an option: ");
+            System.out.println("1. Store new element");
+            System.out.println("2. List artworks from author");
+            System.out.println("3. List artworks from a specific category");
+            System.out.println("0. Exit");
+            option = new Scanner(System.in).nextLine();
+        }while(!option.matches("[0-3]"));
+
+        switch (option)
+        {
+            case "1":
+                storeMenu();
+                break;
+            case "2":
+                break;
+            case "3":
+                break;
+            case "0":
+                break;
+        }
+
     }
 
-    public static void createAuthor()
+    public static void storeMenu()
     {
-        ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "museum.dat");
+        String option = "";
+        do{
+            System.out.println("Choose an option: ");
+            System.out.println("1. Store new author");
+            System.out.println("2. Store new artwork");
+            System.out.println("3. Store new painting");
+            System.out.println("4. Store new sculpture");
+            System.out.println("0. Exit");
+            option = new Scanner(System.in).nextLine();
+        }while(!option.matches("[0-4]"));
+
+        switch (option)
+        {
+            case "1":
+                Author author;
+                if((author = createAuthor()) != null)
+                {
+                    new Db4oHelper().storeAuthor(author);
+                }
+                break;
+            case "2":
+                Artwork artwork;
+                if((artwork = createArtwork()) != null)
+                {
+                    new Db4oHelper().storeArtwork(artwork);
+                }
+                break;
+            case "3":
+                Painting painting;
+                if((painting = createPainting()) != null)
+                {
+                    new Db4oHelper().storePainting(painting);
+                }
+                break;
+            case "4":
+                Sculpture sculpture;
+                if((sculpture = createSculpture()) != null)
+                {
+                    new Db4oHelper().storeSculpture(sculpture);
+                }
+                break;
+            case "0":
+                break;
+        }
+    }
+
+    public static Author createAuthor()
+    {
         Scanner scanner = new Scanner(System.in);
         Author author = new Author();
         System.out.print("Introduce author code: ");
         author.setCode(scanner.nextLine());
+        if(new Db4oHelper().autorExits(author.getCode()))
+        {
+            System.out.println("This author code already exists, aborting operation");
+            return null;
+        }
         System.out.print("Introduce author name: ");
         author.setName(scanner.nextLine());
-        System.out.println("Introduce author nationality");
+        System.out.print("Introduce author nationality: ");
         author.setNationality(scanner.nextLine());
-        db.store(author);
-        db.commit();
-        db.close();
+        return author;
     }
 
-    public static void createArtwork()
+    public static Artwork createArtwork()
     {
-        ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "museum.dat");
         Scanner scanner = new Scanner(System.in);
         Artwork artwork = new Artwork();
         System.out.print("Introduce artwork code: ");
         artwork.setCode(scanner.nextInt());
         scanner.nextLine();
-        System.out.print("Introduce artwork tittle: ");
+        System.out.print("Introduce artwork title: ");
         artwork.setTitle(scanner.nextLine());
         System.out.print("Introduce artwork date in dd-MM-yyyy format: ");
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -55,15 +124,17 @@ public class Main {
         System.out.print("Introduce a style (GRECOROMAN,NEOCLASSIC or CUBISM): ");
         artwork.setStyle(Styles.valueOf(scanner.nextLine().toUpperCase()));
         System.out.print("Introduce and author code: ");
-        artwork.setAuthorCode(scanner.nextInt());
-        db.store(artwork);
-        db.commit();
-        db.close();
+        Db4oHelper db = new Db4oHelper();
+        if(db.autorExits(artwork.getAuthorCode()))
+        {
+            System.out.println("This author don't exists, aborting operation ");
+            return null;
+        }
+        return artwork;
     }
 
-    public static void createPainting()
+    public static Painting createPainting()
     {
-        ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "museum.dat");
         Scanner scanner = new Scanner(System.in);
         Painting painting = new Painting();
         System.out.print("Introduce artwork code: ");
@@ -81,7 +152,13 @@ public class Main {
         System.out.print("Introduce a style (GRECOROMAN,NEOCLASSIC or CUBISM): ");
         painting.setStyle(Styles.valueOf(scanner.nextLine().toUpperCase()));
         System.out.print("Introduce and author code: ");
-        painting.setAuthorCode(scanner.nextInt());
+        painting.setAuthorCode(scanner.nextLine());
+        Db4oHelper db = new Db4oHelper();
+        if(db.autorExits(painting.getAuthorCode()))
+        {
+            System.out.println("This author don't exists, aborting operation ");
+            return null;
+        }
         scanner.nextLine();
         System.out.print("Enter the painting type (OILPAINTING, WATERCOLOUR, PASTEL): ");
         painting.setPaintingType(PaintingTypes.valueOf(scanner.nextLine().toUpperCase()));
@@ -92,44 +169,52 @@ public class Main {
         System.out.print("Introduce painting height: ");
         dimensions.setHeight(scanner.nextFloat());
         painting.setDimensionsType(dimensions);
-        db.store(painting);
-        db.commit();
-        db.close();
+        return painting;
     }
 
-    public static void createPainting()
+    public static Sculpture createSculpture()
     {
-        ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "museum.dat");
         Scanner scanner = new Scanner(System.in);
-        Painting painting = new Painting();
+        Sculpture sculpture = new Sculpture();
         System.out.print("Introduce artwork code: ");
-        painting.setCode(scanner.nextInt());
+        sculpture.setCode(scanner.nextInt());
         scanner.nextLine();
         System.out.print("Introduce artwork tittle: ");
-        painting.setTitle(scanner.nextLine());
+        sculpture.setTitle(scanner.nextLine());
         System.out.print("Introduce artwork date in dd-MM-yyyy format: ");
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         try {
-            painting.setDate(format.parse(scanner.nextLine()));
+            sculpture.setDate(format.parse(scanner.nextLine()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
         System.out.print("Introduce a style (GRECOROMAN,NEOCLASSIC or CUBISM): ");
-        painting.setStyle(Styles.valueOf(scanner.nextLine().toUpperCase()));
+        sculpture.setStyle(Styles.valueOf(scanner.nextLine().toUpperCase()));
         System.out.print("Introduce and author code: ");
-        painting.setAuthorCode(scanner.nextInt());
-        scanner.nextLine();
-        System.out.print("Enter the painting type (OILPAINTING, WATERCOLOUR, PASTEL): ");
-        painting.setPaintingType(PaintingTypes.valueOf(scanner.nextLine().toUpperCase()));
-        DimensionsType dimensions = new DimensionsType();
-        System.out.print("Introduce painting width: ");
-        dimensions.setWidth(scanner.nextFloat());
-        scanner.nextLine();
-        System.out.print("Introduce painting height: ");
-        dimensions.setHeight(scanner.nextFloat());
-        painting.setDimensionsType(dimensions);
-        db.store(painting);
-        db.commit();
-        db.close();
+        sculpture.setAuthorCode(scanner.nextLine());
+        Db4oHelper db = new Db4oHelper();
+        if(db.autorExits(sculpture.getAuthorCode()))
+        {
+            System.out.println("This author don't exists, aborting operation ");
+            return null;
+        }
+        System.out.print("Enter the material type (IRON, BRONZE, MARBLE): ");
+        sculpture.setMaterial(MaterialTypes.valueOf(scanner.nextLine().toUpperCase()));
+        System.out.print("Introduce painting weight: ");
+        sculpture.setWeight(scanner.nextFloat());
+        return sculpture;
+    }
+
+    public static boolean autorExits(ObjectContainer db, String authorCode)
+    {
+        ObjectSet persons = db.queryByExample(new Author(authorCode, null, null));
+        if(persons.hasNext())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
