@@ -20,6 +20,10 @@ public class Artwork {
         this.authorCode = authorCode;
     }
 
+    public Artwork(String authorCode) {
+        this.authorCode = authorCode;
+    }
+
     public int getCode() {
         return code;
     }

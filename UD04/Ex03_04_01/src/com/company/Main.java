@@ -1,12 +1,9 @@
 package com.company;
 
-
-import com.db4o.Db4oEmbedded;
-import com.db4o.ObjectContainer;
-import com.db4o.ObjectSet;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 //El proyecto usa el JDK 1.8 de Java, ya que el JDK 16 me daba error al escribir objetos con enums en la base de datos
@@ -22,21 +19,21 @@ public class Main {
             System.out.println("3. List artworks from a specific category");
             System.out.println("0. Exit");
             option = new Scanner(System.in).nextLine();
-        }while(!option.matches("[0-3]"));
 
-        switch (option)
-        {
-            case "1":
-                storeMenu();
-                break;
-            case "2":
-                break;
-            case "3":
-                break;
-            case "0":
-                break;
-        }
-
+            switch (option)
+            {
+                case "1":
+                    storeMenu();
+                    break;
+                case "2":
+                    listArtworkByAuthor();
+                    break;
+                case "3":
+                    break;
+                case "0":
+                    break;
+            }
+        }while(option.matches("[0-3]"));
     }
 
     public static void storeMenu()
@@ -124,8 +121,9 @@ public class Main {
         System.out.print("Introduce a style (GRECOROMAN,NEOCLASSIC or CUBISM): ");
         artwork.setStyle(Styles.valueOf(scanner.nextLine().toUpperCase()));
         System.out.print("Introduce and author code: ");
+        artwork.setAuthorCode(scanner.nextLine());
         Db4oHelper db = new Db4oHelper();
-        if(db.autorExits(artwork.getAuthorCode()))
+        if(!db.autorExits(artwork.getAuthorCode()))
         {
             System.out.println("This author don't exists, aborting operation ");
             return null;
@@ -204,17 +202,24 @@ public class Main {
         sculpture.setWeight(scanner.nextFloat());
         return sculpture;
     }
-
-    public static boolean autorExits(ObjectContainer db, String authorCode)
+    public static void listArtworkByAuthor()
     {
-        ObjectSet persons = db.queryByExample(new Author(authorCode, null, null));
-        if(persons.hasNext())
+        System.out.print("Type author name: ");
+        Author author = new Db4oHelper().retriveAuthorByName(new Scanner(System.in).nextLine());
+        if(author != null)
         {
-            return true;
+            List<Artwork> artworkList = new Db4oHelper().listArtworksByAuthor(author.getCode());
+            if(!artworkList.isEmpty())
+            {
+                for (Artwork artwork: artworkList)
+                {
+                    System.out.println(artwork.title);
+                }
+            }
+            else
+                System.out.println("Author has no artworks stored");
         }
         else
-        {
-            return false;
-        }
+            System.out.println("Author does not exists");
     }
 }
