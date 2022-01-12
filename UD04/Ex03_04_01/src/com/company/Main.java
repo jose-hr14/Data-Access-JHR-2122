@@ -2,7 +2,6 @@ package com.company;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,6 +28,7 @@ public class Main {
                     listArtworkByAuthor();
                     break;
                 case "3":
+                    listBySpecificCategoryMenu();
                     break;
                 case "0":
                     break;
@@ -152,12 +152,11 @@ public class Main {
         System.out.print("Introduce and author code: ");
         painting.setAuthorCode(scanner.nextLine());
         Db4oHelper db = new Db4oHelper();
-        if(db.autorExits(painting.getAuthorCode()))
+        if(!db.autorExits(painting.getAuthorCode()))
         {
             System.out.println("This author don't exists, aborting operation ");
             return null;
         }
-        scanner.nextLine();
         System.out.print("Enter the painting type (OILPAINTING, WATERCOLOUR, PASTEL): ");
         painting.setPaintingType(PaintingTypes.valueOf(scanner.nextLine().toUpperCase()));
         DimensionsType dimensions = new DimensionsType();
@@ -191,7 +190,7 @@ public class Main {
         System.out.print("Introduce and author code: ");
         sculpture.setAuthorCode(scanner.nextLine());
         Db4oHelper db = new Db4oHelper();
-        if(db.autorExits(sculpture.getAuthorCode()))
+        if(!db.autorExits(sculpture.getAuthorCode()))
         {
             System.out.println("This author don't exists, aborting operation ");
             return null;
@@ -221,5 +220,81 @@ public class Main {
         }
         else
             System.out.println("Author does not exists");
+    }
+
+    public static void listArtworkByStyle()
+    {
+        System.out.print("Type a style name: ");
+        Styles style = Styles.valueOf(new Scanner(System.in).nextLine().toUpperCase());
+        List<Artwork> artworkList = new Db4oHelper().listArtworksByStyle(style);
+        if(!artworkList.isEmpty())
+        {
+            for (Artwork artwork: artworkList)
+            {
+                System.out.println(artwork.title);
+            }
+        }
+        else
+            System.out.println("There are no artworks stored with that style");
+    }
+
+    public static void listBySpecificCategoryMenu()
+    {
+        String option = "";
+        do{
+            System.out.println("Choose an option: ");
+            System.out.println("1. List by style");
+            System.out.println("2. List by painting type");
+            System.out.println("3. List by material type");
+            System.out.println("0. Exit");
+            option = new Scanner(System.in).nextLine();
+        }while(!option.matches("[0-3]"));
+
+        switch (option)
+        {
+            case "1":
+                listArtworkByStyle();
+                break;
+            case "2":
+                listArtworkByPaintingType();
+                break;
+            case "3":
+                listArtworkByMaterialType();
+                break;
+            case "0":
+                break;
+        }
+    }
+
+    public static void listArtworkByPaintingType()
+    {
+        System.out.print("Type a painting type name: ");
+        PaintingTypes paintingType = PaintingTypes.valueOf(new Scanner(System.in).nextLine().toUpperCase());
+        List<Artwork> artworkList = new Db4oHelper().listArtworksByPaintingType(paintingType);
+        if(!artworkList.isEmpty())
+        {
+            for (Artwork artwork: artworkList)
+            {
+                System.out.println(artwork.title);
+            }
+        }
+        else
+            System.out.println("There are no artworks stored with that painting type");
+    }
+
+    public static void listArtworkByMaterialType()
+    {
+        System.out.print("Type a material type name: ");
+        MaterialTypes materialType = MaterialTypes.valueOf(new Scanner(System.in).nextLine().toUpperCase());
+        List<Artwork> artworkList = new Db4oHelper().listArtworksByMaterialType(materialType);
+        if(!artworkList.isEmpty())
+        {
+            for (Artwork artwork: artworkList)
+            {
+                System.out.println(artwork.title);
+            }
+        }
+        else
+            System.out.println("There are no artworks stored with that painting type");
     }
 }

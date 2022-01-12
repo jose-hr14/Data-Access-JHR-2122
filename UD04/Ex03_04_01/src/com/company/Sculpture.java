@@ -19,6 +19,15 @@ public class Sculpture extends Artwork{
         this.weight = weight;
     }
 
+    public Sculpture(MaterialTypes material, double weight) {
+        this.material = material;
+        this.weight = weight;
+    }
+
+    public Sculpture(MaterialTypes material) {
+        this.material = material;
+    }
+
     public MaterialTypes getMaterial() {
         return material;
     }

@@ -15,6 +15,11 @@ public class Painting extends Artwork{
         this.dimensionsType = dimensionsType;
     }
 
+    public Painting(PaintingTypes paintingType, DimensionsType dimensionsType) {
+        this.paintingType = paintingType;
+        this.dimensionsType = dimensionsType;
+    }
+
     public PaintingTypes getPaintingType() {
         return paintingType;
     }

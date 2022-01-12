@@ -20,9 +20,14 @@ public class Artwork {
         this.authorCode = authorCode;
     }
 
-    public Artwork(String authorCode) {
+    public Artwork(String title, Date date, Styles style, String authorCode) {
+        this.title = title;
+        this.date = date;
+        this.style = style;
         this.authorCode = authorCode;
     }
+
+
 
     public int getCode() {
         return code;
