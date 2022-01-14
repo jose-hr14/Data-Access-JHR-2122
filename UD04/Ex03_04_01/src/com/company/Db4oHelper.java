@@ -19,64 +19,103 @@ public class Db4oHelper
 
     public void storeAuthor(Author author)
     {
-        db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
-        db.store(author);
-        db.commit();
-        db.close();
+        try {
+            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
+            db.store(author);
+        }
+        finally {
+            db.commit();
+            db.close();
+        }
     }
 
     public void storeArtwork(Artwork artwork)
     {
-        db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
-        db.store(artwork);
-        db.commit();
-        db.close();
+        try {
+            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
+            db.store(artwork);
+        }
+        finally {
+            db.commit();
+            db.close();
+        }
     }
 
     public void storePainting(Painting painting)
     {
-        db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
-        db.store(painting);
-        db.commit();
-        db.close();
+        try {
+            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
+            db.store(painting);
+        }
+        finally {
+            db.commit();
+            db.close();
+        }
     }
 
     public void storeSculpture(Sculpture sculpture)
     {
-        db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
-        db.store(sculpture);
-        db.commit();
-        db.close();
+        try {
+            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
+            db.store(sculpture);
+        }
+        finally {
+            db.commit();
+            db.close();
+        }
     }
 
     public boolean autorExits(String authorCode)
     {
-        db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
-        ObjectSet persons = db.queryByExample(new Author(authorCode, null, null));
-        if(persons.hasNext())
-        {
-            db.close();
-            return true;
-        }
-        else
-        {
-            db.close();
+        try {
+            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
+            ObjectSet persons = db.queryByExample(new Author(authorCode, null, null));
+            if(persons.hasNext())
+            {
+                return true;
+            }
             return false;
+        }
+        finally {
+            db.commit();
+            db.close();
+        }
+    }
+
+    public boolean artworkExits(int artworkCode)
+    {
+        try {
+            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
+            ObjectSet artworks = db.queryByExample(new Artwork(artworkCode));
+            if(artworks.hasNext())
+            {
+                return true;
+            }
+            return false;
+        }
+        finally {
+            db.commit();
+            db.close();
         }
     }
 
     public List<Artwork> listArtworksByAuthor(String authorCode)
     {
-        db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
-        ObjectSet artworks = db.queryByExample(new Artwork(null, null, null, authorCode));
-        List<Artwork> artworkList = new ArrayList<>();
+        try {
+            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
+            ObjectSet artworks = db.queryByExample(new Artwork(null, null, null, authorCode));
+            List<Artwork> artworkList = new ArrayList<>();
 
-        while(artworks.hasNext())
-        {
-            artworkList.add((Artwork) artworks.next());
+            while(artworks.hasNext())
+            {
+                artworkList.add((Artwork) artworks.next());
+            }
+            return artworkList;
         }
-        db.close();
-        return artworkList;
+        finally {
+            db.commit();
+            db.close();
+        }
     }
 
     public Author retriveAuthorByName(String authorName)
@@ -92,47 +131,62 @@ public class Db4oHelper
             return null;
         }
         finally {
+            db.commit();
             db.close();
         }
     }
 
     public List<Artwork> listArtworksByStyle(Styles style)
     {
-        db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
-        ObjectSet artworks = db.queryByExample(new Artwork(null, null, style, null));
-        List<Artwork> artworkList = new ArrayList<>();
-
-        while(artworks.hasNext())
-        {
-            artworkList.add((Artwork) artworks.next());
+        try {
+            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
+            ObjectSet artworks = db.queryByExample(new Artwork(null, null, style, null));
+            List<Artwork> artworkList = new ArrayList<>();
+            while(artworks.hasNext())
+            {
+                artworkList.add((Artwork) artworks.next());
+            }
+            return artworkList;
         }
-        db.close();
-        return artworkList;
+        finally {
+            db.commit();
+            db.close();
+        }
     }
 
     public List<Artwork> listArtworksByPaintingType(PaintingTypes paintingType)
     {
-        db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
-        ObjectSet paintings = db.queryByExample(new Painting(paintingType, null));
-        List<Artwork> paintingsList = new ArrayList<>();
-        while(paintings.hasNext())
-        {
-            paintingsList.add((Painting) paintings.next());
+        try {
+            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
+            ObjectSet paintings = db.queryByExample(new Painting(paintingType, null));
+            List<Artwork> paintingsList = new ArrayList<>();
+            while(paintings.hasNext())
+            {
+                paintingsList.add((Painting) paintings.next());
+            }
+            return paintingsList;
         }
-        db.close();
-        return paintingsList;
+        finally {
+            db.commit();
+            db.close();
+        }
     }
 
     public List<Artwork> listArtworksByMaterialType(MaterialTypes materialType)
     {
-        db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
-        ObjectSet sculptures = db.queryByExample(new Sculpture(materialType));
-        List<Artwork> sculptureList = new ArrayList<>();
-        while(sculptures.hasNext())
-        {
-            sculptureList.add((Sculpture) sculptures.next());
+        try {
+            db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
+            ObjectSet sculptures = db.queryByExample(new Sculpture(materialType));
+            List<Artwork> sculptureList = new ArrayList<>();
+            while(sculptures.hasNext())
+            {
+                sculptureList.add((Sculpture) sculptures.next());
+            }
+            return sculptureList;
         }
-        db.close();
-        return sculptureList;
+        finally {
+            db.commit();
+            db.close();
+        }
     }
 }

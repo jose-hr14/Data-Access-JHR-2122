@@ -13,6 +13,10 @@ public class Sculpture extends Artwork{
 
     }
 
+    public Sculpture(int code, String title, Date date, Styles style, String authorCode) {
+        super(code, title, date, style, authorCode);
+    }
+
     public Sculpture(int code, String title, Date date, Styles style, String authorCode, MaterialTypes material, double weight) {
         super(code, title, date, style, authorCode);
         this.material = material;
