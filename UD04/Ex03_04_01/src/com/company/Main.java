@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 //Project uses JDK 1.8, because JDK 16 threw error while trying to write enums in the database
+//Using DB4O 8.0.276.16149
 public class Main {
     public static void main(String[] args) {
         System.out.println("--- Museum Database Management ---");
@@ -136,50 +137,48 @@ public class Main {
     }
 
     public static Artwork createArtwork() {
-        Scanner scanner = new Scanner(System.in);
-        Artwork artwork = new Artwork();
-        System.out.print("Introduce artwork code: ");
-        try{
+        try
+        {
+            Scanner scanner = new Scanner(System.in);
+            Artwork artwork = new Artwork();
+            System.out.print("Introduce artwork code: ");
             artwork.setCode(scanner.nextInt());
             if (new Db4oHelper().artworkExits(artwork.getCode())) {
                 System.out.println("This artwork code already exits, aborting operation");
                 return null;
             }
-        }
-        catch (InputMismatchException e)
-        {
-            System.out.println("Code must be a number, aborting operation");
-            return null;
-        }
-
-        scanner.nextLine();
-        System.out.print("Introduce artwork title: ");
-        artwork.setTitle(scanner.nextLine());
-        if (artwork.getTitle().isEmpty()) {
-            System.out.println("Artwork tittle cannot be empty, aborting operation");
-        }
-        System.out.print("Introduce artwork date in dd-MM-yyyy format: ");
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        try {
+            scanner.nextLine();
+            System.out.print("Introduce artwork title: ");
+            artwork.setTitle(scanner.nextLine());
+            if (artwork.getTitle().isEmpty()) {
+                System.out.println("Artwork tittle cannot be empty, aborting operation");
+                return null;
+            }
+            System.out.print("Introduce artwork date in dd-MM-yyyy format: ");
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
             artwork.setDate(format.parse(scanner.nextLine()));
-        } catch (ParseException e) {
+            System.out.print("Introduce a style (GRECOROMAN,NEOCLASSIC or CUBISM): ");
+            artwork.setStyle(Styles.valueOf(scanner.nextLine().toUpperCase()));
+            System.out.print("Introduce and author code: ");
+            artwork.setAuthorCode(scanner.nextLine());
+            if (!new Db4oHelper().autorExits(artwork.getAuthorCode())) {
+                System.out.println("This author don't exists, aborting operation ");
+                return null;
+            }
+            return artwork;
+        }
+        catch (ParseException e) {
             System.out.println("Date invalid or date format invalidad, aborting operation");
             return null;
         }
-        try {
-            System.out.print("Introduce a style (GRECOROMAN,NEOCLASSIC or CUBISM): ");
-            artwork.setStyle(Styles.valueOf(scanner.nextLine().toUpperCase()));
-        } catch (IllegalArgumentException e) {
+        catch (IllegalArgumentException e) {
             System.out.println("Style not valid, aborting operation");
             return null;
         }
-        System.out.print("Introduce and author code: ");
-        artwork.setAuthorCode(scanner.nextLine());
-        if (!new Db4oHelper().autorExits(artwork.getAuthorCode())) {
-            System.out.println("This author don't exists, aborting operation ");
+        catch (InputMismatchException e) {
+            System.out.println("Code must be a number, aborting operation");
             return null;
         }
-        return artwork;
     }
 
     public static Painting createPainting() {
@@ -198,25 +197,19 @@ public class Main {
             dimensions.setHeight(scanner.nextFloat());
             painting.setDimensionsType(dimensions);
             return painting;
-        }
-        catch (NullPointerException nullPointerException)
-        {
+        } catch (NullPointerException nullPointerException) {
             return null;
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Paitning type not valid, aborting operation");
             return null;
-        }
-        catch (InputMismatchException e)
-        {
+        } catch (InputMismatchException e) {
             System.out.println("Width and height must be a number, aborting operation");
             return null;
         }
     }
 
     public static Sculpture createSculpture() {
-        try
-        {
+        try {
             Scanner scanner = new Scanner(System.in);
             Artwork artwork = createArtwork();
             Sculpture sculpture = new Sculpture(artwork.getCode(), artwork.getTitle(), artwork.getDate(), artwork.getStyle(),
@@ -226,17 +219,12 @@ public class Main {
             System.out.print("Introduce painting weight: ");
             sculpture.setWeight(scanner.nextFloat());
             return sculpture;
-        }
-        catch (NullPointerException nullPointerException)
-        {
+        } catch (NullPointerException nullPointerException) {
             return null;
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Material type not valid, aborting operation");
             return null;
-        }
-        catch (InputMismatchException e)
-        {
+        } catch (InputMismatchException e) {
             System.out.println("Weight must be a number, aborting operation");
             return null;
         }
@@ -253,8 +241,7 @@ public class Main {
                 }
             } else
                 System.out.println("There are no artworks stored with that style");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Material type not valid, aborting operation");
         }
     }
@@ -270,15 +257,13 @@ public class Main {
                 }
             } else
                 System.out.println("There are no artworks stored with that painting type");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Material type not valid, aborting operation");
         }
     }
 
     public static void listArtworkByMaterialType() {
-        try
-        {
+        try {
             System.out.print("Enter the material type (IRON, BRONZE, MARBLE): ");
             MaterialTypes materialType = MaterialTypes.valueOf(new Scanner(System.in).nextLine().toUpperCase());
 
@@ -289,8 +274,7 @@ public class Main {
                 }
             } else
                 System.out.println("There are no artworks stored with that painting type");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Material type not valid, aborting operation");
         }
     }

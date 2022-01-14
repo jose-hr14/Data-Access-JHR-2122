@@ -1,7 +1,0 @@
-<contactList>
-	<contact>
-		<name> pepe </name>
-	</contact>
-</contactList>
-
-basicamente, replicamos la clase en xml.

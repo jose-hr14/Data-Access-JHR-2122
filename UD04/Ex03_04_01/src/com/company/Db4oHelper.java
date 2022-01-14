@@ -70,11 +70,7 @@ public class Db4oHelper
         try {
             db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
             ObjectSet persons = db.queryByExample(new Author(authorCode, null, null));
-            if(persons.hasNext())
-            {
-                return true;
-            }
-            return false;
+            return persons.hasNext();
         }
         finally {
             db.commit();
@@ -87,11 +83,7 @@ public class Db4oHelper
         try {
             db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), databaseName);
             ObjectSet artworks = db.queryByExample(new Artwork(artworkCode));
-            if(artworks.hasNext())
-            {
-                return true;
-            }
-            return false;
+            return artworks.hasNext();
         }
         finally {
             db.commit();
