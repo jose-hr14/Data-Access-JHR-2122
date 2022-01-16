@@ -1,0 +1,30 @@
+CREATE DOMAIN public.score AS integer
+	CONSTRAINT "bigger than 0" CHECK ((VALUE >= 0))
+	CONSTRAINT "lower than 10" CHECK ((VALUE <= 10));
+-- To make sure score is between 0 and 10
+-- Good insert
+INSERT INTO public.scores (enrollmentid, subjectid, score) 
+	VALUES (21, 1, 0);
+-- Bad insert
+INSERT INTO public.scores (enrollmentid, subjectid, score) 
+VALUES (21, 1, 11);
+------------------------------------------------------------
+CREATE DOMAIN public.phone AS character varying
+	CONSTRAINT "phone number lenght" CHECK ((length((VALUE)::text) = 9));
+--To make sure phone number always has 9 numbers	
+-- Good insert
+INSERT INTO public.student (firstname, lastname, idcard, email, phone) 
+	VALUES ('Jose', 'Hernandez', '1', 'a', '123456789');
+-- Bad insert
+INSERT INTO public.student (firstname, lastname, idcard, email, phone) 
+	VALUES ('Jose', 'Hernandez', '1', 'a', '123');
+----------------------------------------------------------------------------
+CREATE DOMAIN public.email AS character varying
+	CONSTRAINT email CHECK (((VALUE)::text ~~ '%@%.com'::text));
+-- To make sure email format is valid
+-- Good insert
+INSERT INTO public.student (firstname, lastname, idcard, email, phone) 
+	VALUES ('Jose', 'Hernandez', '1', 'jose@marenostrum.com', '123');
+-- Bad insert
+INSERT INTO public.student (firstname, lastname, idcard, email, phone) 
+	VALUES ('Jose', 'Hernandez', '1', 'a', '123');
