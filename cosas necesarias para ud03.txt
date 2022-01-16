@@ -1,5 +1,0 @@
-PostgreSQL
-PgAdmin
-JDBC Driver
-
-boolean isEmail = false;

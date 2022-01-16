@@ -1,0 +1,48 @@
+CREATE DOMAIN public."CapitalLetters" AS character varying
+	CONSTRAINT capitalletters CHECK (((VALUE)::text = upper((VALUE)::text)));
+
+CREATE TABLE public.employee (
+    empno integer NOT NULL,
+    ename public."CapitalLetters", -- domain
+    job public.jobs,
+    depno integer
+);
+
+CREATE TABLE public.dept (
+    deptno integer NOT NULL,
+    dname public."CapitalLetters", -- domain
+    loc public."CapitalLetters" -- domain
+);
+
+-- Domain to make sure that the ename and from employee table, dname and loc from 
+-- dept table always has capital letters.
+
+-- Good insert
+INSERT INTO public.employee (empno, ename, job, depno) VALUES (7369, 'SMITH', 'CLERK', 20);
+-- Bad insert 
+INSERT INTO public.employee (empno, ename, job, depno) VALUES (7369, 'Smith', 'CLERK', 20);
+
+--------------------------------------------------------------------------------------------
+CREATE TYPE public.jobs AS ENUM (
+    'ANALYST',
+    'CLERK',
+    'MANAGER',
+    'PRESIDENT',
+    'SALESMAN'
+);
+
+CREATE TABLE public.employee (
+    empno integer NOT NULL,
+    ename public."CapitalLetters",
+    job public.jobs, -- type enum
+    depno integer
+);
+
+-- Type as enum to make sure that the jobs insertend in de column job
+-- from the employee table is one of the avaiable jobs.
+
+-- Good insert
+INSERT INTO public.employee (empno, ename, job, depno) VALUES (7499, 'ALLEN', 'SALESMAN', 30);
+-- Bad insert
+INSERT INTO public.employee (empno, ename, job, depno) VALUES (7499, 'ALLEN', 'Taxista', 30);
+
