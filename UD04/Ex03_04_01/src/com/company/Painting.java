@@ -9,8 +9,17 @@ public class Painting extends Artwork{
     public Painting() {
     }
 
+    public Painting(int code, String title, Date date, Styles style, String authorCode) {
+        super(code, title, date, style, authorCode);
+    }
+
     public Painting(int code, String title, Date date, Styles style, String authorCode, PaintingTypes paintingType, DimensionsType dimensionsType) {
         super(code, title, date, style, authorCode);
+        this.paintingType = paintingType;
+        this.dimensionsType = dimensionsType;
+    }
+
+    public Painting(PaintingTypes paintingType, DimensionsType dimensionsType) {
         this.paintingType = paintingType;
         this.dimensionsType = dimensionsType;
     }

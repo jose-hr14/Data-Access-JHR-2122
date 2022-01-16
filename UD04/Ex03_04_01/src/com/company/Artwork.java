@@ -12,6 +12,10 @@ public class Artwork {
     public Artwork() {
     }
 
+    public Artwork(int code) {
+        this.code = code;
+    }
+
     public Artwork(int code, String title, Date date, Styles style, String authorCode) {
         this.code = code;
         this.title = title;
@@ -19,6 +23,15 @@ public class Artwork {
         this.style = style;
         this.authorCode = authorCode;
     }
+
+    public Artwork(String title, Date date, Styles style, String authorCode) {
+        this.title = title;
+        this.date = date;
+        this.style = style;
+        this.authorCode = authorCode;
+    }
+
+
 
     public int getCode() {
         return code;
