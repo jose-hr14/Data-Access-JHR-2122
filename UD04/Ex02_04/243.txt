@@ -1,0 +1,82 @@
+CREATE DOMAIN public.authorcode AS character varying
+	CONSTRAINT regex CHECK (((VALUE)::text ~~ '[A-Z]{1,3}[0-9]{1,4}'::text));
+-- Domain to make sure author code is a string formed by the initials of the 
+-- author and the year of birth.
+
+-- Good insert
+INSERT INTO public.author(code, name, nationality)VALUES 
+	('JHR1990', 'Jose Hernandez', 'Spanish');
+-- Bad insert
+INSERT INTO public.author(code, name, nationality)VALUES 
+	('pepito89', 'Jose Hernandez', 'Spanish');
+	
+-------------------------------------------------------------------------------
+CREATE DOMAIN public.dimenssionsdomain AS double precision
+	CONSTRAINT onlypositive CHECK ((VALUE > (0)::double precision));
+-- To make sure that the the width and height values from the 
+-- type dimenssionstype, that will be used in the painting table for the 
+-- dimenssions column is always above 0. Also used in the weight collumn
+-- for the sculpture table.
+
+-- Good insert
+INSERT INTO public.painting (title, dated, style, authorcode, code, type, dimensions) VALUES 
+	('Monalisa', '1700-01-01', 'greco roman', 'JGS1990', 1, 'pastel', '(42,42)');
+	
+-- Bad insert
+INSERT INTO public.painting (title, dated, style, authorcode, code, type, dimensions) VALUES 
+	('Monalisa', '1700-01-01', 'greco roman', 'JGS1990', 1, 'pastel', '(-2, -4)');
+-------------------------------------------------------------------------------
+CREATE TYPE public.dimenssionstype AS (
+	width public.dimenssionsdomain,
+	height public.dimenssionsdomain
+);
+-- Composyte type to save in the same column, dimenssions, both the width and the 
+-- height from the painting table
+-- Good insert
+INSERT INTO public.painting (title, dated, style, authorcode, code, type, dimensions) VALUES 
+	('Monalisa', '1700-01-01', 'greco roman', 'JGS1990', 1, 'pastel', '(42,42)');
+-- Bad insert
+INSERT INTO public.painting (title, dated, style, authorcode, code, type, dimensions) VALUES 
+	('Monalisa', '1700-01-01', 'greco roman', 'JGS1990', 1, 'pastel', '42x42');
+	
+--------------------------------------------------------------------------------------
+CREATE TYPE public.materialtype AS ENUM (
+    'iron',
+    'bronze',
+    'marble'
+);
+-- To limit the value from the material column in the sculpture table to the avaiable
+-- ones
+-- Good insert
+INSERT INTO public.sculpture (title, dated, style, authorcode, code, material, weight) VALUES 
+	('Cool engilsh', '1700-01-01', 'greco roman', 'JGS1990', 2, 'iron', 12);
+-- Bad insert
+INSERT INTO public.sculpture (title, dated, style, authorcode, code, material, weight) VALUES 
+	('Cool engilsh', '1700-01-01', 'greco roman', 'JGS1990', 2, 'dirt', 12);
+----------------------------------------------------------------------------------------------
+CREATE TYPE public.paintingtypes AS ENUM (
+    'oil painting',
+    'water colour',
+    'pastel'
+);
+-- To limit the value from the type column in the painting table to the avaiable ones
+-- Good insert
+INSERT INTO public.painting (title, dated, style, authorcode, code, type, dimensions) VALUES 
+	('Monalisa', '1700-01-01', 'greco roman', 'JGS1990', 1, 'pastel', '(42,42)');
+-- Bad insert
+INSERT INTO public.painting (title, dated, style, authorcode, code, type, dimensions) VALUES 
+	('Monalisa', '1700-01-01', 'greco roman', 'JGS1990', 1, 'brush', '(42,42)');
+-----------------------------------------------------------------------------------------------
+CREATE TYPE public.styles AS ENUM (
+    'greco roman',
+    'neo classic',
+    'cubism'
+);
+-- To limit the style column from the artwork table and those that inherit its same columns
+-- to the avaiable ones	
+-- Good insert
+INSERT INTO public.painting (title, dated, style, authorcode, code, type, dimensions) VALUES 
+	('Monalisa', '1700-01-01', 'greco roman', 'JGS1990', 1, 'pastel', '(42,42)');
+-- Bad insert
+INSERT INTO public.painting (title, dated, style, authorcode, code, type, dimensions) VALUES 
+	('Monalisa', '1700-01-01', 'romanticism', 'JGS1990', 1, 'pastel', '(42,42)');
