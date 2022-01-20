@@ -26,6 +26,14 @@ public class DatabaseManager {
                 session.createQuery("from com.jhr14.unit5.EmployeeEntity");
         return myQuery.list();
     }
+
+    public DeptEntity retrieveDeptByID(int id)
+    {
+        Query<DeptEntity> myQuery =
+                session.createQuery("from com.jhr14.unit5.DeptEntity where " +
+                        "deptno = " + id);
+        return  myQuery.list().get(0);
+    }
     public void saveDept(DeptEntity deptEntity)
     {
         Transaction transaction = session.beginTransaction();

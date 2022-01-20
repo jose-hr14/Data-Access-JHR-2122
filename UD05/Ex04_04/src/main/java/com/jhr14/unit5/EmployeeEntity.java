@@ -72,7 +72,7 @@ public class EmployeeEntity {
 
     @Override
     public String toString() {
-        return "Empno: " + getEmpno() + " Ename " + getEname() + " Job: " + getJob() + " Deptno: "
+        return "Empno: " + getEmpno() + " Ename: " + getEname() + " Job: " + getJob() + " Deptno: "
                 + department.getDeptno();
     }
 }
