@@ -8,10 +8,6 @@ import javax.persistence.PersistenceException;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     static Scanner scanner;
@@ -79,10 +75,10 @@ public class App
                 switch (option = scanner.nextLine())
                 {
                     case "1":
-                        databaseManager.saveDept(createDept());
+                        createDept();
                         break;
                     case "2":
-                        databaseManager.saveEmployee(createEmployee());
+                        createEmployee();
                         break;
                     default:
                         break;
@@ -119,10 +115,10 @@ public class App
                 switch (option = scanner.nextLine())
                 {
                     case "1":
-                        databaseManager.updateDept(modifyDept());
+                        modifyDept();
                         break;
                     case "2":
-                        databaseManager.updateEmployee(modifyEmployee());
+                        modifyEmployee();
                         break;
                     default:
                         break;
@@ -228,7 +224,7 @@ public class App
         }while (!option.equals("N") && !option.equals("Y"));
     }
 
-    public static DeptEntity modifyDept()
+    public static void modifyDept()
     {
         System.out.print("Introduce a dept id you want to modify: ");
         DeptEntity dept = databaseManager.retrieveDeptByID(Integer.parseInt(scanner.nextLine()));
@@ -236,10 +232,10 @@ public class App
         dept.setDname(scanner.nextLine());
         System.out.print("Previous dept location: " + dept.getLoc() + ", introduce the new dept location: ");
         dept.setLoc(scanner.nextLine());
-        return dept;
+        databaseManager.updateDept(dept);
     }
 
-    public static EmployeeEntity modifyEmployee()
+    public static void modifyEmployee()
     {
         System.out.print("Introduce the employee id you want to modify: ");
         EmployeeEntity employee = databaseManager.retrieveEmployeeByID(Integer.parseInt(scanner.nextLine()));
@@ -249,10 +245,10 @@ public class App
         employee.setJob(scanner.nextLine());
         System.out.print("Previous employee's department: " + employee.getDepartment() + ", introduce the id of the new dept the employee will be working in: ");
         employee.setDepartment(databaseManager.retrieveDeptByID(Integer.parseInt(scanner.nextLine())));
-        return employee;
+        databaseManager.updateEmployee(employee);
     }
 
-    public static DeptEntity createDept()
+    public static void createDept()
     {
         DeptEntity dept = new DeptEntity();
         System.out.print("Introduce a dept id: ");
@@ -261,10 +257,10 @@ public class App
         dept.setDname(scanner.nextLine());
         System.out.print("Introduce a dept location: ");
         dept.setLoc(scanner.nextLine());
-        return dept;
+        databaseManager.saveDept(dept);
     }
 
-    public static EmployeeEntity createEmployee()
+    public static void createEmployee()
     {
         EmployeeEntity employee = new EmployeeEntity();
         System.out.print("Introduce a employee id: ");
@@ -275,16 +271,20 @@ public class App
         employee.setJob(scanner.nextLine());
         System.out.print("Introduce the id of the dept the employee will be working in: ");
         employee.setDepartment(databaseManager.retrieveDeptByID(Integer.parseInt(scanner.nextLine())));
-        return employee;
+        databaseManager.saveEmployee(employee);
     }
 
     public static void readDatabase()
     {
         for (DeptEntity dept: databaseManager.retrieveDeptList()) {
             System.out.println(dept.toString());
-            for (EmployeeEntity employee: dept.getEmployeeList()) {
-                System.out.println("\t" + employee.toString());
+            if(!dept.getEmployeeList().isEmpty())
+            {
+                for (EmployeeEntity employee: dept.getEmployeeList()) {
+                    System.out.println("\t" + employee.toString());
+                }
             }
+
         }
     }
 }
