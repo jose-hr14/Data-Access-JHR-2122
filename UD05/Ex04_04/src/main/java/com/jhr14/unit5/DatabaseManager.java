@@ -1,5 +1,6 @@
 package com.jhr14.unit5;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -27,13 +28,32 @@ public class DatabaseManager {
         return myQuery.list();
     }
 
-    public DeptEntity retrieveDeptByID(int id)
+    public DeptEntity retrieveDeptByID(int id) throws HibernateException
     {
         Query<DeptEntity> myQuery =
                 session.createQuery("from com.jhr14.unit5.DeptEntity where " +
                         "deptno = " + id);
-        return  myQuery.list().get(0);
+        if(!myQuery.list().isEmpty())
+            return  myQuery.list().get(0);
+        else
+        {
+            throw new HibernateException("Dept not found");
+        }
     }
+
+    public EmployeeEntity retrieveEmployeeByID(int id) throws HibernateException
+    {
+        Query<EmployeeEntity> myQuery =
+                session.createQuery("from com.jhr14.unit5.EmployeeEntity where " +
+                        "empno = " + id);
+        if(!myQuery.list().isEmpty())
+            return  myQuery.list().get(0);
+        else
+        {
+            throw new HibernateException("Employee not found");
+        }
+    }
+
     public void saveDept(DeptEntity deptEntity)
     {
         Transaction transaction = session.beginTransaction();
