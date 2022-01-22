@@ -1,8 +1,7 @@
 package com.jhr14.unit5;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.*;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -16,6 +15,7 @@ public class DatabaseManager {
 
     public List<DeptEntity> retrieveDeptList()
     {
+        session.clear();
         Query<DeptEntity> myQuery =
                 session.createQuery("from com.jhr14.unit5.DeptEntity");
         return myQuery.list();

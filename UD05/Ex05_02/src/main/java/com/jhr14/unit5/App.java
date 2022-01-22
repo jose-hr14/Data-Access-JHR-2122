@@ -1,5 +1,6 @@
 package com.jhr14.unit5;
 
+import org.hibernate.CacheMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -272,12 +273,15 @@ public class App
 
     public static void readDatabase()
     {
-        for (DeptEntity dept: databaseManager.retrieveDeptList()) {
-            System.out.println(dept.toString());
-            if(!dept.getEmployeeList().isEmpty())
-            {
-                for (EmployeeEntity employee: dept.getEmployeeList()) {
-                    System.out.println("\t" + employee.toString());
+        if(!databaseManager.retrieveDeptList().isEmpty())
+        {
+            for (DeptEntity dept: databaseManager.retrieveDeptList()) {
+                System.out.println(dept.toString());
+                if(!dept.getEmployeeList().isEmpty())
+                {
+                    for (EmployeeEntity employee: dept.getEmployeeList()) {
+                        System.out.println("\t" + employee.toString());
+                    }
                 }
             }
         }

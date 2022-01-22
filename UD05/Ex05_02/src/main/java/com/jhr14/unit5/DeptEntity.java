@@ -15,7 +15,7 @@ public class DeptEntity {
     @Basic
     @Column(name = "loc", nullable = true, length = 13)
     private String loc;
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<EmployeeEntity> employeeList;
 
     public int getDeptno() {

@@ -14,7 +14,7 @@ public class EmployeeEntity {
     @Basic
     @Column(name = "job", nullable = true, length = 9)
     private String job;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "deptno", referencedColumnName = "deptno")
     private DeptEntity department;
 
