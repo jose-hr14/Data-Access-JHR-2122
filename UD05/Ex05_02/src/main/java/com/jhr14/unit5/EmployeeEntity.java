@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "employee", schema = "public", catalog = "employees")
 public class EmployeeEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "empno", nullable = false)
     private int empno;

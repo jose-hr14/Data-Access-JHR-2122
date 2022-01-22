@@ -68,9 +68,11 @@ public class App
                 {
                     case "1":
                         createDept();
+                        System.out.println("Department stored successfully");
                         break;
                     case "2":
                         createEmployee();
+                        System.out.println("Employee stored successfully");
                         break;
                     default:
                         break;
@@ -108,9 +110,11 @@ public class App
                 {
                     case "1":
                         modifyDept();
+                        System.out.println("Employee updated successfully");
                         break;
                     case "2":
                         modifyEmployee();
+                        System.out.println("Employee updated successfully");
                         break;
                     default:
                         break;
@@ -148,9 +152,11 @@ public class App
                 {
                     case "1":
                         deleteDept();
+                        System.out.println("Department deleted successfully");
                         break;
                     case "2":
                         deleteEmployee();
+                        System.out.println("Department deleted successfully");
                         break;
                     default:
                         break;
@@ -183,7 +189,6 @@ public class App
             switch (option = scanner.nextLine().toUpperCase()) {
                 case "Y":
                     databaseManager.deleteDept(dept);
-                    System.out.println("Department deleted successfully");
                     break;
                 case "N":
                     break;
@@ -205,7 +210,6 @@ public class App
             switch (option = scanner.nextLine().toUpperCase()) {
                 case "Y":
                     databaseManager.deleteEmployee(employee);
-                    System.out.println("Employee deleted sucessfully");
                     break;
                 case "N":
                     break;
