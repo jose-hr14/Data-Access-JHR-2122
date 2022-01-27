@@ -31,12 +31,6 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -72,7 +66,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.jhr2122.unit5.finalactivity/com.jhr2122.unit5.finalactivity.HelloApplication
+                                com.jhr2122.unit5.finalactivity/com.jhr2122.unit5.finalactivity.LibraryApplication
                             </mainClass>
                         </configuration>
                     </execution>

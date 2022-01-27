@@ -14,6 +14,16 @@ public class UsersEntity {
     private Date birthdate;
     private Set<LendingEntity> lentBooks;
 
+    public UsersEntity() {
+    }
+
+    public UsersEntity(String code, String name, String surname, Date birthdate) {
+        this.code = code;
+        this.name = name;
+        this.surname = surname;
+        this.birthdate = birthdate;
+    }
+
     @Id
     @Column(name = "code", nullable = false, length = 8)
     public String getCode() {
