@@ -15,6 +15,18 @@ public class BooksEntity {
     private String publisher;
     private Set<LendingEntity> borrowedBy;
 
+    public BooksEntity() {
+    }
+
+    public BooksEntity(String isbn, String title, Integer copies, String cover, String outline, String publisher) {
+        this.isbn = isbn;
+        this.title = title;
+        this.copies = copies;
+        this.cover = cover;
+        this.outline = outline;
+        this.publisher = publisher;
+    }
+
     @Id
     @Column(name = "isbn", nullable = false, length = 13)
     public String getIsbn() {

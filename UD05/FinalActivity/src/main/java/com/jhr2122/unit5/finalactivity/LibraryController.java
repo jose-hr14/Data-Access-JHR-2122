@@ -1,9 +1,11 @@
 package com.jhr2122.unit5.finalactivity;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -53,9 +55,6 @@ public class LibraryController {
     private ImageView iconUser;
 
     @FXML
-    private TextField label11;
-
-    @FXML
     private DatePicker lblUserBirthdate;
 
     @FXML
@@ -77,7 +76,26 @@ public class LibraryController {
     private GridPane paneUser;
 
     @FXML
+    private TextField txfCopies;
+
+    @FXML
+    private TextField txfCover;
+
+    @FXML
+    private TextField txfISBN;
+
+    @FXML
+    private TextField txfOutline;
+
+    @FXML
+    private TextField txfPublisher;
+
+    @FXML
+    private TextField txfTitle;
+
+    @FXML
     private GridPane upperPane;
+
 
     @FXML
     void iconReadListener(MouseEvent event) {
@@ -114,5 +132,21 @@ public class LibraryController {
             databaseManager.saveUser(usersEntity);
             System.out.println("Done");
         }
+        if(paneBook.isVisible()){
+            BooksEntity booksEntity = new BooksEntity(txfISBN.getText(), txfTitle.getText(),
+                    Integer.valueOf(txfCopies.getText()), txfCover.getText(), txfOutline.getText(),
+                    txfPublisher.getText());
+            databaseManager.saveBook(booksEntity);
+        }
+    }
+
+    @FXML
+    void intFilter(KeyEvent event) {
+
+    }
+
+    @FXML
+    void iconExitListener(MouseEvent event) {
+        Platform.exit();
     }
 }

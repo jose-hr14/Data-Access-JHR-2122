@@ -18,21 +18,21 @@ public class DatabaseManager {
     {
         session.clear();
         Query<UsersEntity> myQuery =
-                session.createQuery("from com.example.demo.UsersEntity");
+                session.createQuery("from com.jhr2122.unit5.finalactivity.UsersEntity");
         return myQuery.list();
     }
 
     public List<BooksEntity> retrieveBooksList()
     {
         Query<BooksEntity> myQuery =
-                session.createQuery("from com.example.demo.BooksEntity");
+                session.createQuery("from com.jhr2122.unit5.finalactivity.BooksEntity");
         return myQuery.list();
     }
 
     public UsersEntity retrieveUserByID(String id) throws HibernateException
     {
         Query<UsersEntity> myQuery =
-                session.createQuery("from com.example.demo.UsersEntity where " +
+                session.createQuery("from com.jhr2122.unit5.finalactivity.UsersEntity where " +
                         "id = " + id);
         if(!myQuery.list().isEmpty())
             return  myQuery.list().get(0);
@@ -45,7 +45,7 @@ public class DatabaseManager {
     public BooksEntity retrieveBookByID(String isbn) throws HibernateException
     {
         Query<BooksEntity> myQuery =
-                session.createQuery("from com.example.demo.BooksEntity where " +
+                session.createQuery("from com.jhr2122.unit5.finalactivity.BooksEntity where " +
                         "isbn = " + isbn);
         if(!myQuery.list().isEmpty())
             return  myQuery.list().get(0);
