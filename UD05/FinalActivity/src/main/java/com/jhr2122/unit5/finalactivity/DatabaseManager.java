@@ -33,7 +33,7 @@ public class DatabaseManager {
     {
         Query<UsersEntity> myQuery =
                 session.createQuery("from com.jhr2122.unit5.finalactivity.UsersEntity where " +
-                        "id = " + id);
+                        "id = '" + id + "'");
         if(!myQuery.list().isEmpty())
             return  myQuery.list().get(0);
         else
@@ -58,7 +58,7 @@ public class DatabaseManager {
     public void saveUser(UsersEntity usersEntity)
     {
         Transaction transaction = session.beginTransaction();
-        session.save( usersEntity );
+        session.save(usersEntity);
         transaction.commit();
     }
     public void saveBook(BooksEntity booksEntity)

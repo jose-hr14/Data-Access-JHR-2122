@@ -85,4 +85,9 @@ public class UsersEntity {
     public void setLentBooks(Set<LendingEntity> lentBooks) {
         this.lentBooks = lentBooks;
     }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getSurname();
+    }
 }
