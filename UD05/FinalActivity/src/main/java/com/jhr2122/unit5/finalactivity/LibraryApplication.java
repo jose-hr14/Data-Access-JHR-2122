@@ -14,7 +14,7 @@ public class LibraryApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LibraryApplication.class.getResource("library-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 550, 550);
-        stage.setTitle("Hello!");
+        stage.setTitle("Library Manager");
         stage.setScene(scene);
         stage.show();
     }
