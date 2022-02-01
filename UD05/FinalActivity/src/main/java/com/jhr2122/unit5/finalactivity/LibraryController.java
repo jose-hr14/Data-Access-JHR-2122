@@ -23,6 +23,7 @@ public class LibraryController {
     boolean isDelete;
     boolean isEdit;
     boolean isSearchingToEdit;
+
     public LibraryController() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
@@ -135,16 +136,6 @@ public class LibraryController {
     private GridPane upperPane;
 
     @FXML
-    void iconReadListener(MouseEvent event) {
-        if(paneUser.isVisible())
-        {
-            lblUserCode.setDisable(false);
-            isRead = true;
-            changePanelFromStandardToConfirm();
-        }
-    }
-
-    @FXML
     void userIconListener(MouseEvent event) {
         paneBook.setVisible(false);
         paneLent.setVisible(false);
@@ -183,10 +174,17 @@ public class LibraryController {
     @FXML
     void iconCancelListener(MouseEvent event) {
         changePanelFromConfirmToStandard();
-        if(paneUser.isVisible())
-        {
+        if (paneUser.isVisible()) {
             disableUserFields();
             cleanUserFields();
+            isEdit = false;
+            isRead = false;
+            isAdd = false;
+            isDelete = false;
+            isSearchingToEdit = false;
+        } else if (paneBook.isVisible()) {
+            disableBookFields();
+            cleanBookFields();
             isEdit = false;
             isRead = false;
             isAdd = false;
@@ -196,15 +194,27 @@ public class LibraryController {
     }
 
     @FXML
-    void iconAddListener(MouseEvent event) {
-        changePanelFromStandardToConfirm();
-        isAdd = true;
-        if(paneUser.isVisible())
-        {
-            enableUserFields();
+    void iconReadListener(MouseEvent event) {
+        if (paneUser.isVisible()) {
+            lblUserCode.setDisable(false);
+            isRead = true;
+            changePanelFromStandardToConfirm();
         }
         else if(paneBook.isVisible())
         {
+            txfISBN.setDisable(false);
+            isRead = true;
+            changePanelFromStandardToConfirm();
+        }
+    }
+
+    @FXML
+    void iconAddListener(MouseEvent event) {
+        changePanelFromStandardToConfirm();
+        isAdd = true;
+        if (paneUser.isVisible()) {
+            enableUserFields();
+        } else if (paneBook.isVisible()) {
             enableBookFields();
         }
     }
@@ -212,17 +222,19 @@ public class LibraryController {
     @FXML
     void iconEditListener(MouseEvent event) {
         changePanelFromStandardToConfirm();
-        if(paneUser.isVisible())
-        {
+        if (paneUser.isVisible()) {
             isSearchingToEdit = true;
             lblUserCode.setDisable(false);
+        }
+        else if(paneBook.isVisible()){
+            isSearchingToEdit = true;
+            txfISBN.setDisable(false);
         }
     }
 
     @FXML
     void iconConfirmListener(MouseEvent event) {
-        if(paneUser.isVisible() && isAdd)
-        {
+        if (paneUser.isVisible() && isAdd) {
             UsersEntity usersEntity = new UsersEntity(lblUserCode.getText(), lblUserName.getText(),
                     lblUserSurname.getText(), java.sql.Date.valueOf(lblUserBirthdate.getValue()));
             databaseManager.saveUser(usersEntity);
@@ -230,33 +242,24 @@ public class LibraryController {
             disableUserFields();
             changePanelFromConfirmToStandard();
             isAdd = false;
-        }
-        else if(paneUser.isVisible() && isRead)
-        {
+        } else if (paneUser.isVisible() && isRead) {
             UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
             lblUserName.setText(usersEntity.getName());
             lblUserSurname.setText(usersEntity.getSurname());
             lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
             isRead = false;
-        }
-        else if(paneUser.isVisible() && isSearchingToEdit)
-        {
+        } else if (paneUser.isVisible() && isSearchingToEdit) {
             UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
             lblUserName.setText(usersEntity.getName());
             lblUserSurname.setText(usersEntity.getSurname());
             lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
 
+            enableUserFields();
             lblUserCode.setDisable(true);
-            lblUserName.setDisable(false);
-            lblUserSurname.setDisable(false);
-            lblUserBirthdate.setDisable(false);
-            lblUserBirthdate.setDisable(false);
 
             isSearchingToEdit = false;
             isEdit = true;
-        }
-        else if(paneUser.isVisible() && isEdit)
-        {
+        } else if (paneUser.isVisible() && isEdit) {
             UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
             usersEntity.setName(lblUserName.getText());
             usersEntity.setSurname(lblUserSurname.getText());
@@ -268,42 +271,76 @@ public class LibraryController {
             changePanelFromConfirmToStandard();
 
             isEdit = false;
-        }
-        else if(paneBook.isVisible() && isAdd){
+        } else if (paneBook.isVisible() && isAdd) {
             BooksEntity booksEntity = new BooksEntity(txfISBN.getText(), txfTitle.getText(),
                     (int) sliderCopies.getValue(), txfCover.getText(), txfOutline.getText(),
                     txfPublisher.getText());
             databaseManager.saveBook(booksEntity);
             changePanelFromConfirmToStandard();
+            cleanBookFields();
+            disableBookFields();
 
             isAdd = false;
         }
+        else if (paneBook.isVisible() && isRead) {
+            BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
+            txfTitle.setText(booksEntity.getTitle());
+            sliderCopies.setValue(booksEntity.getCopies());
+            txfCover.setText(booksEntity.getCover());
+            txfOutline.setText(booksEntity.getOutline());
+            txfPublisher.setText(booksEntity.getPublisher());
+        }
+        else if (paneBook.isVisible() && isSearchingToEdit) {
+            BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
+            txfTitle.setText(booksEntity.getTitle());
+            sliderCopies.setValue(booksEntity.getCopies());
+            txfCover.setText(booksEntity.getCover());
+            txfOutline.setText(booksEntity.getOutline());
+            txfPublisher.setText(booksEntity.getPublisher());
+
+            enableBookFields();
+            txfISBN.setDisable(true);
+
+            isSearchingToEdit = false;
+            isEdit = true;
+        }
+        else if (paneBook.isVisible() && isEdit) {
+            BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
+
+            booksEntity.setTitle(txfTitle.getText());
+            booksEntity.setCopies((int) sliderCopies.getValue());
+            booksEntity.setCover(txfCover.getText());
+            booksEntity.setOutline(txfOutline.getText());
+            booksEntity.setPublisher(txfPublisher.getText());
+
+            cleanBookFields();
+            disableBookFields();
+            changePanelFromConfirmToStandard();
+
+            isEdit = false;
+        }
     }
 
-    void changePanelFromConfirmToStandard()
-    {
+    void changePanelFromConfirmToStandard() {
         bottomPanel.setVisible(true);
         bottomConfirmPane.setVisible(false);
         upperPane.setDisable(false);
     }
 
-    void changePanelFromStandardToConfirm()
-    {
+    void changePanelFromStandardToConfirm() {
         bottomPanel.setVisible(false);
         bottomConfirmPane.setVisible(true);
         upperPane.setDisable(true);
     }
 
-    void enableUserFields()
-    {
+    void enableUserFields() {
         lblUserCode.setDisable(false);
         lblUserName.setDisable(false);
         lblUserSurname.setDisable(false);
         lblUserBirthdate.setDisable(false);
     }
 
-    void enableBookFields()
-    {
+    void enableBookFields() {
         txfISBN.setDisable(false);
         txfTitle.setDisable(false);
         sliderCopies.setDisable(false);
@@ -312,8 +349,7 @@ public class LibraryController {
         txfPublisher.setDisable(false);
     }
 
-    void disableBookFields()
-    {
+    void disableBookFields() {
         txfISBN.setDisable(true);
         txfTitle.setDisable(true);
         sliderCopies.setDisable(true);
@@ -322,16 +358,24 @@ public class LibraryController {
         txfPublisher.setDisable(true);
     }
 
-    void disableUserFields()
-    {
+    void cleanBookFields() {
+
+        txfISBN.clear();
+        txfTitle.clear();
+        sliderCopies.setValue(1);
+        txfCover.clear();
+        txfOutline.clear();
+        txfPublisher.clear();
+    }
+
+    void disableUserFields() {
         lblUserCode.setDisable(true);
         lblUserName.setDisable(true);
         lblUserSurname.setDisable(true);
         lblUserBirthdate.setDisable(true);
     }
 
-    void cleanUserFields()
-    {
+    void cleanUserFields() {
         lblUserCode.clear();
         lblUserName.clear();
         lblUserSurname.clear();

@@ -46,7 +46,7 @@ public class DatabaseManager {
     {
         Query<BooksEntity> myQuery =
                 session.createQuery("from com.jhr2122.unit5.finalactivity.BooksEntity where " +
-                        "isbn = " + isbn);
+                        "isbn = '" + isbn + "'");
         if(!myQuery.list().isEmpty())
             return  myQuery.list().get(0);
         else

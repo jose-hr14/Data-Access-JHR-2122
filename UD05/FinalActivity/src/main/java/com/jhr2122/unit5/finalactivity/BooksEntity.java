@@ -108,4 +108,9 @@ public class BooksEntity {
     public void setBorrowedBy(Set<LendingEntity> borrowedBy) {
         this.borrowedBy = borrowedBy;
     }
+
+    @Override
+    public String toString() {
+        return title + ", by " + publisher;
+    }
 }
