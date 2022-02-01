@@ -94,5 +94,4 @@ public class DatabaseManager {
         session.delete(booksEntity);
         transaction.commit();
     }
-
 }
