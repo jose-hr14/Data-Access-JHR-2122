@@ -13,12 +13,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.sql.Date;
+
 public class LibraryController {
 
     DatabaseManager databaseManager;
     boolean isRead;
     boolean isAdd;
     boolean isDelete;
+    boolean isEdit;
+    boolean isSearchingToEdit;
     public LibraryController() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
@@ -27,6 +31,8 @@ public class LibraryController {
         isRead = false;
         isAdd = false;
         isDelete = false;
+        isEdit = false;
+        isSearchingToEdit = false;
     }
 
     @FXML
@@ -160,14 +166,6 @@ public class LibraryController {
     }
 
     @FXML
-    void iconAddListener(MouseEvent event) {
-        changePanelFromStandardToConfirm();
-        isAdd = true;
-        if(paneUser.isVisible())
-            enableUserFields();
-    }
-
-    @FXML
     void iconExitListener(MouseEvent event) {
         Platform.exit();
     }
@@ -186,8 +184,39 @@ public class LibraryController {
     void iconCancelListener(MouseEvent event) {
         changePanelFromConfirmToStandard();
         if(paneUser.isVisible())
+        {
             disableUserFields();
+            cleanUserFields();
+            isEdit = false;
+            isRead = false;
+            isAdd = false;
+            isDelete = false;
+            isSearchingToEdit = false;
+        }
+    }
 
+    @FXML
+    void iconAddListener(MouseEvent event) {
+        changePanelFromStandardToConfirm();
+        isAdd = true;
+        if(paneUser.isVisible())
+        {
+            enableUserFields();
+        }
+        else if(paneBook.isVisible())
+        {
+            enableBookFields();
+        }
+    }
+
+    @FXML
+    void iconEditListener(MouseEvent event) {
+        changePanelFromStandardToConfirm();
+        if(paneUser.isVisible())
+        {
+            isSearchingToEdit = true;
+            lblUserCode.setDisable(false);
+        }
     }
 
     @FXML
@@ -197,25 +226,57 @@ public class LibraryController {
             UsersEntity usersEntity = new UsersEntity(lblUserCode.getText(), lblUserName.getText(),
                     lblUserSurname.getText(), java.sql.Date.valueOf(lblUserBirthdate.getValue()));
             databaseManager.saveUser(usersEntity);
-            isAdd = false;
             cleanUserFields();
             disableUserFields();
             changePanelFromConfirmToStandard();
+            isAdd = false;
         }
-        if(paneUser.isVisible() && isRead)
+        else if(paneUser.isVisible() && isRead)
         {
             UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
             lblUserName.setText(usersEntity.getName());
             lblUserSurname.setText(usersEntity.getSurname());
             lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
+            isRead = false;
         }
-        if(paneBook.isVisible() && isAdd){
+        else if(paneUser.isVisible() && isSearchingToEdit)
+        {
+            UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
+            lblUserName.setText(usersEntity.getName());
+            lblUserSurname.setText(usersEntity.getSurname());
+            lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
+
+            lblUserCode.setDisable(true);
+            lblUserName.setDisable(false);
+            lblUserSurname.setDisable(false);
+            lblUserBirthdate.setDisable(false);
+            lblUserBirthdate.setDisable(false);
+
+            isSearchingToEdit = false;
+            isEdit = true;
+        }
+        else if(paneUser.isVisible() && isEdit)
+        {
+            UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
+            usersEntity.setName(lblUserName.getText());
+            usersEntity.setSurname(lblUserSurname.getText());
+            usersEntity.setBirthdate(Date.valueOf(lblUserBirthdate.getValue()));
+            databaseManager.updateUser(usersEntity);
+
+            cleanUserFields();
+            disableUserFields();
+            changePanelFromConfirmToStandard();
+
+            isEdit = false;
+        }
+        else if(paneBook.isVisible() && isAdd){
             BooksEntity booksEntity = new BooksEntity(txfISBN.getText(), txfTitle.getText(),
                     (int) sliderCopies.getValue(), txfCover.getText(), txfOutline.getText(),
                     txfPublisher.getText());
             databaseManager.saveBook(booksEntity);
-            isAdd = false;
             changePanelFromConfirmToStandard();
+
+            isAdd = false;
         }
     }
 
@@ -239,6 +300,26 @@ public class LibraryController {
         lblUserName.setDisable(false);
         lblUserSurname.setDisable(false);
         lblUserBirthdate.setDisable(false);
+    }
+
+    void enableBookFields()
+    {
+        txfISBN.setDisable(false);
+        txfTitle.setDisable(false);
+        sliderCopies.setDisable(false);
+        txfCover.setDisable(false);
+        txfOutline.setDisable(false);
+        txfPublisher.setDisable(false);
+    }
+
+    void disableBookFields()
+    {
+        txfISBN.setDisable(true);
+        txfTitle.setDisable(true);
+        sliderCopies.setDisable(true);
+        txfCover.setDisable(true);
+        txfOutline.setDisable(true);
+        txfPublisher.setDisable(true);
     }
 
     void disableUserFields()
