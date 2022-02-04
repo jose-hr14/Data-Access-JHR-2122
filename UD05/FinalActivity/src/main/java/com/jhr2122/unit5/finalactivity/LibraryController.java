@@ -3,6 +3,7 @@ package com.jhr2122.unit5.finalactivity;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -14,6 +15,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class LibraryController {
 
@@ -23,6 +25,8 @@ public class LibraryController {
     boolean isDelete;
     boolean isEdit;
     boolean isSearchingToEdit;
+    boolean isBorrowing;
+    boolean isReturning;
 
     public LibraryController() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -34,6 +38,8 @@ public class LibraryController {
         isDelete = false;
         isEdit = false;
         isSearchingToEdit = false;
+        isBorrowing = false;
+        isReturning = false;
     }
 
     @FXML
@@ -106,6 +112,9 @@ public class LibraryController {
     private Slider sliderCopies;
 
     @FXML
+    private Label lblBorrowOrReturnState;
+
+    @FXML
     private TextField txfCover;
 
     @FXML
@@ -140,6 +149,8 @@ public class LibraryController {
         paneBook.setVisible(false);
         paneLent.setVisible(false);
         paneUser.setVisible(true);
+        isBorrowing = false;
+        isReturning = false;
     }
 
     @FXML
@@ -147,13 +158,28 @@ public class LibraryController {
         paneUser.setVisible(false);
         paneLent.setVisible(false);
         paneBook.setVisible(true);
+        isBorrowing = false;
+        isReturning = false;
     }
 
     @FXML
     void lentIconListener(MouseEvent event) {
+        lblBorrowOrReturnState.setText("Borrow menu");
         paneUser.setVisible(false);
         paneBook.setVisible(false);
         paneLent.setVisible(true);
+        isBorrowing = true;
+        isReturning = false;
+    }
+
+    @FXML
+    void returnIconListener(MouseEvent event){
+        lblBorrowOrReturnState.setText("Return menu");
+        paneUser.setVisible(false);
+        paneBook.setVisible(false);
+        paneLent.setVisible(true);
+        isBorrowing = false;
+        isReturning = true;
     }
 
     @FXML
@@ -168,29 +194,29 @@ public class LibraryController {
 
     @FXML
     void iconSearchIsbnListener(MouseEvent event) {
-
+        txfFoundBookName.setText(databaseManager.retrieveBookByID(txfSearchIsbn.getText()).toString());
     }
 
     @FXML
     void iconCancelListener(MouseEvent event) {
-        changePanelFromConfirmToStandard();
         if (paneUser.isVisible()) {
             disableUserFields();
             cleanUserFields();
-            isEdit = false;
-            isRead = false;
-            isAdd = false;
-            isDelete = false;
-            isSearchingToEdit = false;
         } else if (paneBook.isVisible()) {
             disableBookFields();
             cleanBookFields();
-            isEdit = false;
-            isRead = false;
-            isAdd = false;
-            isDelete = false;
-            isSearchingToEdit = false;
         }
+        else if(isBorrowing)
+        {
+            disableRentReturnFields();
+            cleanRentReturnFields();
+        }
+        changePanelFromConfirmToStandard();
+        isEdit = false;
+        isRead = false;
+        isAdd = false;
+        isDelete = false;
+        isSearchingToEdit = false;
     }
 
     @FXML
@@ -216,6 +242,10 @@ public class LibraryController {
             enableUserFields();
         } else if (paneBook.isVisible()) {
             enableBookFields();
+        }
+        else if(isBorrowing)
+        {
+            enableRentReturnFields();
         }
     }
 
@@ -313,11 +343,24 @@ public class LibraryController {
             booksEntity.setOutline(txfOutline.getText());
             booksEntity.setPublisher(txfPublisher.getText());
 
+            databaseManager.updateBook(booksEntity);
+
             cleanBookFields();
             disableBookFields();
             changePanelFromConfirmToStandard();
 
             isEdit = false;
+        }
+        else if(isBorrowing && isAdd)
+        {
+            LendingEntity lendingEntity = new LendingEntity();
+            lendingEntity.setBorrower(databaseManager.retrieveUserByID(txfSearchUserCode.getText()));
+            lendingEntity.setBook(databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
+            lendingEntity.setLendingdate(Date.valueOf(LocalDate.now()));
+            databaseManager.saveLending(lendingEntity);
+
+            isAdd = false;
+            disableRentReturnFields();
         }
     }
 
@@ -380,5 +423,33 @@ public class LibraryController {
         lblUserName.clear();
         lblUserSurname.clear();
         lblUserBirthdate.setValue(null);
+    }
+
+    void enableRentReturnFields()
+    {
+        iconSearchUserCode.setDisable(false);
+        iconSearchUserCode.setVisible(true);
+        txfSearchUserCode.setDisable(false);
+        iconSearchIsbn.setDisable(false);
+        iconSearchIsbn.setVisible(true);
+        txfSearchIsbn.setDisable(false);
+    }
+
+    void disableRentReturnFields()
+    {
+        iconSearchUserCode.setDisable(true);
+        iconSearchUserCode.setVisible(false);
+        txfSearchUserCode.setDisable(true);
+        iconSearchIsbn.setDisable(true);
+        iconSearchIsbn.setVisible(false);
+        txfSearchIsbn.setDisable(true);
+    }
+
+    void cleanRentReturnFields()
+    {
+        txfSearchUserCode.clear();
+        txfFoundUserName.clear();
+        txfSearchIsbn.clear();
+        txfFoundBookName.clear();
     }
 }

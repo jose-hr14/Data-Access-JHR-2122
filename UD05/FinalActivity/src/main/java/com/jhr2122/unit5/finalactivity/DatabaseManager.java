@@ -37,9 +37,8 @@ public class DatabaseManager {
         if(!myQuery.list().isEmpty())
             return  myQuery.list().get(0);
         else
-        {
             throw new HibernateException("User not found");
-        }
+
     }
 
     public BooksEntity retrieveBookByID(String isbn) throws HibernateException
@@ -50,9 +49,8 @@ public class DatabaseManager {
         if(!myQuery.list().isEmpty())
             return  myQuery.list().get(0);
         else
-        {
             throw new HibernateException("Book not found");
-        }
+
     }
 
     public void saveUser(UsersEntity usersEntity)
@@ -65,6 +63,12 @@ public class DatabaseManager {
     {
         Transaction transaction = session.beginTransaction();
         session.save(booksEntity);
+        transaction.commit();
+    }
+    public void saveLending(LendingEntity lendingEntity)
+    {
+        Transaction transaction = session.beginTransaction();
+        session.save(lendingEntity);
         transaction.commit();
     }
     public void updateUser(UsersEntity usersEntity)

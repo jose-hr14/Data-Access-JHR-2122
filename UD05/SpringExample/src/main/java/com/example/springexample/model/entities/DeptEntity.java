@@ -1,4 +1,4 @@
-package com.example.springexample;
+package com.example.springexample.model.entities;
 
 import javax.persistence.*;
 import java.util.List;

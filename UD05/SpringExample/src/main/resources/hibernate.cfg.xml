@@ -9,8 +9,8 @@
     <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
     <property name="connection.username">postgres</property>
     <property name="connection.password">postgres</property>
-    <mapping class="com.example.springexample.DeptEntity"/>
-    <mapping class="com.example.springexample.EmployeeEntity"/>
+    <mapping class="com.example.springexample.model.entities.DeptEntity"/>
+    <mapping class="com.example.springexample.model.entities.EmployeeEntity"/>
 
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
