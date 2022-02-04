@@ -357,7 +357,11 @@ public class LibraryController {
             lendingEntity.setBorrower(databaseManager.retrieveUserByID(txfSearchUserCode.getText()));
             lendingEntity.setBook(databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
             lendingEntity.setLendingdate(Date.valueOf(LocalDate.now()));
-            databaseManager.saveLending(lendingEntity);
+            try {
+                databaseManager.saveLending(lendingEntity);
+            } catch (Exception e) {
+                //Reserve book option
+            }
 
             isAdd = false;
             disableRentReturnFields();

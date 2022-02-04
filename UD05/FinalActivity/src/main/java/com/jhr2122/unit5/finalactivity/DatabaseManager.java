@@ -65,8 +65,11 @@ public class DatabaseManager {
         session.save(booksEntity);
         transaction.commit();
     }
-    public void saveLending(LendingEntity lendingEntity)
-    {
+    public void saveLending(LendingEntity lendingEntity) throws Exception {
+        if(lendingEntity.getBook().getCopies() < 1)
+            throw new Exception("There are no copies avaiable to borrow");
+        lendingEntity.getBook().setCopies(lendingEntity.getBook().getCopies() - 1);
+        this.updateBook(lendingEntity.getBook());
         Transaction transaction = session.beginTransaction();
         session.save(lendingEntity);
         transaction.commit();
