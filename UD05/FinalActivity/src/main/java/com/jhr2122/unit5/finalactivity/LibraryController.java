@@ -2,20 +2,19 @@ package com.jhr2122.unit5.finalactivity;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class LibraryController {
 
@@ -149,6 +148,8 @@ public class LibraryController {
         paneBook.setVisible(false);
         paneLent.setVisible(false);
         paneUser.setVisible(true);
+        iconRead.setVisible(true);
+        iconEdit.setVisible(true);
         isBorrowing = false;
         isReturning = false;
     }
@@ -158,6 +159,8 @@ public class LibraryController {
         paneUser.setVisible(false);
         paneLent.setVisible(false);
         paneBook.setVisible(true);
+        iconRead.setVisible(true);
+        iconEdit.setVisible(true);
         isBorrowing = false;
         isReturning = false;
     }
@@ -168,6 +171,8 @@ public class LibraryController {
         paneUser.setVisible(false);
         paneBook.setVisible(false);
         paneLent.setVisible(true);
+        iconRead.setVisible(false);
+        iconEdit.setVisible(false);
         isBorrowing = true;
         isReturning = false;
     }
@@ -178,6 +183,8 @@ public class LibraryController {
         paneUser.setVisible(false);
         paneBook.setVisible(false);
         paneLent.setVisible(true);
+        iconRead.setVisible(false);
+        iconEdit.setVisible(false);
         isBorrowing = false;
         isReturning = true;
     }
@@ -189,12 +196,53 @@ public class LibraryController {
 
     @FXML
     void iconSearchUserCodeListener(MouseEvent event) {
-        txfFoundUserName.setText(databaseManager.retrieveUserByID(txfSearchUserCode.getText()).toString());
+        try{
+            txfFoundUserName.setText(databaseManager.retrieveUserByID(txfSearchUserCode.getText()).toString());
+        }
+        catch (HibernateException e)
+        {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(e.getClass().toString());
+            alert.setContentText(e.getMessage());
+
+            alert.showAndWait();
+        }
     }
 
     @FXML
     void iconSearchIsbnListener(MouseEvent event) {
-        txfFoundBookName.setText(databaseManager.retrieveBookByID(txfSearchIsbn.getText()).toString());
+        try
+        {
+            BooksEntity booksEntity = databaseManager.retrieveBookByID(txfSearchIsbn.getText());
+            if(booksEntity.getCopies() > 0)
+                txfFoundBookName.setText(booksEntity.toString());
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Attention");
+                alert.setHeaderText("The are no copies available");
+                alert.setContentText("Do you want to make a reservation?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    // ... user chose OK
+                } else {
+                    // ... user chose CANCEL or closed the dialog
+                }
+            }
+        }
+        catch (HibernateException e)
+        {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(e.getClass().toString());
+            alert.setContentText(e.getMessage());
+
+            alert.showAndWait();
+        }
+
     }
 
     @FXML
@@ -244,6 +292,10 @@ public class LibraryController {
             enableBookFields();
         }
         else if(isBorrowing)
+        {
+            enableRentReturnFields();
+        }
+        else if(isReturning)
         {
             enableRentReturnFields();
         }
@@ -365,6 +417,29 @@ public class LibraryController {
 
             isAdd = false;
             disableRentReturnFields();
+            cleanRentReturnFields();
+            changePanelFromConfirmToStandard();
+        }
+        else if(isReturning && isAdd)
+        {
+            try {
+                LendingEntity lendingEntity = databaseManager.retrieveLendingByIDAAndISBN
+                        (databaseManager.retrieveUserByID(txfSearchUserCode.getText()),
+                                databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
+                databaseManager.saveReturn(lendingEntity);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(e.getClass().toString());
+                alert.setContentText(e.getMessage());
+
+                alert.showAndWait();
+            }
+            isAdd = false;
+            disableRentReturnFields();
+            cleanRentReturnFields();
+            changePanelFromConfirmToStandard();
         }
     }
 

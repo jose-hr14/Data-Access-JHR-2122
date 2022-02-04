@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class DatabaseManager {
@@ -52,7 +54,18 @@ public class DatabaseManager {
             throw new HibernateException("Book not found");
 
     }
+    public LendingEntity retrieveLendingByIDAAndISBN(UsersEntity usersEntity, BooksEntity booksEntity) throws HibernateException
+    {
+        Query<LendingEntity> myQuery =
+                session.createQuery("from com.jhr2122.unit5.finalactivity.LendingEntity where " +
+                        "book.isbn = '" + booksEntity.getIsbn() + "' and borrower.code = '" + usersEntity.getCode() + "'"
+                        + "and returningdate = null");
+        if(!myQuery.list().isEmpty())
+            return  myQuery.list().get(0);
+        else
+            throw new HibernateException("Lending not found");
 
+    }
     public void saveUser(UsersEntity usersEntity)
     {
         Transaction transaction = session.beginTransaction();
@@ -67,12 +80,22 @@ public class DatabaseManager {
     }
     public void saveLending(LendingEntity lendingEntity) throws Exception {
         if(lendingEntity.getBook().getCopies() < 1)
-            throw new Exception("There are no copies avaiable to borrow");
+            throw new Exception("There are no copies available to borrow");
         lendingEntity.getBook().setCopies(lendingEntity.getBook().getCopies() - 1);
         this.updateBook(lendingEntity.getBook());
         Transaction transaction = session.beginTransaction();
         session.save(lendingEntity);
         transaction.commit();
+    }
+    public void saveReturn(LendingEntity lendingEntity) throws Exception {
+        lendingEntity.setReturningdate(Date.valueOf(LocalDate.now()));
+        this.updateLending(lendingEntity);
+        lendingEntity.getBook().setCopies(lendingEntity.getBook().getCopies() +1);
+        this.updateBook(lendingEntity.getBook());
+        if(lendingEntity.getLendingdate().toLocalDate().plusDays(7).isAfter(LocalDate.now()))
+        {
+            //Fine user
+        }
     }
     public void updateUser(UsersEntity usersEntity)
     {
@@ -85,6 +108,13 @@ public class DatabaseManager {
     {
         Transaction transaction = session.beginTransaction();
         session.update(booksEntity);
+        transaction.commit();
+    }
+
+    public void updateLending(LendingEntity lendingEntity)
+    {
+        Transaction transaction = session.beginTransaction();
+        session.update(lendingEntity);
         transaction.commit();
     }
 
