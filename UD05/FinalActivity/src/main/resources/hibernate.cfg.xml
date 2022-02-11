@@ -9,11 +9,15 @@
     <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
     <property name="connection.username">postgres</property>
     <property name="connection.password">postgres</property>
-    <mapping class="com.jhr2122.unit5.finalactivity.BooksEntity"/>
+      <mapping class="com.jhr2122.unit5.finalactivity.BooksEntity"/>
     <mapping class="com.jhr2122.unit5.finalactivity.LendingEntity"/>
     <mapping class="com.jhr2122.unit5.finalactivity.UsersEntity"/>
+      <mapping class="com.jhr2122.unit5.finalactivity.BooksEntity"/>
+      <mapping class="com.jhr2122.unit5.finalactivity.LendingEntity"/>
+      <mapping class="com.jhr2122.unit5.finalactivity.ReservationsEntity"/>
+      <mapping class="com.jhr2122.unit5.finalactivity.UsersEntity"/>
 
-    <!-- DB schema will be updated if needed -->
+      <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>
 </hibernate-configuration>

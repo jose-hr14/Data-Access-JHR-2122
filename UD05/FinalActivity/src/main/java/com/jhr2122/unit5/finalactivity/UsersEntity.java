@@ -2,8 +2,8 @@ package com.jhr2122.unit5.finalactivity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "library")
@@ -12,7 +12,9 @@ public class UsersEntity {
     private String name;
     private String surname;
     private Date birthdate;
-    private Set<LendingEntity> lentBooks;
+    private Date fined;
+    private List<LendingEntity> lentBooks;
+    private List<ReservationsEntity> reservedBooks;
 
     public UsersEntity() {
     }
@@ -24,6 +26,7 @@ public class UsersEntity {
         this.birthdate = birthdate;
     }
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "code", nullable = false, length = 8)
     public String getCode() {
@@ -64,26 +67,45 @@ public class UsersEntity {
         this.birthdate = birthdate;
     }
 
+    @Basic
+    @Column(name = "fined", nullable = true)
+    public Date getFined() {
+        return fined;
+    }
+
+    public void setFined(Date fined) {
+        this.fined = fined;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UsersEntity that = (UsersEntity) o;
-        return Objects.equals(code, that.code) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(birthdate, that.birthdate);
+        return Objects.equals(code, that.code) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(birthdate, that.birthdate) && Objects.equals(fined, that.fined);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(code, name, surname, birthdate);
+        return Objects.hash(code, name, surname, birthdate, fined);
     }
 
     @OneToMany(mappedBy = "borrower")
-    public Set<LendingEntity> getLentBooks() {
+    public List<LendingEntity> getLentBooks() {
         return lentBooks;
     }
 
-    public void setLentBooks(Set<LendingEntity> lentBooks) {
+    public void setLentBooks(List<LendingEntity> lentBooks) {
         this.lentBooks = lentBooks;
+    }
+
+    @OneToMany(mappedBy = "borrower")
+    public List<ReservationsEntity> getReservedBooks() {
+        return reservedBooks;
+    }
+
+    public void setReservedBooks(List<ReservationsEntity> reservedBooks) {
+        this.reservedBooks = reservedBooks;
     }
 
     @Override

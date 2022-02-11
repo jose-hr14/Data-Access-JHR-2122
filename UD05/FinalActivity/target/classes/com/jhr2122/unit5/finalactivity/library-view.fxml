@@ -129,7 +129,7 @@
             <Insets left="10.0" right="10.0" />
          </padding>
       </GridPane>
-      <GridPane fx:id="paneBook" layoutX="10.0" layoutY="100.0" prefHeight="252.0" prefWidth="500.0" style="-fx-background-color: #A0C4E2;" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
+      <GridPane fx:id="paneBook" layoutX="10.0" layoutY="100.0" prefHeight="252.0" prefWidth="500.0" style="-fx-background-color: #A0C4E2;" visible="false" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
          <children>
             <Label text="ISBN" GridPane.halignment="CENTER" />
             <Label text="Title" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
@@ -163,7 +163,7 @@
             <Insets left="10.0" right="10.0" />
          </padding>
       </GridPane>
-      <GridPane fx:id="paneLent" layoutX="114.0" layoutY="150.0" style="-fx-background-color: #A0C4E2;" visible="false" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
+      <GridPane fx:id="paneLent" layoutX="114.0" layoutY="150.0" style="-fx-background-color: #A0C4E2;" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="162.20001220703125" minWidth="10.0" prefWidth="69.40003204345703" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.3999755859375" minWidth="10.0" prefWidth="410.3999755859375" />
@@ -187,9 +187,9 @@
                   <Image url="@59cfc4d2d3b1936210a5ddc7.png" />
                </image>
             </ImageView>
-            <TextField fx:id="txfFoundUserName" disable="true" editable="false" prefWidth="796.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <TextField fx:id="txfFoundUserName" disable="true" prefWidth="796.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
             <TextField fx:id="txfSearchIsbn" disable="true" promptText="Type the ISBN" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="txfFoundBookName" disable="true" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+            <TextField fx:id="txfFoundBookName" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
             <Label text="Book" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
             <ImageView fx:id="iconSearchIsbn" fitHeight="43.0" fitWidth="100.0" onMouseClicked="#iconSearchIsbnListener" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                <image>

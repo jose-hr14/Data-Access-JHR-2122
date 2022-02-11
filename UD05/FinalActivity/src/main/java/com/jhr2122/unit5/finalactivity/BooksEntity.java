@@ -1,8 +1,8 @@
 package com.jhr2122.unit5.finalactivity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "books", schema = "public", catalog = "library")
@@ -13,9 +13,11 @@ public class BooksEntity {
     private String cover;
     private String outline;
     private String publisher;
-    private Set<LendingEntity> borrowedBy;
+    private List<LendingEntity> borrowedBy;
+    private List<ReservationsEntity> reservedBy;
 
     public BooksEntity() {
+
     }
 
     public BooksEntity(String isbn, String title, Integer copies, String cover, String outline, String publisher) {
@@ -27,6 +29,7 @@ public class BooksEntity {
         this.publisher = publisher;
     }
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "isbn", nullable = false, length = 13)
     public String getIsbn() {
@@ -101,12 +104,21 @@ public class BooksEntity {
     }
 
     @OneToMany(mappedBy = "book")
-    public Set<LendingEntity> getBorrowedBy() {
+    public List<LendingEntity> getBorrowedBy() {
         return borrowedBy;
     }
 
-    public void setBorrowedBy(Set<LendingEntity> borrowedBy) {
+    public void setBorrowedBy(List<LendingEntity> borrowedBy) {
         this.borrowedBy = borrowedBy;
+    }
+
+    @OneToMany(mappedBy = "book")
+    public List<ReservationsEntity> getReservedBy() {
+        return reservedBy;
+    }
+
+    public void setReservedBy(List<ReservationsEntity> reservedBy) {
+        this.reservedBy = reservedBy;
     }
 
     @Override

@@ -5,11 +5,10 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "lending", schema = "public", catalog = "library")
-public class LendingEntity {
+@Table(name = "reservations", schema = "public", catalog = "library")
+public class ReservationsEntity {
     private int id;
-    private Date lendingdate;
-    private Date returningdate;
+    private Date reservation;
     private BooksEntity book;
     private UsersEntity borrower;
 
@@ -25,36 +24,26 @@ public class LendingEntity {
     }
 
     @Basic
-    @Column(name = "lendingdate", nullable = false)
-    public Date getLendingdate() {
-        return lendingdate;
+    @Column(name = "reservation", nullable = false)
+    public Date getReservation() {
+        return reservation;
     }
 
-    public void setLendingdate(Date lendingdate) {
-        this.lendingdate = lendingdate;
-    }
-
-    @Basic
-    @Column(name = "returningdate", nullable = true)
-    public Date getReturningdate() {
-        return returningdate;
-    }
-
-    public void setReturningdate(Date returningdate) {
-        this.returningdate = returningdate;
+    public void setReservation(Date reservation) {
+        this.reservation = reservation;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LendingEntity that = (LendingEntity) o;
-        return id == that.id && Objects.equals(lendingdate, that.lendingdate) && Objects.equals(returningdate, that.returningdate);
+        ReservationsEntity that = (ReservationsEntity) o;
+        return id == that.id && Objects.equals(reservation, that.reservation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, lendingdate, returningdate);
+        return Objects.hash(id, reservation);
     }
 
     @ManyToOne

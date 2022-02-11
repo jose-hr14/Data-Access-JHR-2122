@@ -7,10 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -20,6 +22,7 @@ import org.hibernate.cfg.Configuration;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +36,7 @@ public class LibraryController{
     boolean isSearchingToEdit;
     boolean isBorrowing;
     boolean isReturning;
+    ColorAdjust effect;
 
     public LibraryController() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -46,6 +50,9 @@ public class LibraryController{
         isSearchingToEdit = false;
         isBorrowing = false;
         isReturning = false;
+
+        effect = new ColorAdjust();
+        effect.setBrightness(0.8);
     }
 
 
@@ -160,6 +167,22 @@ public class LibraryController{
     @FXML
     private ListView<BooksEntity> listView;
 
+    public TextField getTxfSearchIsbn() {
+        return txfSearchIsbn;
+    }
+
+    public void setTxfSearchIsbn(TextField txfSearchIsbn) {
+        this.txfSearchIsbn = txfSearchIsbn;
+    }
+
+    public TextField getTxfSearchUserCode() {
+        return txfSearchUserCode;
+    }
+
+    public void setTxfSearchUserCode(TextField txfSearchUserCode) {
+        this.txfSearchUserCode = txfSearchUserCode;
+    }
+
     public TextField getTxfFoundBookName() {
         return txfFoundBookName;
     }
@@ -177,17 +200,6 @@ public class LibraryController{
     }
 
     @FXML
-    void iconConfirmModalListener(MouseEvent event) {
-        listView.setItems(FXCollections.observableList(databaseManager.retrieveBooksList()));
-    }
-
-    @FXML
-    void iconCancelModalListener(MouseEvent event) {
-        BooksEntity booksEntity = listView.getSelectionModel().getSelectedItem();
-        System.out.println();
-    }
-
-    @FXML
     void userIconListener(MouseEvent event) {
         paneBook.setVisible(false);
         paneLent.setVisible(false);
@@ -196,6 +208,11 @@ public class LibraryController{
         iconEdit.setVisible(true);
         isBorrowing = false;
         isReturning = false;
+
+        iconUser.setEffect(effect);
+        iconBook.setEffect(null);
+        iconLentBook.setEffect(null);
+        iconReturnBook.setEffect(null);
     }
 
     @FXML
@@ -207,6 +224,11 @@ public class LibraryController{
         iconEdit.setVisible(true);
         isBorrowing = false;
         isReturning = false;
+
+        iconUser.setEffect(null);
+        iconBook.setEffect(effect);
+        iconLentBook.setEffect(null);
+        iconReturnBook.setEffect(null);
     }
 
     @FXML
@@ -219,6 +241,11 @@ public class LibraryController{
         iconEdit.setVisible(false);
         isBorrowing = true;
         isReturning = false;
+
+        iconUser.setEffect(null);
+        iconBook.setEffect(null);
+        iconLentBook.setEffect(effect);
+        iconReturnBook.setEffect(null);
     }
 
     @FXML
@@ -231,6 +258,11 @@ public class LibraryController{
         iconEdit.setVisible(false);
         isBorrowing = false;
         isReturning = true;
+
+        iconUser.setEffect(null);
+        iconBook.setEffect(null);
+        iconLentBook.setEffect(null);
+        iconReturnBook.setEffect(effect);
     }
 
     @FXML
@@ -241,8 +273,7 @@ public class LibraryController{
     @FXML
     void iconSearchUserCodeListener(MouseEvent event) {
         try {
-            //txfFoundUserName.setText(databaseManager.retrieveUserByID(txfSearchUserCode.getText()).toString());
-            openModalWindowUsers(databaseManager.retrieveUserList());
+            openModalWindowUsers(databaseManager.retrieveUsersByWildcard(txfFoundUserName.getText()));
         } catch (HibernateException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -259,9 +290,7 @@ public class LibraryController{
     @FXML
     void iconSearchIsbnListener(MouseEvent event) {
         try {
-            openModalWindowBooks(databaseManager.retrieveBooksList());
-            //BooksEntity booksEntity = databaseManager.retrieveBookByID(txfSearchIsbn.getText());
-            //txfFoundBookName.setText(booksEntity.toString());
+            openModalWindowBooks(databaseManager.retrieveBooksByWildcard(txfFoundBookName.getText()));
         } catch (HibernateException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -421,31 +450,34 @@ public class LibraryController{
 
             isEdit = false;
         } else if (isBorrowing && isAdd) {
-            LendingEntity lendingEntity = new LendingEntity();
-            lendingEntity.setBorrower(databaseManager.retrieveUserByID(txfSearchUserCode.getText()));
-            lendingEntity.setBook(databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
+            if(!txfSearchUserCode.getText().isEmpty() && !txfSearchIsbn.getText().isEmpty())
+            {
+                LendingEntity lendingEntity = new LendingEntity();
+                lendingEntity.setBorrower(databaseManager.retrieveUserByID(txfSearchUserCode.getText()));
+                lendingEntity.setBook(databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
 
-            lendingEntity.setLendingdate(Date.valueOf(LocalDate.now()));
-            try {
-                databaseManager.saveLending(lendingEntity);
-            } catch (Exception e) {
-                //Reserve book option
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Attention");
-                alert.setHeaderText("The are no copies available");
-                alert.setContentText("Do you want to make a reservation?");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK) {
-                    // ... user chose OK
-                } else {
-                    // ... user chose CANCEL or closed the dialog
+                lendingEntity.setLendingdate(Date.valueOf(LocalDate.now()));
+                try {
+                    databaseManager.saveLending(lendingEntity);
+                } catch (Exception e) {
+                    //Reserve book option
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Attention");
+                    alert.setHeaderText("The are no copies available");
+                    alert.setContentText("Do you want to make a reservation?");
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        // ... user chose OK
+                    } else {
+                        // ... user chose CANCEL or closed the dialog
+                    }
                 }
-            }
 
-            isAdd = false;
-            disableRentReturnFields();
-            cleanRentReturnFields();
-            changePanelFromConfirmToStandard();
+                isAdd = false;
+                disableRentReturnFields();
+                cleanRentReturnFields();
+                changePanelFromConfirmToStandard();
+            }
         } else if (isReturning && isAdd) {
             try {
                 LendingEntity lendingEntity = databaseManager.retrieveLendingByIDAAndISBN
@@ -532,19 +564,19 @@ public class LibraryController{
     void enableRentReturnFields() {
         iconSearchUserCode.setDisable(false);
         iconSearchUserCode.setVisible(true);
-        txfSearchUserCode.setDisable(false);
+        txfFoundUserName.setDisable(false);
         iconSearchIsbn.setDisable(false);
         iconSearchIsbn.setVisible(true);
-        txfSearchIsbn.setDisable(false);
+        txfFoundBookName.setDisable(false);
     }
 
     void disableRentReturnFields() {
         iconSearchUserCode.setDisable(true);
         iconSearchUserCode.setVisible(false);
-        txfSearchUserCode.setDisable(true);
+        txfFoundUserName.setDisable(true);
         iconSearchIsbn.setDisable(true);
         iconSearchIsbn.setVisible(false);
-        txfSearchIsbn.setDisable(true);
+        txfFoundBookName.setDisable(true);
     }
 
     void cleanRentReturnFields() {
@@ -559,9 +591,11 @@ public class LibraryController{
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         Scene scene = new Scene(root, 255, 408);
-        ((ListviewController) fxmlLoader.getController()).setBooksEntities(databaseManager.retrieveBooksList());
+        ((ListviewController) fxmlLoader.getController()).setBooksEntities(booksEntityList);
         ((ListviewController) fxmlLoader.getController()).setLibraryController(this);
-        stage.setTitle("Library Manager");
+        stage.setTitle("Choose a book");
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
     }
@@ -572,7 +606,9 @@ public class LibraryController{
         Scene scene = new Scene(root, 255, 408);
         ((ListviewController) fxmlLoader.getController()).setUsersEntities(usersEntities);
         ((ListviewController) fxmlLoader.getController()).setLibraryController(this);
-        stage.setTitle("Library Manager");
+        stage.setTitle("Choose user");
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
     }

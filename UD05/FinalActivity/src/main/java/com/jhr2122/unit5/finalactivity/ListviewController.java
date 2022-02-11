@@ -23,7 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ListviewController extends Application implements Initializable{
+public class ListviewController{
+
+    List<BooksEntity> booksEntities;
+    List<UsersEntity> usersEntities;
+    LibraryController libraryController;
+
     @FXML
     private ImageView iconCancel;
 
@@ -33,9 +38,6 @@ public class ListviewController extends Application implements Initializable{
     @FXML
     private ListView<Object> listView;
 
-    List<BooksEntity> booksEntities;
-    List<UsersEntity> usersEntities;
-    LibraryController libraryController;
 
     public LibraryController getLibraryController() {
         return libraryController;
@@ -79,17 +81,19 @@ public class ListviewController extends Application implements Initializable{
             listView.getItems().addAll( FXCollections.observableList(usersEntities));
     }
 
-
     @FXML
     void iconConfirmModalListener(MouseEvent event) {
         if(listView.getSelectionModel().getSelectedItem() instanceof BooksEntity)
         {
+            libraryController.getTxfSearchIsbn().setText(((BooksEntity) listView.getSelectionModel().getSelectedItem()).getIsbn());
             libraryController.getTxfFoundBookName().setText(listView.getSelectionModel().getSelectedItem().toString());
-
+            libraryController.getTxfFoundBookName().setDisable(true);
         }
         else if(listView.getSelectionModel().getSelectedItem() instanceof UsersEntity)
         {
+            libraryController.getTxfSearchUserCode().setText(((UsersEntity) listView.getSelectionModel().getSelectedItem()).getCode());
             libraryController.getTxfFoundUserName().setText(listView.getSelectionModel().getSelectedItem().toString());
+            libraryController.getTxfFoundUserName().setDisable(true);
         }
         Stage stage = (Stage) listView.getScene().getWindow();
         stage.close();
@@ -97,23 +101,7 @@ public class ListviewController extends Application implements Initializable{
 
     @FXML
     void iconCancelModalListener(MouseEvent event) {
-
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("listview-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 255, 408);
-        stage.setTitle("Library Manager");
-        stage.setScene(scene);
-        stage.showAndWait();
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
-
-    public ListviewController() {
+        Stage stage = (Stage) listView.getScene().getWindow();
+        stage.close();
     }
 }
