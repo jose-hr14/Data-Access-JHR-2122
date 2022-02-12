@@ -96,7 +96,22 @@ public class DatabaseManager {
         transaction.commit();
     }
 
+    public boolean bookIsReserved(BooksEntity booksEntity)
+    {
+        Query<ReservationsEntity> myQuery =
+                session.createQuery("from com.jhr2122.unit5.finalactivity.ReservationsEntity where " +
+                        "book.isbn = '" + booksEntity.getIsbn() + "'");
+        if(myQuery.list().size() >= booksEntity.getCopies())
+            return true;
+        else
+            return false;
+    }
+
     public void saveLending(LendingEntity lendingEntity) throws Exception {
+        if(lendingEntity.getBorrower().getFined() != null
+                && lendingEntity.getBorrower().getFined().toLocalDate().isAfter(LocalDate.now()))
+            throw new Exception("User is fined and cannot rent books until " +
+                    lendingEntity.getBorrower().getFined().toLocalDate());
         if (lendingEntity.getBook().getCopies() < 1)
             throw new Exception("There are no copies available to borrow");
         lendingEntity.getBook().setCopies(lendingEntity.getBook().getCopies() - 1);
@@ -112,8 +127,15 @@ public class DatabaseManager {
         lendingEntity.getBook().setCopies(lendingEntity.getBook().getCopies() + 1);
         this.updateBook(lendingEntity.getBook());
         if (lendingEntity.getLendingdate().toLocalDate().plusDays(7).isAfter(LocalDate.now())) {
-            //Fine user
+            lendingEntity.getBorrower().setFined(Date.valueOf(LocalDate.now()));
         }
+    }
+
+    public void saveReservation(ReservationsEntity reservationsEntity)
+    {
+        Transaction transaction = session.beginTransaction();
+        session.save(reservationsEntity);
+        transaction.commit();
     }
 
     public void updateUser(UsersEntity usersEntity) {

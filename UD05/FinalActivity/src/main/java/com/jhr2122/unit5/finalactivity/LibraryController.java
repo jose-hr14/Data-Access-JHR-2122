@@ -455,24 +455,39 @@ public class LibraryController{
                 LendingEntity lendingEntity = new LendingEntity();
                 lendingEntity.setBorrower(databaseManager.retrieveUserByID(txfSearchUserCode.getText()));
                 lendingEntity.setBook(databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
-
                 lendingEntity.setLendingdate(Date.valueOf(LocalDate.now()));
-                try {
-                    databaseManager.saveLending(lendingEntity);
-                } catch (Exception e) {
-                    //Reserve book option
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Attention");
-                    alert.setHeaderText("The are no copies available");
-                    alert.setContentText("Do you want to make a reservation?");
-                    Optional<ButtonType> result = alert.showAndWait();
+                if(lendingEntity.getBook().getCopies() < 1)
+                {
+                    Optional<ButtonType> result = openConfirmationDialog("Attention", "The are no copies available",
+                            "Do you want to make a reservation?");
                     if (result.get() == ButtonType.OK) {
-                        // ... user chose OK
-                    } else {
-                        // ... user chose CANCEL or closed the dialog
+                        ReservationsEntity reservationsEntity = new ReservationsEntity();
+                        reservationsEntity.setBorrower(lendingEntity.getBorrower());
+                        reservationsEntity.setBook(lendingEntity.getBook());
+                        reservationsEntity.setReservation(Date.valueOf(LocalDate.now()));
+                        databaseManager.saveReservation(reservationsEntity);
                     }
                 }
-
+                else if(databaseManager.bookIsReserved(lendingEntity.getBook()))
+                {
+                    if(lendingEntity.getBorrower().getReservedBooks().stream().anyMatch(reservedBook
+                            -> reservedBook.getBook().equals(lendingEntity.getBook())))
+                    {
+                        try {
+                            databaseManager.saveLending(lendingEntity);
+                        } catch (Exception e) {
+                            openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", e.getMessage());
+                        }
+                    }
+                }
+                else
+                {
+                    try {
+                        databaseManager.saveLending(lendingEntity);
+                    } catch (Exception e) {
+                        openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", e.getMessage());
+                    }
+                }
                 isAdd = false;
                 disableRentReturnFields();
                 cleanRentReturnFields();
@@ -484,14 +499,14 @@ public class LibraryController{
                         (databaseManager.retrieveUserByID(txfSearchUserCode.getText()),
                                 databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
                 databaseManager.saveReturn(lendingEntity);
+                if(lendingEntity.getBorrower().getFined().toLocalDate().isAfter(LocalDate.now()))
+                {
+                    openAlertDialog(Alert.AlertType.ERROR, "Error", "Late returnal",
+                            "User was fined until " + lendingEntity.getBorrower().getFined());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(e.getClass().toString());
-                alert.setContentText(e.getMessage());
-
-                alert.showAndWait();
+                openAlertDialog(Alert.AlertType.ERROR, "Error", e.getClass().toString(), e.getMessage());
             }
             isAdd = false;
             disableRentReturnFields();
@@ -611,5 +626,23 @@ public class LibraryController{
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
+    }
+
+    void openAlertDialog(Alert.AlertType alertType, String title, String headerText, String contentText)
+    {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.showAndWait();
+    }
+
+    Optional<ButtonType> openConfirmationDialog(String title, String headerText, String contentText)
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Attention");
+        alert.setHeaderText("The are no copies available");
+        alert.setContentText("Do you want to make a reservation?");
+        return alert.showAndWait();
     }
 }
