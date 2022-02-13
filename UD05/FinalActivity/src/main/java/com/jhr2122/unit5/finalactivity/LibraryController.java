@@ -1,19 +1,21 @@
 package com.jhr2122.unit5.finalactivity;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Lighting;
+import javafx.scene.effect.Shadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,8 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class LibraryController{
-//500 pixeles de ancho
+public class LibraryController {
+    //500 pixeles de ancho
     DatabaseManager databaseManager;
     boolean isRead;
     boolean isAdd;
@@ -37,6 +39,80 @@ public class LibraryController{
     boolean isBorrowing;
     boolean isReturning;
     ColorAdjust effect;
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private GridPane bottomConfirmPane;
+    @FXML
+    private GridPane bottomPanel;
+    @FXML
+    private ImageView iconAdd;
+    @FXML
+    private ImageView iconBook;
+    @FXML
+    private ImageView iconCancel;
+    @FXML
+    private ImageView iconConfirm;
+    @FXML
+    private ImageView iconEdit;
+    @FXML
+    private ImageView iconExit;
+    @FXML
+    private ImageView iconLentBook;
+    @FXML
+    private ImageView iconRead;
+    @FXML
+    private ImageView iconReturnBook;
+    @FXML
+    private ImageView iconSearchIsbn;
+    @FXML
+    private ImageView iconSearchUserCode;
+    @FXML
+    private ImageView iconUser;
+    @FXML
+    private DatePicker lblUserBirthdate;
+    @FXML
+    private TextField lblUserCode;
+    @FXML
+    private TextField lblUserName;
+    @FXML
+    private TextField lblUserSurname;
+    @FXML
+    private GridPane paneBook;
+    @FXML
+    private GridPane paneLent;
+    @FXML
+    private GridPane paneUser;
+    @FXML
+    private Slider sliderCopies;
+    @FXML
+    private Label lblBorrowOrReturnState;
+    @FXML
+    private TextField txfCover;
+    @FXML
+    private TextField txfFoundBookName;
+    @FXML
+    private TextField txfFoundUserName;
+    @FXML
+    private TextField txfISBN;
+    @FXML
+    private TextField txfOutline;
+    @FXML
+    private TextField txfPublisher;
+    @FXML
+    private TextField txfSearchIsbn;
+    @FXML
+    private TextField txfSearchUserCode;
+    @FXML
+    private TextField txfTitle;
+    @FXML
+    private GridPane upperPane;
+    @FXML
+    private ImageView iconCancelModal;
+    @FXML
+    private ImageView iconConfirmModal;
+    @FXML
+    private ListView<BooksEntity> listView;
 
     public LibraryController() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -51,121 +127,8 @@ public class LibraryController{
         isBorrowing = false;
         isReturning = false;
 
-        effect = new ColorAdjust();
-        effect.setBrightness(0.8);
+        getEffect();
     }
-
-
-    @FXML
-    private AnchorPane anchorPane;
-
-    @FXML
-    private GridPane bottomConfirmPane;
-
-    @FXML
-    private GridPane bottomPanel;
-
-    @FXML
-    private ImageView iconAdd;
-
-    @FXML
-    private ImageView iconBook;
-
-    @FXML
-    private ImageView iconCancel;
-
-    @FXML
-    private ImageView iconConfirm;
-
-    @FXML
-    private ImageView iconEdit;
-
-    @FXML
-    private ImageView iconExit;
-
-    @FXML
-    private ImageView iconLentBook;
-
-    @FXML
-    private ImageView iconRead;
-
-    @FXML
-    private ImageView iconReturnBook;
-
-    @FXML
-    private ImageView iconSearchIsbn;
-
-    @FXML
-    private ImageView iconSearchUserCode;
-
-    @FXML
-    private ImageView iconUser;
-
-    @FXML
-    private DatePicker lblUserBirthdate;
-
-    @FXML
-    private TextField lblUserCode;
-
-    @FXML
-    private TextField lblUserName;
-
-    @FXML
-    private TextField lblUserSurname;
-
-    @FXML
-    private GridPane paneBook;
-
-    @FXML
-    private GridPane paneLent;
-
-    @FXML
-    private GridPane paneUser;
-
-    @FXML
-    private Slider sliderCopies;
-
-    @FXML
-    private Label lblBorrowOrReturnState;
-
-    @FXML
-    private TextField txfCover;
-
-    @FXML
-    private TextField txfFoundBookName;
-
-    @FXML
-    private TextField txfFoundUserName;
-
-    @FXML
-    private TextField txfISBN;
-
-    @FXML
-    private TextField txfOutline;
-
-    @FXML
-    private TextField txfPublisher;
-
-    @FXML
-    private TextField txfSearchIsbn;
-
-    @FXML
-    private TextField txfSearchUserCode;
-
-    @FXML
-    private TextField txfTitle;
-
-    @FXML
-    private GridPane upperPane;
-
-    @FXML
-    private ImageView iconCancelModal;
-
-    @FXML
-    private ImageView iconConfirmModal;
-
-    @FXML
-    private ListView<BooksEntity> listView;
 
     public TextField getTxfSearchIsbn() {
         return txfSearchIsbn;
@@ -290,7 +253,18 @@ public class LibraryController{
     @FXML
     void iconSearchIsbnListener(MouseEvent event) {
         try {
-            openModalWindowBooks(databaseManager.retrieveBooksByWildcard(txfFoundBookName.getText()));
+            if (isBorrowing)
+                openModalWindowBooks(databaseManager.retrieveBooksByWildcard(txfFoundBookName.getText()));
+            else if (isReturning) {
+                List<BooksEntity> bookToBeReturned = new ArrayList<>();
+                for (LendingEntity lending : databaseManager.retrieveUserByID(txfSearchUserCode.getText()).getLentBooks()) {
+                    bookToBeReturned.add(lending.getBook());
+                }
+                if (bookToBeReturned.isEmpty())
+                    throw new HibernateException("This user has no book to be returned");
+                else
+                    openModalWindowBooks(bookToBeReturned);
+            }
         } catch (HibernateException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -367,152 +341,214 @@ public class LibraryController{
     @FXML
     void iconConfirmListener(MouseEvent event) {
         if (paneUser.isVisible() && isAdd) {
-            UsersEntity usersEntity = new UsersEntity(lblUserCode.getText(), lblUserName.getText(),
-                    lblUserSurname.getText(), java.sql.Date.valueOf(lblUserBirthdate.getValue()));
-            databaseManager.saveUser(usersEntity);
-            cleanUserFields();
-            disableUserFields();
-            changePanelFromConfirmToStandard();
-            isAdd = false;
+            if (!lblUserCode.getText().isEmpty() && !lblUserName.getText().isEmpty() && !lblUserSurname.getText().isEmpty())
+                addUser();
+            else
+                openAlertDialog(Alert.AlertType.WARNING, "Attention", "Some fields are blank",
+                        "Id, name and surname are mandatory");
         } else if (paneUser.isVisible() && isRead) {
-            UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
-            lblUserName.setText(usersEntity.getName());
-            lblUserSurname.setText(usersEntity.getSurname());
-            lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
-            isRead = false;
+            readUser();
         } else if (paneUser.isVisible() && isSearchingToEdit) {
-            UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
-            lblUserName.setText(usersEntity.getName());
-            lblUserSurname.setText(usersEntity.getSurname());
-            lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
-
-            enableUserFields();
-            lblUserCode.setDisable(true);
-
-            isSearchingToEdit = false;
-            isEdit = true;
+            searchingUserToEdit();
         } else if (paneUser.isVisible() && isEdit) {
-            UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
-            usersEntity.setName(lblUserName.getText());
-            usersEntity.setSurname(lblUserSurname.getText());
-            usersEntity.setBirthdate(Date.valueOf(lblUserBirthdate.getValue()));
-            databaseManager.updateUser(usersEntity);
-
-            cleanUserFields();
-            disableUserFields();
-            changePanelFromConfirmToStandard();
-
-            isEdit = false;
+            editUser();
         } else if (paneBook.isVisible() && isAdd) {
-            BooksEntity booksEntity = new BooksEntity(txfISBN.getText(), txfTitle.getText(),
-                    (int) sliderCopies.getValue(), txfCover.getText(), txfOutline.getText(),
-                    txfPublisher.getText());
-            databaseManager.saveBook(booksEntity);
-            changePanelFromConfirmToStandard();
-            cleanBookFields();
-            disableBookFields();
-
-            isAdd = false;
+            if(!txfISBN.getText().isEmpty() && !txfTitle.getText().isEmpty() && !txfPublisher.getText().isEmpty())
+                addBook();
+            else
+                openAlertDialog(Alert.AlertType.WARNING, "Attention", "Some fields are blank",
+                        "ISBN, tittle and publisher are mandatory");
         } else if (paneBook.isVisible() && isRead) {
-            BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
-            txfTitle.setText(booksEntity.getTitle());
-            sliderCopies.setValue(booksEntity.getCopies());
-            txfCover.setText(booksEntity.getCover());
-            txfOutline.setText(booksEntity.getOutline());
-            txfPublisher.setText(booksEntity.getPublisher());
+            readBook();
         } else if (paneBook.isVisible() && isSearchingToEdit) {
-            BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
-            txfTitle.setText(booksEntity.getTitle());
-            sliderCopies.setValue(booksEntity.getCopies());
-            txfCover.setText(booksEntity.getCover());
-            txfOutline.setText(booksEntity.getOutline());
-            txfPublisher.setText(booksEntity.getPublisher());
-
-            enableBookFields();
-            txfISBN.setDisable(true);
-
-            isSearchingToEdit = false;
-            isEdit = true;
+            searchBookToEdit();
         } else if (paneBook.isVisible() && isEdit) {
-            BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
-
-            booksEntity.setTitle(txfTitle.getText());
-            booksEntity.setCopies((int) sliderCopies.getValue());
-            booksEntity.setCover(txfCover.getText());
-            booksEntity.setOutline(txfOutline.getText());
-            booksEntity.setPublisher(txfPublisher.getText());
-
-            databaseManager.updateBook(booksEntity);
-
-            cleanBookFields();
-            disableBookFields();
-            changePanelFromConfirmToStandard();
-
-            isEdit = false;
+            editBook();
         } else if (isBorrowing && isAdd) {
-            if(!txfSearchUserCode.getText().isEmpty() && !txfSearchIsbn.getText().isEmpty())
-            {
-                LendingEntity lendingEntity = new LendingEntity();
-                lendingEntity.setBorrower(databaseManager.retrieveUserByID(txfSearchUserCode.getText()));
-                lendingEntity.setBook(databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
-                lendingEntity.setLendingdate(Date.valueOf(LocalDate.now()));
-                if(lendingEntity.getBook().getCopies() < 1)
-                {
-                    Optional<ButtonType> result = openConfirmationDialog("Attention", "The are no copies available",
-                            "Do you want to make a reservation?");
-                    if (result.get() == ButtonType.OK) {
-                        ReservationsEntity reservationsEntity = new ReservationsEntity();
-                        reservationsEntity.setBorrower(lendingEntity.getBorrower());
-                        reservationsEntity.setBook(lendingEntity.getBook());
-                        reservationsEntity.setReservation(Date.valueOf(LocalDate.now()));
-                        databaseManager.saveReservation(reservationsEntity);
-                    }
+            addLending();
+        } else if (isReturning && isAdd) {
+            addReturning();
+        }
+    }
+
+    private void addReturning() {
+        try {
+            LendingEntity lendingEntity = databaseManager.retrieveLendingByIDAAndISBN
+                    (databaseManager.retrieveUserByID(txfSearchUserCode.getText()),
+                            databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
+            databaseManager.saveReturn(lendingEntity);
+            if (lendingEntity.getBorrower().getFined() != null
+                    && lendingEntity.getBorrower().getFined().toLocalDate().isAfter(LocalDate.now())) {
+                openAlertDialog(Alert.AlertType.ERROR, "Error", "Late returnal",
+                        "User was fined until " + lendingEntity.getBorrower().getFined());
+            }
+            List<ReservationsEntity> reservationsEntity = databaseManager.retrieveReservationsByBook(lendingEntity.getBook());
+            if (!databaseManager.retrieveReservationsByBook(lendingEntity.getBook()).isEmpty())
+                openAlertDialog(Alert.AlertType.INFORMATION, "Attention", "A user has a reservation " +
+                        "of this book", "Please, notify " +
+                        databaseManager.retrieveReservationsByBook(lendingEntity.getBook()).get(0).getBorrower().toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            openAlertDialog(Alert.AlertType.ERROR, "Error", e.getClass().toString(), e.getMessage());
+        }
+        isAdd = false;
+        disableRentReturnFields();
+        cleanRentReturnFields();
+        changePanelFromConfirmToStandard();
+    }
+
+    private void addLending() {
+        if (!txfSearchUserCode.getText().isEmpty() && !txfSearchIsbn.getText().isEmpty()) {
+            LendingEntity lendingEntity = new LendingEntity();
+            lendingEntity.setBorrower(databaseManager.retrieveUserByID(txfSearchUserCode.getText()));
+            lendingEntity.setBook(databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
+            lendingEntity.setLendingdate(Date.valueOf(LocalDate.now()));
+            if (lendingEntity.getBook().getCopies() < 1) {
+                Optional<ButtonType> result = openConfirmationDialog("Attention", "The are no copies available",
+                        "Do you want to make a reservation?");
+                if (result.get() == ButtonType.OK) {
+                    addReservation(lendingEntity);
                 }
-                else if(databaseManager.bookIsReserved(lendingEntity.getBook()))
-                {
-                    if(lendingEntity.getBorrower().getReservedBooks().stream().anyMatch(reservedBook
-                            -> reservedBook.getBook().equals(lendingEntity.getBook())))
-                    {
-                        try {
-                            databaseManager.saveLending(lendingEntity);
-                        } catch (Exception e) {
-                            openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", e.getMessage());
-                        }
-                    }
-                }
-                else
-                {
+            } else if (databaseManager.bookIsReserved(lendingEntity.getBook())) {
+                List<ReservationsEntity> reservationsOfThisBook = databaseManager.
+                        retrieveReservationsByBook(lendingEntity.getBook());
+                if (reservationsOfThisBook.get(0).getBorrower().equals(lendingEntity.getBorrower())) {
                     try {
                         databaseManager.saveLending(lendingEntity);
+                        databaseManager.deleteReservation(reservationsOfThisBook.get(0));
                     } catch (Exception e) {
                         openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", e.getMessage());
                     }
+                } else {
+                    Optional<ButtonType> result = openConfirmationDialog("Attention", "The available copies are reserved",
+                            "Do you want to make a reservation?");
+                    if (result.get() == ButtonType.OK) {
+                        addReservation(lendingEntity);
+                    }
                 }
-                isAdd = false;
-                disableRentReturnFields();
-                cleanRentReturnFields();
-                changePanelFromConfirmToStandard();
-            }
-        } else if (isReturning && isAdd) {
-            try {
-                LendingEntity lendingEntity = databaseManager.retrieveLendingByIDAAndISBN
-                        (databaseManager.retrieveUserByID(txfSearchUserCode.getText()),
-                                databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
-                databaseManager.saveReturn(lendingEntity);
-                if(lendingEntity.getBorrower().getFined().toLocalDate().isAfter(LocalDate.now()))
-                {
-                    openAlertDialog(Alert.AlertType.ERROR, "Error", "Late returnal",
-                            "User was fined until " + lendingEntity.getBorrower().getFined());
+            } else {
+                try {
+                    databaseManager.saveLending(lendingEntity);
+                } catch (Exception e) {
+                    openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", e.getMessage());
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                openAlertDialog(Alert.AlertType.ERROR, "Error", e.getClass().toString(), e.getMessage());
             }
             isAdd = false;
             disableRentReturnFields();
             cleanRentReturnFields();
             changePanelFromConfirmToStandard();
         }
+    }
+
+    private void addReservation(LendingEntity lendingEntity) {
+        ReservationsEntity reservationsEntity = new ReservationsEntity();
+        reservationsEntity.setBorrower(lendingEntity.getBorrower());
+        reservationsEntity.setBook(lendingEntity.getBook());
+        reservationsEntity.setReservation(Date.valueOf(LocalDate.now()));
+        databaseManager.saveReservation(reservationsEntity);
+    }
+
+    private void editBook() {
+        BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
+
+        booksEntity.setTitle(txfTitle.getText());
+        booksEntity.setCopies((int) sliderCopies.getValue());
+        booksEntity.setCover(txfCover.getText());
+        booksEntity.setOutline(txfOutline.getText());
+        booksEntity.setPublisher(txfPublisher.getText());
+
+        databaseManager.updateBook(booksEntity);
+
+        cleanBookFields();
+        disableBookFields();
+        changePanelFromConfirmToStandard();
+
+        isEdit = false;
+    }
+
+    private void searchBookToEdit() {
+        BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
+        txfTitle.setText(booksEntity.getTitle());
+        sliderCopies.setValue(booksEntity.getCopies());
+        txfCover.setText(booksEntity.getCover());
+        txfOutline.setText(booksEntity.getOutline());
+        txfPublisher.setText(booksEntity.getPublisher());
+
+        enableBookFields();
+        txfISBN.setDisable(true);
+
+        isSearchingToEdit = false;
+        isEdit = true;
+    }
+
+    private void readBook() {
+        BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
+        txfTitle.setText(booksEntity.getTitle());
+        sliderCopies.setValue(booksEntity.getCopies());
+        txfCover.setText(booksEntity.getCover());
+        txfOutline.setText(booksEntity.getOutline());
+        txfPublisher.setText(booksEntity.getPublisher());
+    }
+
+    private void addBook() {
+        BooksEntity booksEntity = new BooksEntity(txfISBN.getText(), txfTitle.getText(),
+                (int) sliderCopies.getValue(), txfCover.getText(), txfOutline.getText(),
+                txfPublisher.getText());
+        databaseManager.saveBook(booksEntity);
+        changePanelFromConfirmToStandard();
+        cleanBookFields();
+        disableBookFields();
+
+        isAdd = false;
+    }
+
+    private void editUser() {
+        UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
+        usersEntity.setName(lblUserName.getText());
+        usersEntity.setSurname(lblUserSurname.getText());
+        usersEntity.setBirthdate(Date.valueOf(lblUserBirthdate.getValue()));
+        databaseManager.updateUser(usersEntity);
+
+        cleanUserFields();
+        disableUserFields();
+        changePanelFromConfirmToStandard();
+
+        isEdit = false;
+    }
+
+    private void searchingUserToEdit() {
+        UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
+        lblUserName.setText(usersEntity.getName());
+        lblUserSurname.setText(usersEntity.getSurname());
+        lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
+
+        enableUserFields();
+        lblUserCode.setDisable(true);
+
+        isSearchingToEdit = false;
+        isEdit = true;
+    }
+
+    private void readUser() {
+        UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
+        lblUserName.setText(usersEntity.getName());
+        lblUserSurname.setText(usersEntity.getSurname());
+        lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
+        isRead = false;
+    }
+
+    private void addUser() {
+        UsersEntity usersEntity = new UsersEntity();
+        usersEntity.setCode(lblUserCode.getText());
+        usersEntity.setName(lblUserName.getText());
+        usersEntity.setSurname(lblUserSurname.getText());
+        if(lblUserBirthdate.getValue() != null)
+            usersEntity.setBirthdate(Date.valueOf(lblUserBirthdate.getValue()));
+        databaseManager.saveUser(usersEntity);
+        cleanUserFields();
+        disableUserFields();
+        changePanelFromConfirmToStandard();
+        isAdd = false;
     }
 
     void changePanelFromConfirmToStandard() {
@@ -611,9 +647,11 @@ public class LibraryController{
         stage.setTitle("Choose a book");
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
     }
+
     void openModalWindowUsers(List<UsersEntity> usersEntities) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("listview-view.fxml"));
         Parent root = fxmlLoader.load();
@@ -624,12 +662,12 @@ public class LibraryController{
         stage.setTitle("Choose user");
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
     }
 
-    void openAlertDialog(Alert.AlertType alertType, String title, String headerText, String contentText)
-    {
+    void openAlertDialog(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -637,12 +675,26 @@ public class LibraryController{
         alert.showAndWait();
     }
 
-    Optional<ButtonType> openConfirmationDialog(String title, String headerText, String contentText)
-    {
+    Optional<ButtonType> openConfirmationDialog(String title, String headerText, String contentText) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Attention");
-        alert.setHeaderText("The are no copies available");
-        alert.setContentText("Do you want to make a reservation?");
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
         return alert.showAndWait();
+    }
+
+    private void getEffect() {
+        Lighting lighting = new Lighting();
+        lighting.setDiffuseConstant(1.0);
+        lighting.setSpecularConstant(0.3);
+        lighting.setSpecularExponent(20.0);
+        lighting.setSurfaceScale(1.5);
+        Shadow shadow = new Shadow();
+        shadow.setWidth(21.0);
+        shadow.setHeight(21.0);
+        shadow.setRadius(10.0);
+        lighting.setBumpInput(shadow);
+        effect = new ColorAdjust();
+        effect.setInput(lighting);
     }
 }

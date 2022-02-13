@@ -26,7 +26,6 @@ public class UsersEntity {
         this.birthdate = birthdate;
     }
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "code", nullable = false, length = 8)
     public String getCode() {

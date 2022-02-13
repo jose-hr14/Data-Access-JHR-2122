@@ -29,7 +29,6 @@ public class BooksEntity {
         this.publisher = publisher;
     }
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "isbn", nullable = false, length = 13)
     public String getIsbn() {

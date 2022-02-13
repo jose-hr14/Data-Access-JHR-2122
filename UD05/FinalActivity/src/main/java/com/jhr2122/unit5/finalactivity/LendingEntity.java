@@ -1,11 +1,14 @@
 package com.jhr2122.unit5.finalactivity;
 
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "lending", schema = "public", catalog = "library")
+@Where(clause = "returningdate is null")
 public class LendingEntity {
     private int id;
     private Date lendingdate;
