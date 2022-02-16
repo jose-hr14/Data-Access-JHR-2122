@@ -1,5 +1,6 @@
 package com.jhr2122.unit5.finalactivity.finalactivityspring.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -71,6 +72,7 @@ public class LendingEntity {
 
     @ManyToOne
     @JoinColumn(name = "book", referencedColumnName = "isbn", nullable = false)
+    @JsonIgnoreProperties("borrowedBy")
     public BooksEntity getBook() {
         return book;
     }
@@ -81,6 +83,7 @@ public class LendingEntity {
 
     @ManyToOne
     @JoinColumn(name = "borrower", referencedColumnName = "code", nullable = false)
+    @JsonIgnoreProperties("lentBooks")
     public UsersEntity getBorrower() {
         return borrower;
     }
