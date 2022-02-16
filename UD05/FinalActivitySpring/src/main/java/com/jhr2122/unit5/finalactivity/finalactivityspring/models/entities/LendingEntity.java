@@ -1,10 +1,9 @@
-package com.jhr2122.unit5.finalactivity;
+package com.jhr2122.unit5.finalactivity.finalactivityspring.models.entities;
 
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Objects;
 
 @Entity
 @Table(name = "lending", schema = "public", catalog = "Library")
@@ -51,13 +50,23 @@ public class LendingEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         LendingEntity that = (LendingEntity) o;
-        return id == that.id && Objects.equals(lendingdate, that.lendingdate) && Objects.equals(returningdate, that.returningdate);
+
+        if (id != that.id) return false;
+        if (lendingdate != null ? !lendingdate.equals(that.lendingdate) : that.lendingdate != null) return false;
+        if (returningdate != null ? !returningdate.equals(that.returningdate) : that.returningdate != null)
+            return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, lendingdate, returningdate);
+        int result = id;
+        result = 31 * result + (lendingdate != null ? lendingdate.hashCode() : 0);
+        result = 31 * result + (returningdate != null ? returningdate.hashCode() : 0);
+        return result;
     }
 
     @ManyToOne

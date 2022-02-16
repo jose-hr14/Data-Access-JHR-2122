@@ -28,7 +28,7 @@ public class DatabaseManager {
     }
 
     public List<ReservationsEntity> retrieveReservationsByBook(BooksEntity booksEntity) {
-        Query<ReservationsEntity> myQuery = session.createQuery(("from com.jhr2122.unit5.finalactivity.ReservationsEntity " + "where book.isbn = '" + booksEntity.getIsbn() + "' order by reservation"));
+        Query<ReservationsEntity> myQuery = session.createQuery(("from com.jhr2122.unit5.finalactivity.ReservationsEntity " + "where book.isbn = '" + booksEntity.getIsbn() + "' order by date"));
         return myQuery.list();
     }
 
@@ -68,18 +68,20 @@ public class DatabaseManager {
         Transaction transaction = session.beginTransaction();
         session.save(usersEntity);
         transaction.commit();
+        session.refresh(usersEntity);
     }
 
     public void saveBook(BooksEntity booksEntity) {
         Transaction transaction = session.beginTransaction();
         session.save(booksEntity);
         transaction.commit();
+        session.refresh(booksEntity);
     }
 
     public void saveLending(LendingEntity lendingEntity) throws Exception {
         List<LendingEntity> asdf = lendingEntity.getBorrower().getLentBooks();
-        if(lendingEntity.getBorrower().getLentBooks().stream().anyMatch(lending -> lending.getBook().
-                equals(lendingEntity.getBook())))
+        if(lendingEntity.getBorrower().getLentBooks().stream().anyMatch(lending -> lending.getBook().equals
+                        (lendingEntity.getBook())))
             throw new Exception("Book already borowed by this user");
         if(lendingEntity.getBorrower().getLentBooks().size() == 3)
             throw new Exception("This user has already borrowed three books");
@@ -97,7 +99,7 @@ public class DatabaseManager {
         lendingEntity.getBook().setCopies(lendingEntity.getBook().getCopies() + 1);
         this.updateBook(lendingEntity.getBook());
         if (lendingEntity.getLendingdate().toLocalDate().plusDays(7).isAfter(LocalDate.now())) {
-            lendingEntity.getBorrower().setFined(Date.valueOf(LocalDate.now()));
+            lendingEntity.getBorrower().setFined(Date.valueOf(LocalDate.now().plusDays(7)));
         }
         session.refresh(lendingEntity.getBorrower());
     }
@@ -106,47 +108,54 @@ public class DatabaseManager {
         Transaction transaction = session.beginTransaction();
         session.save(reservationsEntity);
         transaction.commit();
+        session.refresh(reservationsEntity);
     }
 
     public void updateUser(UsersEntity usersEntity) {
         Transaction transaction = session.beginTransaction();
         session.update(usersEntity);
         transaction.commit();
+        session.refresh(usersEntity);
     }
 
     public void updateBook(BooksEntity booksEntity) {
         Transaction transaction = session.beginTransaction();
         session.update(booksEntity);
         transaction.commit();
+        session.refresh(booksEntity);
     }
 
     public void updateLending(LendingEntity lendingEntity) {
         Transaction transaction = session.beginTransaction();
         session.update(lendingEntity);
         transaction.commit();
+        session.refresh(lendingEntity);
     }
 
     public void deleteUser(UsersEntity usersEntity) {
         Transaction transaction = session.beginTransaction();
         session.delete(usersEntity);
         transaction.commit();
+        session.refresh(usersEntity);
     }
 
     public void deleteBook(BooksEntity booksEntity) {
         Transaction transaction = session.beginTransaction();
         session.delete(booksEntity);
         transaction.commit();
+        session.refresh(booksEntity);
     }
 
     public void deleteReservation(ReservationsEntity reservationsEntity) {
         Transaction transaction = session.beginTransaction();
         session.delete(reservationsEntity);
         transaction.commit();
+        session.refresh(reservationsEntity);
     }
 
     public boolean bookIsReserved(BooksEntity booksEntity) {
-        Query<ReservationsEntity> myQuery = session.createQuery("from com.jhr2122.unit5.finalactivity.ReservationsEntity where " + "book.isbn = '" + booksEntity.getIsbn() + "'");
-        if (myQuery.list().size() >= booksEntity.getCopies()) return true;
+        List<ReservationsEntity> reservationsEntity = booksEntity.getReservedBy();
+        if (reservationsEntity.size() >= booksEntity.getCopies()) return true;
         else return false;
     }
 }

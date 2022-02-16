@@ -1,11 +1,11 @@
-package com.jhr2122.unit5.finalactivity;
+package com.jhr2122.unit5.finalactivity.finalactivityspring.models.entities;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "books", schema = "public", catalog = "Library")
@@ -16,22 +16,12 @@ public class BooksEntity {
     private String cover;
     private String outline;
     private String publisher;
+    @JsonIgnore
     private List<LendingEntity> borrowedBy;
+    @JsonIgnore
     private List<ReservationsEntity> reservedBy;
 
-    public BooksEntity() {
-
-    }
-
-    public BooksEntity(String isbn, String title, Integer copies, String cover, String outline, String publisher) {
-        this.isbn = isbn;
-        this.title = title;
-        this.copies = copies;
-        this.cover = cover;
-        this.outline = outline;
-        this.publisher = publisher;
-    }
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "isbn", nullable = false, length = 13)
     public String getIsbn() {
@@ -96,17 +86,31 @@ public class BooksEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         BooksEntity that = (BooksEntity) o;
-        return Objects.equals(isbn, that.isbn) && Objects.equals(title, that.title) && Objects.equals(copies, that.copies) && Objects.equals(cover, that.cover) && Objects.equals(outline, that.outline) && Objects.equals(publisher, that.publisher);
+
+        if (isbn != null ? !isbn.equals(that.isbn) : that.isbn != null) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (copies != null ? !copies.equals(that.copies) : that.copies != null) return false;
+        if (cover != null ? !cover.equals(that.cover) : that.cover != null) return false;
+        if (outline != null ? !outline.equals(that.outline) : that.outline != null) return false;
+        if (publisher != null ? !publisher.equals(that.publisher) : that.publisher != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isbn, title, copies, cover, outline, publisher);
+        int result = isbn != null ? isbn.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (copies != null ? copies.hashCode() : 0);
+        result = 31 * result + (cover != null ? cover.hashCode() : 0);
+        result = 31 * result + (outline != null ? outline.hashCode() : 0);
+        result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
+        return result;
     }
 
     @OneToMany(mappedBy = "book")
-    @LazyCollection(LazyCollectionOption.FALSE)
     public List<LendingEntity> getBorrowedBy() {
         return borrowedBy;
     }
@@ -116,17 +120,11 @@ public class BooksEntity {
     }
 
     @OneToMany(mappedBy = "book")
-    @LazyCollection(LazyCollectionOption.FALSE)
     public List<ReservationsEntity> getReservedBy() {
         return reservedBy;
     }
 
     public void setReservedBy(List<ReservationsEntity> reservedBy) {
         this.reservedBy = reservedBy;
-    }
-
-    @Override
-    public String toString() {
-        return title + ", by " + publisher;
     }
 }

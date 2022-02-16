@@ -18,6 +18,7 @@ public class LibraryApplication extends Application {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
+        //date para el campo reservations, nombre del campo y tipo date, por defecto nulo
     }
 
     public static void main(String[] args) {

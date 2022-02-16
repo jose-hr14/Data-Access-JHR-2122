@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class LibraryController {
-    //500 pixeles de ancho
     DatabaseManager databaseManager;
     boolean isRead;
     boolean isAdd;
@@ -118,6 +117,7 @@ public class LibraryController {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         databaseManager = new DatabaseManager(session);
+        setEffect();
 
         isRead = false;
         isAdd = false;
@@ -126,8 +126,6 @@ public class LibraryController {
         isSearchingToEdit = false;
         isBorrowing = false;
         isReturning = false;
-
-        getEffect();
     }
 
     public TextField getTxfSearchIsbn() {
@@ -417,6 +415,7 @@ public class LibraryController {
                         databaseManager.saveLending(lendingEntity);
                         databaseManager.deleteReservation(reservationsOfThisBook.get(0));
                     } catch (Exception e) {
+                        e.printStackTrace();
                         openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", e.getMessage());
                     }
                 } else {
@@ -430,6 +429,7 @@ public class LibraryController {
                 try {
                     databaseManager.saveLending(lendingEntity);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", e.getMessage());
                 }
             }
@@ -444,7 +444,7 @@ public class LibraryController {
         ReservationsEntity reservationsEntity = new ReservationsEntity();
         reservationsEntity.setBorrower(lendingEntity.getBorrower());
         reservationsEntity.setBook(lendingEntity.getBook());
-        reservationsEntity.setReservation(Date.valueOf(LocalDate.now()));
+        reservationsEntity.setDate(Date.valueOf(LocalDate.now()));
         databaseManager.saveReservation(reservationsEntity);
     }
 
@@ -683,7 +683,7 @@ public class LibraryController {
         return alert.showAndWait();
     }
 
-    private void getEffect() {
+    private void setEffect() {
         Lighting lighting = new Lighting();
         lighting.setDiffuseConstant(1.0);
         lighting.setSpecularConstant(0.3);

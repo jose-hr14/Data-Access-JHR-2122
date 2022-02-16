@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:postgresql://localhost:5432/library</property>
+    <property name="connection.url">jdbc:postgresql://localhost:5432/Library</property>
     <property name="connection.driver_class">org.postgresql.Driver</property>
     <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
     <property name="connection.username">postgres</property>

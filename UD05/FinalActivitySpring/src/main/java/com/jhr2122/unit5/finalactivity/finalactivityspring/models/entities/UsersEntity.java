@@ -1,12 +1,10 @@
-package com.jhr2122.unit5.finalactivity;
+package com.jhr2122.unit5.finalactivity.finalactivityspring.models.entities;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "Library")
@@ -19,16 +17,7 @@ public class UsersEntity {
     private List<LendingEntity> lentBooks;
     private List<ReservationsEntity> reservedBooks;
 
-    public UsersEntity() {
-    }
-
-    public UsersEntity(String code, String name, String surname, Date birthdate) {
-        this.code = code;
-        this.name = name;
-        this.surname = surname;
-        this.birthdate = birthdate;
-    }
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "code", nullable = false, length = 8)
     public String getCode() {
@@ -83,17 +72,30 @@ public class UsersEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         UsersEntity that = (UsersEntity) o;
-        return Objects.equals(code, that.code) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(birthdate, that.birthdate) && Objects.equals(fined, that.fined);
+
+        if (code != null ? !code.equals(that.code) : that.code != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
+        if (birthdate != null ? !birthdate.equals(that.birthdate) : that.birthdate != null) return false;
+        if (fined != null ? !fined.equals(that.fined) : that.fined != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(code, name, surname, birthdate, fined);
+        int result = code != null ? code.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (birthdate != null ? birthdate.hashCode() : 0);
+        result = 31 * result + (fined != null ? fined.hashCode() : 0);
+        return result;
     }
 
     @OneToMany(mappedBy = "borrower")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnoreProperties("borrower")
     public List<LendingEntity> getLentBooks() {
         return lentBooks;
     }
@@ -103,17 +105,12 @@ public class UsersEntity {
     }
 
     @OneToMany(mappedBy = "borrower")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnoreProperties("borrower")
     public List<ReservationsEntity> getReservedBooks() {
         return reservedBooks;
     }
 
     public void setReservedBooks(List<ReservationsEntity> reservedBooks) {
         this.reservedBooks = reservedBooks;
-    }
-
-    @Override
-    public String toString() {
-        return getName() + " " + getSurname();
     }
 }
