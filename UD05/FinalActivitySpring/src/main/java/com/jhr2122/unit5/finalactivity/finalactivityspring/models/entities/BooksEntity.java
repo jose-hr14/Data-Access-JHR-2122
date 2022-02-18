@@ -21,7 +21,6 @@ public class BooksEntity {
     @JsonIgnore
     private List<ReservationsEntity> reservedBy;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "isbn", nullable = false, length = 13)
     public String getIsbn() {

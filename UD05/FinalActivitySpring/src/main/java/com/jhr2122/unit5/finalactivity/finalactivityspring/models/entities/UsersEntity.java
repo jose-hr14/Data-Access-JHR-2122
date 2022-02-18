@@ -17,7 +17,6 @@ public class UsersEntity {
     private List<LendingEntity> lentBooks;
     private List<ReservationsEntity> reservedBooks;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "code", nullable = false, length = 8)
     public String getCode() {

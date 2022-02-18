@@ -20,6 +20,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -30,6 +31,7 @@ import java.util.Optional;
 
 public class LibraryController {
     DatabaseManager databaseManager;
+    SpringManager springManager;
     boolean isRead;
     boolean isAdd;
     boolean isDelete;
@@ -117,6 +119,7 @@ public class LibraryController {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         databaseManager = new DatabaseManager(session);
+        springManager = new SpringManager();
         setEffect();
 
         isRead = false;
@@ -445,7 +448,12 @@ public class LibraryController {
         reservationsEntity.setBorrower(lendingEntity.getBorrower());
         reservationsEntity.setBook(lendingEntity.getBook());
         reservationsEntity.setDate(Date.valueOf(LocalDate.now()));
-        databaseManager.saveReservation(reservationsEntity);
+        try {
+            springManager.PostReservation(reservationsEntity);
+        } catch (Exception e) {
+            databaseManager.saveReservation(reservationsEntity);
+            e.printStackTrace();
+        }
     }
 
     private void editBook() {
@@ -545,6 +553,7 @@ public class LibraryController {
         if(lblUserBirthdate.getValue() != null)
             usersEntity.setBirthdate(Date.valueOf(lblUserBirthdate.getValue()));
         databaseManager.saveUser(usersEntity);
+
         cleanUserFields();
         disableUserFields();
         changePanelFromConfirmToStandard();
