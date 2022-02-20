@@ -117,8 +117,8 @@ public class LibraryController {
 
     public LibraryController() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        databaseManager = new DatabaseManager(session);
+        //Session session = sessionFactory.openSession();
+        databaseManager = new DatabaseManager(sessionFactory);
         springManager = new SpringManager();
         setEffect();
 
@@ -410,13 +410,20 @@ public class LibraryController {
                 if (result.get() == ButtonType.OK) {
                     addReservation(lendingEntity);
                 }
-            } else if (databaseManager.bookIsReserved(lendingEntity.getBook())) {
+            } else if (bookIsReserved(lendingEntity.getBook())) {
                 List<ReservationsEntity> reservationsOfThisBook = databaseManager.
                         retrieveReservationsByBook(lendingEntity.getBook());
                 if (reservationsOfThisBook.get(0).getBorrower().equals(lendingEntity.getBorrower())) {
                     try {
                         databaseManager.saveLending(lendingEntity);
-                        databaseManager.deleteReservation(reservationsOfThisBook.get(0));
+                        try
+                        {
+                            springManager.deleteReservation(reservationsOfThisBook.get(0));
+                        }
+                        catch(Exception e)
+                        {
+                            databaseManager.deleteReservation(reservationsOfThisBook.get(0));
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                         openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", e.getMessage());
@@ -690,6 +697,12 @@ public class LibraryController {
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
         return alert.showAndWait();
+    }
+
+    public boolean bookIsReserved(BooksEntity booksEntity) {
+        List<ReservationsEntity> reservationsEntity = booksEntity.getReservedBy();
+        if (reservationsEntity.size() >= booksEntity.getCopies()) return true;
+        else return false;
     }
 
     private void setEffect() {

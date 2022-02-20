@@ -1,7 +1,6 @@
 package com.jhr2122.unit5.finalactivity.finalactivityspring.controller;
 
 import com.jhr2122.unit5.finalactivity.finalactivityspring.models.dao.IBooksEntityDAO;
-import com.jhr2122.unit5.finalactivity.finalactivityspring.models.dao.IUsersEntityDAO;
 import com.jhr2122.unit5.finalactivity.finalactivityspring.models.entities.BooksEntity;
 import com.jhr2122.unit5.finalactivity.finalactivityspring.models.entities.UsersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,12 @@ public class BooksEntityController {
     private IBooksEntityDAO booksEntityDAO;
 
     @GetMapping
-    public List<BooksEntity> findAllUsers(){
+    public List<BooksEntity> findAllBooks(){
         return (List<BooksEntity>) booksEntityDAO.findAll();
     }
 
-    @GetMapping("/{code}")
-    public ResponseEntity<BooksEntity> findUserById(@PathVariable(value = "isbn") String isbn) {
+    @GetMapping("/{isbn}")
+    public ResponseEntity<BooksEntity> findBookByIsbn(@PathVariable(value = "isbn") String isbn) {
         Optional<BooksEntity> book = booksEntityDAO.findById(isbn);
 
         if(book.isPresent()) {
@@ -36,7 +35,18 @@ public class BooksEntityController {
     }
 
     @PostMapping
-    public BooksEntity saveUser(@Validated @RequestBody BooksEntity book) {
+    public BooksEntity saveBook(@Validated @RequestBody BooksEntity book) {
         return booksEntityDAO.save(book);
+    }
+
+    @DeleteMapping("/{isbn}")
+    public ResponseEntity<?> deleteUser(@PathVariable(value = "isbn") String isbn) {
+        Optional<BooksEntity> book = booksEntityDAO.findById(isbn);
+        if(book.isPresent()) {
+            booksEntityDAO.deleteById(isbn);
+            return ResponseEntity.ok().body("Deleted");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

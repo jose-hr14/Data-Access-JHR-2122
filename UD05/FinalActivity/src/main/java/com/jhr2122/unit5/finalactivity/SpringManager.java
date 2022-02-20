@@ -82,7 +82,7 @@ public class SpringManager {
             else
             {
                 System.out.println("Connection failed");
-                //throw new Exception("Reservation POST failed");
+                throw new Exception("Reservation POST failed");
             }
         }
         catch(Exception e) {
@@ -93,7 +93,7 @@ public class SpringManager {
                 conn.disconnect();
         }
     }
-    public static void GetRequest(){
+    public static void GetUsers(){
         HttpURLConnection conn = null;
         try {
             URL url = new URL(
@@ -114,6 +114,29 @@ public class SpringManager {
             }
             else
                 System.out.println("Connection failed.");
+        }
+        catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn != null)
+                conn.disconnect();
+        }
+    }
+    public void deleteReservation(ReservationsEntity reservation) throws Exception
+    {
+        HttpURLConnection conn = null;
+        try {
+            URL url = new URL("http://localhost:8080/api-rest/Library/Reservations/" + reservation.getId());
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("DELETE");
+            if (conn.getResponseCode() == 200)
+                System.out.println("Reservation deleted");
+            else
+            {
+                System.out.println("Connection failed");
+                throw new Exception("Reservation DELETE failed");
+            }
         }
         catch(Exception e) {
             System.out.println(e.getMessage());

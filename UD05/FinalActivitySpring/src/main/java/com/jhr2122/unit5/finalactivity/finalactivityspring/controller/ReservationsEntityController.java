@@ -1,9 +1,7 @@
 package com.jhr2122.unit5.finalactivity.finalactivityspring.controller;
 
 import com.jhr2122.unit5.finalactivity.finalactivityspring.models.dao.IReservationsEntityDAO;
-import com.jhr2122.unit5.finalactivity.finalactivityspring.models.dao.IUsersEntityDAO;
 import com.jhr2122.unit5.finalactivity.finalactivityspring.models.entities.ReservationsEntity;
-import com.jhr2122.unit5.finalactivity.finalactivityspring.models.entities.UsersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,23 +18,35 @@ public class ReservationsEntityController {
     private IReservationsEntityDAO reservationsEntityDAO;
 
     @GetMapping
-    public List<ReservationsEntity> findAllUsers(){
+    public List<ReservationsEntity> findAllReservations(){
         return (List<ReservationsEntity>) reservationsEntityDAO.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservationsEntity> findUserById(@PathVariable(value = "id") Integer id) {
-        Optional<ReservationsEntity> user = reservationsEntityDAO.findById(id);
+    public ResponseEntity<ReservationsEntity> findReservationById(@PathVariable(value = "id") Integer id) {
+        Optional<ReservationsEntity> reservation = reservationsEntityDAO.findById(id);
 
-        if(user.isPresent()) {
-            return  ResponseEntity.ok().body(user.get());
+        if(reservation.isPresent()) {
+            return  ResponseEntity.ok().body(reservation.get());
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ReservationsEntity saveUser(@Validated @RequestBody ReservationsEntity reservationsEntity) {
+    public ReservationsEntity saveReservation(@Validated @RequestBody ReservationsEntity reservationsEntity) {
         return reservationsEntityDAO.save(reservationsEntity);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReservation(@PathVariable(value = "id") int id) {
+        Optional<ReservationsEntity> reservation = reservationsEntityDAO.findById(id);
+        if(reservation.isPresent()) {
+            reservationsEntityDAO.deleteById(id);
+            return ResponseEntity.ok().body("Deleted");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
