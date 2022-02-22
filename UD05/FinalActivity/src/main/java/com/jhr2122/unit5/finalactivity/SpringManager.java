@@ -9,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SpringManager {
-
     public void PostUser(UsersEntity user) throws JSONException {
         HttpURLConnection conn = null;
         String jsonInputString = new JSONObject()

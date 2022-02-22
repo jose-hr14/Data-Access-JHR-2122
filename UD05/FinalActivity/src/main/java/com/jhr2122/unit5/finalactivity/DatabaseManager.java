@@ -42,10 +42,11 @@ public class DatabaseManager {
         }
     }
 
-    public UsersEntity retrieveUserByID(String id) throws HibernateException {
+    public UsersEntity retrieveFirstUserByID(String id) throws HibernateException {
         try (Session session = sessionFactory.openSession())
         {
-            Query<UsersEntity> myQuery = session.createQuery("from com.jhr2122.unit5.finalactivity.UsersEntity where " + "id = '" + id + "'");
+            Query<UsersEntity> myQuery = session.createQuery("from com.jhr2122.unit5.finalactivity.UsersEntity where " + "id LIKE '" + id + "%'" +
+                    "ORDER BY id");
             if (!myQuery.list().isEmpty())
                 return myQuery.list().get(0);
             else
@@ -71,10 +72,11 @@ public class DatabaseManager {
         }
     }
 
-    public BooksEntity retrieveBookByID(String isbn) throws HibernateException {
+    public BooksEntity retrieveFirstBookByID(String isbn) throws HibernateException {
         try (Session session = sessionFactory.openSession())
         {
-            Query<BooksEntity> myQuery = session.createQuery("from com.jhr2122.unit5.finalactivity.BooksEntity where " + "isbn = '" + isbn + "'");
+            Query<BooksEntity> myQuery = session.createQuery("from com.jhr2122.unit5.finalactivity.BooksEntity where " + "isbn LIKE '" + isbn + "%'" +
+                    "ORDER BY isbn");
             if (!myQuery.list().isEmpty()) return myQuery.list().get(0);
             else throw new HibernateException("Book not found");
         }
@@ -91,7 +93,7 @@ public class DatabaseManager {
         }
     }
 
-    public void saveUser(UsersEntity usersEntity) {
+    public void saveUser(UsersEntity usersEntity){
         try (Session session = sessionFactory.openSession())
         {
             Transaction transaction = session.beginTransaction();

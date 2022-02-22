@@ -17,10 +17,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -117,7 +115,6 @@ public class LibraryController {
 
     public LibraryController() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        //Session session = sessionFactory.openSession();
         databaseManager = new DatabaseManager(sessionFactory);
         springManager = new SpringManager();
         setEffect();
@@ -258,7 +255,7 @@ public class LibraryController {
                 openModalWindowBooks(databaseManager.retrieveBooksByWildcard(txfFoundBookName.getText()));
             else if (isReturning) {
                 List<BooksEntity> bookToBeReturned = new ArrayList<>();
-                for (LendingEntity lending : databaseManager.retrieveUserByID(txfSearchUserCode.getText()).getLentBooks()) {
+                for (LendingEntity lending : databaseManager.retrieveFirstUserByID(txfSearchUserCode.getText()).getLentBooks()) {
                     bookToBeReturned.add(lending.getBook());
                 }
                 if (bookToBeReturned.isEmpty())
@@ -318,8 +315,10 @@ public class LibraryController {
         isAdd = true;
         if (paneUser.isVisible()) {
             enableUserFields();
+            cleanUserFields();
         } else if (paneBook.isVisible()) {
             enableBookFields();
+            cleanBookFields();
         } else if (isBorrowing) {
             enableRentReturnFields();
         } else if (isReturning) {
@@ -333,9 +332,11 @@ public class LibraryController {
         if (paneUser.isVisible()) {
             isSearchingToEdit = true;
             lblUserCode.setDisable(false);
+            cleanUserFields();
         } else if (paneBook.isVisible()) {
             isSearchingToEdit = true;
             txfISBN.setDisable(false);
+            cleanBookFields();
         }
     }
 
@@ -343,19 +344,65 @@ public class LibraryController {
     void iconConfirmListener(MouseEvent event) {
         if (paneUser.isVisible() && isAdd) {
             if (!lblUserCode.getText().isEmpty() && !lblUserName.getText().isEmpty() && !lblUserSurname.getText().isEmpty())
-                addUser();
+            {
+                try
+                {
+                    addUser();
+                    openAlertDialog(Alert.AlertType.INFORMATION, "Operation succesful", "Users",
+                            "User stored successfuly");
+                }
+                catch(Exception exception)
+                {
+                    openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
+                            exception.getCause().getCause().getMessage());
+                }
+            }
             else
                 openAlertDialog(Alert.AlertType.WARNING, "Attention", "Some fields are blank",
                         "Id, name and surname are mandatory");
         } else if (paneUser.isVisible() && isRead) {
-            readUser();
+            try
+            {
+                readUser();
+            }
+            catch(Exception exception)
+            {
+                openAlertDialog(Alert.AlertType.ERROR, "Attention", "User not found", exception.getMessage());
+                cleanUserFields();
+            }
         } else if (paneUser.isVisible() && isSearchingToEdit) {
-            searchingUserToEdit();
+            try
+            {
+                searchingUserToEdit();
+            }
+            catch(Exception exception)
+            {
+                openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
+                        exception.getMessage());
+            }
         } else if (paneUser.isVisible() && isEdit) {
-            editUser();
+            try{
+                editUser();
+            }
+            catch(Exception exception)
+            {
+                openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
+                        exception.getCause().getCause().getMessage());
+            }
+
         } else if (paneBook.isVisible() && isAdd) {
             if(!txfISBN.getText().isEmpty() && !txfTitle.getText().isEmpty() && !txfPublisher.getText().isEmpty())
-                addBook();
+            {
+                try
+                {
+                    addBook();
+                }
+                catch(Exception exception)
+                {
+                    openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
+                            exception.getCause().getCause().getMessage());
+                }
+            }
             else
                 openAlertDialog(Alert.AlertType.WARNING, "Attention", "Some fields are blank",
                         "ISBN, tittle and publisher are mandatory");
@@ -375,8 +422,8 @@ public class LibraryController {
     private void addReturning() {
         try {
             LendingEntity lendingEntity = databaseManager.retrieveLendingByIDAAndISBN
-                    (databaseManager.retrieveUserByID(txfSearchUserCode.getText()),
-                            databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
+                    (databaseManager.retrieveFirstUserByID(txfSearchUserCode.getText()),
+                            databaseManager.retrieveFirstBookByID(txfSearchIsbn.getText()));
             databaseManager.saveReturn(lendingEntity);
             if (lendingEntity.getBorrower().getFined() != null
                     && lendingEntity.getBorrower().getFined().toLocalDate().isAfter(LocalDate.now())) {
@@ -401,8 +448,8 @@ public class LibraryController {
     private void addLending() {
         if (!txfSearchUserCode.getText().isEmpty() && !txfSearchIsbn.getText().isEmpty()) {
             LendingEntity lendingEntity = new LendingEntity();
-            lendingEntity.setBorrower(databaseManager.retrieveUserByID(txfSearchUserCode.getText()));
-            lendingEntity.setBook(databaseManager.retrieveBookByID(txfSearchIsbn.getText()));
+            lendingEntity.setBorrower(databaseManager.retrieveFirstUserByID(txfSearchUserCode.getText()));
+            lendingEntity.setBook(databaseManager.retrieveFirstBookByID(txfSearchIsbn.getText()));
             lendingEntity.setLendingdate(Date.valueOf(LocalDate.now()));
             if (lendingEntity.getBook().getCopies() < 1) {
                 Optional<ButtonType> result = openConfirmationDialog("Attention", "The are no copies available",
@@ -464,8 +511,7 @@ public class LibraryController {
     }
 
     private void editBook() {
-        BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
-
+        BooksEntity booksEntity = databaseManager.retrieveFirstBookByID(txfISBN.getText());
         booksEntity.setTitle(txfTitle.getText());
         booksEntity.setCopies((int) sliderCopies.getValue());
         booksEntity.setCover(txfCover.getText());
@@ -482,7 +528,8 @@ public class LibraryController {
     }
 
     private void searchBookToEdit() {
-        BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
+        BooksEntity booksEntity = databaseManager.retrieveFirstBookByID(txfISBN.getText());
+        txfISBN.setText(booksEntity.getIsbn());
         txfTitle.setText(booksEntity.getTitle());
         sliderCopies.setValue(booksEntity.getCopies());
         txfCover.setText(booksEntity.getCover());
@@ -497,12 +544,23 @@ public class LibraryController {
     }
 
     private void readBook() {
-        BooksEntity booksEntity = databaseManager.retrieveBookByID(txfISBN.getText());
-        txfTitle.setText(booksEntity.getTitle());
-        sliderCopies.setValue(booksEntity.getCopies());
-        txfCover.setText(booksEntity.getCover());
-        txfOutline.setText(booksEntity.getOutline());
-        txfPublisher.setText(booksEntity.getPublisher());
+        try
+        {
+            txfISBN.setDisable(true);
+            BooksEntity booksEntity = databaseManager.retrieveFirstBookByID(txfISBN.getText());
+            txfISBN.setText(booksEntity.getIsbn());
+            txfTitle.setText(booksEntity.getTitle());
+            sliderCopies.setValue(booksEntity.getCopies());
+            txfCover.setText(booksEntity.getCover());
+            txfOutline.setText(booksEntity.getOutline());
+            txfPublisher.setText(booksEntity.getPublisher());
+        }
+        catch(Exception exception)
+        {
+            openAlertDialog(Alert.AlertType.ERROR, "Attention", "Book not found", exception.getMessage());
+        }
+        isRead = false;
+        changePanelFromConfirmToStandard();
     }
 
     private void addBook() {
@@ -518,10 +576,11 @@ public class LibraryController {
     }
 
     private void editUser() {
-        UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
+        UsersEntity usersEntity = databaseManager.retrieveFirstUserByID(lblUserCode.getText());
         usersEntity.setName(lblUserName.getText());
         usersEntity.setSurname(lblUserSurname.getText());
-        usersEntity.setBirthdate(Date.valueOf(lblUserBirthdate.getValue()));
+        if(usersEntity.getBirthdate() != null)
+            usersEntity.setBirthdate(Date.valueOf(lblUserBirthdate.getValue()));
         databaseManager.updateUser(usersEntity);
 
         cleanUserFields();
@@ -532,10 +591,12 @@ public class LibraryController {
     }
 
     private void searchingUserToEdit() {
-        UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
+        UsersEntity usersEntity = databaseManager.retrieveFirstUserByID(lblUserCode.getText());
+        lblUserCode.setText(usersEntity.getCode());
         lblUserName.setText(usersEntity.getName());
         lblUserSurname.setText(usersEntity.getSurname());
-        lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
+        if(usersEntity.getBirthdate() != null)
+            lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
 
         enableUserFields();
         lblUserCode.setDisable(true);
@@ -545,11 +606,16 @@ public class LibraryController {
     }
 
     private void readUser() {
-        UsersEntity usersEntity = databaseManager.retrieveUserByID(lblUserCode.getText());
+        lblUserCode.setDisable(true);
+        UsersEntity usersEntity = databaseManager.retrieveFirstUserByID(lblUserCode.getText());
+        lblUserCode.setText(usersEntity.getCode());
         lblUserName.setText(usersEntity.getName());
         lblUserSurname.setText(usersEntity.getSurname());
-        lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
+        if(usersEntity.getBirthdate() != null)
+            lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
         isRead = false;
+
+        changePanelFromConfirmToStandard();
     }
 
     private void addUser() {

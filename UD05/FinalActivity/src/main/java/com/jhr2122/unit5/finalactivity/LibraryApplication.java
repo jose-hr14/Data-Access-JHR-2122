@@ -20,6 +20,7 @@ public class LibraryApplication extends Application {
         stage.show();
         //SpringManager.GetRequest();
         //date para el campo reservations, nombre del campo y tipo date, por defecto nulo
+        // Cuando se busca un usuario, se debe volver al estado principal sin perder ni el usuario ni el libro
     }
 
     public static void main(String[] args) {
