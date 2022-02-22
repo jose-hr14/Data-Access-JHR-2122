@@ -354,7 +354,7 @@ public class LibraryController {
                 catch(Exception exception)
                 {
                     openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
-                            exception.getCause().getCause().getMessage());
+                            getExceptionCause(exception));
                 }
             }
             else
@@ -367,7 +367,8 @@ public class LibraryController {
             }
             catch(Exception exception)
             {
-                openAlertDialog(Alert.AlertType.ERROR, "Attention", "User not found", exception.getMessage());
+                openAlertDialog(Alert.AlertType.ERROR, "Attention", "User not found",
+                        getExceptionCause(exception));
                 cleanUserFields();
             }
         } else if (paneUser.isVisible() && isSearchingToEdit) {
@@ -378,7 +379,7 @@ public class LibraryController {
             catch(Exception exception)
             {
                 openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
-                        exception.getMessage());
+                        getExceptionCause(exception));
             }
         } else if (paneUser.isVisible() && isEdit) {
             try{
@@ -387,7 +388,7 @@ public class LibraryController {
             catch(Exception exception)
             {
                 openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
-                        exception.getCause().getCause().getMessage());
+                        getExceptionCause(exception));
             }
 
         } else if (paneBook.isVisible() && isAdd) {
@@ -400,7 +401,7 @@ public class LibraryController {
                 catch(Exception exception)
                 {
                     openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
-                            exception.getCause().getCause().getMessage());
+                            getExceptionCause(exception));
                 }
             }
             else
@@ -409,9 +410,26 @@ public class LibraryController {
         } else if (paneBook.isVisible() && isRead) {
             readBook();
         } else if (paneBook.isVisible() && isSearchingToEdit) {
-            searchBookToEdit();
+            try
+            {
+                searchBookToEdit();
+            }
+            catch(Exception exception)
+            {
+                openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
+                        getExceptionCause(exception));
+            }
+
         } else if (paneBook.isVisible() && isEdit) {
-            editBook();
+            try
+            {
+                editBook();
+            }
+            catch(Exception exception)
+            {
+                openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
+                        getExceptionCause(exception));
+            }
         } else if (isBorrowing && isAdd) {
             addLending();
         } else if (isReturning && isAdd) {
@@ -437,7 +455,7 @@ public class LibraryController {
                         databaseManager.retrieveReservationsByBook(lendingEntity.getBook()).get(0).getBorrower().toString());
         } catch (Exception e) {
             e.printStackTrace();
-            openAlertDialog(Alert.AlertType.ERROR, "Error", e.getClass().toString(), e.getMessage());
+            openAlertDialog(Alert.AlertType.ERROR, "Error", e.getClass().toString(), getExceptionCause(e));
         }
         isAdd = false;
         disableRentReturnFields();
@@ -473,7 +491,7 @@ public class LibraryController {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", e.getMessage());
+                        openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", getExceptionCause(e));
                     }
                 } else {
                     Optional<ButtonType> result = openConfirmationDialog("Attention", "The available copies are reserved",
@@ -487,7 +505,7 @@ public class LibraryController {
                     databaseManager.saveLending(lendingEntity);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", e.getMessage());
+                    openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", getExceptionCause(e));
                 }
             }
             isAdd = false;
@@ -557,7 +575,8 @@ public class LibraryController {
         }
         catch(Exception exception)
         {
-            openAlertDialog(Alert.AlertType.ERROR, "Attention", "Book not found", exception.getMessage());
+            openAlertDialog(Alert.AlertType.ERROR, "Attention", "Book not found", getExceptionCause(exception));
+            cleanBookFields();
         }
         isRead = false;
         changePanelFromConfirmToStandard();
@@ -784,5 +803,14 @@ public class LibraryController {
         lighting.setBumpInput(shadow);
         effect = new ColorAdjust();
         effect.setInput(lighting);
+    }
+
+    private String getExceptionCause(Throwable exception)
+    {
+        while(exception.getCause() != null)
+        {
+            exception = exception.getCause();
+        }
+        return  exception.getMessage();
     }
 }
