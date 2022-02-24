@@ -26,6 +26,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 
 public class LibraryController {
     DatabaseManager databaseManager;
@@ -114,6 +115,10 @@ public class LibraryController {
     private ListView<BooksEntity> listView;
 
     public LibraryController() {
+        @SuppressWarnings("unused")
+        org.jboss.logging.Logger logger =
+                org.jboss.logging.Logger.getLogger("org.hibernate");
+        java.util.logging.Logger.getLogger("org.hibernate") .setLevel(Level.OFF);
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         databaseManager = new DatabaseManager(sessionFactory);
         springManager = new SpringManager();
