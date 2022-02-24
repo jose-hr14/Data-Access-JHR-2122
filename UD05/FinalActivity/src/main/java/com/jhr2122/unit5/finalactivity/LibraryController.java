@@ -236,7 +236,6 @@ public class LibraryController {
         try {
             openModalWindowUsers(databaseManager.retrieveUsersByWildcard(txfFoundUserName.getText()));
         } catch (HibernateException e) {
-            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(e.getClass().toString());
@@ -244,7 +243,6 @@ public class LibraryController {
 
             alert.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -264,7 +262,6 @@ public class LibraryController {
                     openModalWindowBooks(bookToBeReturned);
             }
         } catch (HibernateException e) {
-            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(e.getClass().toString());
@@ -272,7 +269,6 @@ public class LibraryController {
 
             alert.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -348,8 +344,8 @@ public class LibraryController {
                 try
                 {
                     addUser();
-                    openAlertDialog(Alert.AlertType.INFORMATION, "Operation succesful", "Users",
-                            "User stored successfuly");
+                    openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Users",
+                            "User stored successfully");
                 }
                 catch(Exception exception)
                 {
@@ -364,12 +360,15 @@ public class LibraryController {
             try
             {
                 readUser();
+                openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Users",
+                        "User found successfully");
             }
             catch(Exception exception)
             {
                 openAlertDialog(Alert.AlertType.ERROR, "Attention", "User not found",
                         getExceptionCause(exception));
                 cleanUserFields();
+                changePanelFromConfirmToStandard();
             }
         } else if (paneUser.isVisible() && isSearchingToEdit) {
             try
@@ -384,6 +383,8 @@ public class LibraryController {
         } else if (paneUser.isVisible() && isEdit) {
             try{
                 editUser();
+                openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Users",
+                        "User edited successfully");
             }
             catch(Exception exception)
             {
@@ -397,6 +398,8 @@ public class LibraryController {
                 try
                 {
                     addBook();
+                    openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Books",
+                            "Book stored successfully");
                 }
                 catch(Exception exception)
                 {
@@ -409,6 +412,8 @@ public class LibraryController {
                         "ISBN, tittle and publisher are mandatory");
         } else if (paneBook.isVisible() && isRead) {
             readBook();
+            openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Books",
+                    "Book found successfully");
         } else if (paneBook.isVisible() && isSearchingToEdit) {
             try
             {
@@ -424,6 +429,8 @@ public class LibraryController {
             try
             {
                 editBook();
+                openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Books",
+                        "Book edited successfully");
             }
             catch(Exception exception)
             {
@@ -454,7 +461,6 @@ public class LibraryController {
                         "of this book", "Please, notify " +
                         databaseManager.retrieveReservationsByBook(lendingEntity.getBook()).get(0).getBorrower().toString());
         } catch (Exception e) {
-            e.printStackTrace();
             openAlertDialog(Alert.AlertType.ERROR, "Error", e.getClass().toString(), getExceptionCause(e));
         }
         isAdd = false;
@@ -490,7 +496,6 @@ public class LibraryController {
                             databaseManager.deleteReservation(reservationsOfThisBook.get(0));
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
                         openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", getExceptionCause(e));
                     }
                 } else {
@@ -504,7 +509,6 @@ public class LibraryController {
                 try {
                     databaseManager.saveLending(lendingEntity);
                 } catch (Exception e) {
-                    e.printStackTrace();
                     openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", getExceptionCause(e));
                 }
             }
@@ -524,7 +528,6 @@ public class LibraryController {
             springManager.PostReservation(reservationsEntity);
         } catch (Exception e) {
             databaseManager.saveReservation(reservationsEntity);
-            e.printStackTrace();
         }
     }
 
