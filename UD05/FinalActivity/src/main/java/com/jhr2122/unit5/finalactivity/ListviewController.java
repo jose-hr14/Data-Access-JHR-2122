@@ -87,12 +87,15 @@ public class ListviewController{
             libraryController.getTxfSearchIsbn().setText(((BooksEntity) listView.getSelectionModel().getSelectedItem()).getIsbn());
             libraryController.getTxfFoundBookName().setText(listView.getSelectionModel().getSelectedItem().toString());
             libraryController.getTxfFoundBookName().setDisable(true);
+            libraryController.getIconSearchIsbn().setDisable(true);
+
         }
         else if(listView.getSelectionModel().getSelectedItem() instanceof UsersEntity)
         {
             libraryController.getTxfSearchUserCode().setText(((UsersEntity) listView.getSelectionModel().getSelectedItem()).getCode());
             libraryController.getTxfFoundUserName().setText(listView.getSelectionModel().getSelectedItem().toString());
             libraryController.getTxfFoundUserName().setDisable(true);
+            libraryController.getIconSearchUserCode().setDisable(true);
         }
         Stage stage = (Stage) listView.getScene().getWindow();
         stage.close();

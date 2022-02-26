@@ -137,32 +137,24 @@ public class LibraryController {
         return txfSearchIsbn;
     }
 
-    public void setTxfSearchIsbn(TextField txfSearchIsbn) {
-        this.txfSearchIsbn = txfSearchIsbn;
-    }
-
     public TextField getTxfSearchUserCode() {
         return txfSearchUserCode;
-    }
-
-    public void setTxfSearchUserCode(TextField txfSearchUserCode) {
-        this.txfSearchUserCode = txfSearchUserCode;
     }
 
     public TextField getTxfFoundBookName() {
         return txfFoundBookName;
     }
 
-    public void setTxfFoundBookName(TextField txfFoundBookName) {
-        this.txfFoundBookName = txfFoundBookName;
-    }
-
     public TextField getTxfFoundUserName() {
         return txfFoundUserName;
     }
 
-    public void setTxfFoundUserName(TextField txfFoundUserName) {
-        this.txfFoundUserName = txfFoundUserName;
+    public ImageView getIconSearchIsbn() {
+        return iconSearchIsbn;
+    }
+
+    public ImageView getIconSearchUserCode() {
+        return iconSearchUserCode;
     }
 
     @FXML
