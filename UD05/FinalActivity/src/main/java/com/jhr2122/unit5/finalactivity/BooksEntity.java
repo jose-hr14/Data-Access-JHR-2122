@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * POJO of book. This class is a representation of a record from the book table from PostgreSql
+ * POJO of book. This class is a representation of the books' table from PostgreSql
  * in the form of Java Object.
  */
 @Entity

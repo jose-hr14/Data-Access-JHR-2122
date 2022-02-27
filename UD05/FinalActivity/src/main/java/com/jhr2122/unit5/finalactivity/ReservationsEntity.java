@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 /**
- * POJO of reservations. This class is a representation of a record from the reservations table from PostgreSql
+ * POJO of reservations. This class is a representation of the reservations' table from PostgreSql
  * in the form of Java Object.
  */
 @Entity
