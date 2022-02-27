@@ -448,6 +448,8 @@ public class LibraryController {
                         (databaseManager.retrieveFirstUserByID(txfSearchUserCode.getText()),
                                 databaseManager.retrieveFirstBookByID(txfSearchIsbn.getText()));
                 databaseManager.saveReturn(lendingEntity);
+                openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Returnal",
+                        "The book was returned successfully");
                 if (lendingEntity.getBorrower().getFined() != null
                         && lendingEntity.getBorrower().getFined().toLocalDate().isAfter(LocalDate.now())) {
                     openAlertDialog(Alert.AlertType.ERROR, "Error", "Late returnal",
@@ -478,6 +480,8 @@ public class LibraryController {
                         "Do you want to make a reservation?");
                 if (result.get() == ButtonType.OK) {
                     addReservation(lendingEntity);
+                    openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Reservation",
+                            "Book reserved successfully");
                 }
             } else if (bookIsReserved(lendingEntity.getBook())) {
                 List<ReservationsEntity> reservationsOfThisBook = databaseManager.
@@ -487,30 +491,47 @@ public class LibraryController {
                 {
                     usersWhoCanBorrow.add(reservationsOfThisBook.get(i).getBorrower());
                 }
-                if (usersWhoCanBorrow.contains(lendingEntity.getBorrower())) {
+                if (usersWhoCanBorrow.contains(lendingEntity.getBorrower()) || lendingEntity.getBook().getCopies() >
+                        reservationsOfThisBook.size()) {
                     try {
                         databaseManager.saveLending(lendingEntity);
                         try
                         {
                             springManager.deleteReservation(reservationsOfThisBook.get(0));
+                            openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Borrowing",
+                                    "The reserved book was borrowed successfully");
                         }
                         catch(Exception e)
                         {
                             databaseManager.deleteReservation(reservationsOfThisBook.get(0));
+                            openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Borrowing",
+                                    "The reserved book was borrowed successfully");
                         }
                     } catch (Exception e) {
                         openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", getExceptionCause(e));
                     }
                 } else {
-                    Optional<ButtonType> result = openConfirmationDialog("Attention", "The available copies are reserved",
-                            "Do you want to make a reservation?");
-                    if (result.get() == ButtonType.OK) {
-                        addReservation(lendingEntity);
+                    if(reservationsOfThisBook.stream().anyMatch(reservation -> reservation.getBorrower().equals(lendingEntity.getBorrower())))
+                    {
+                        openAlertDialog(Alert.AlertType.INFORMATION, "Attention", "Reservations",
+                                "this user has a reservation already, but the are no copies avaiable");
+                    }
+                    else
+                    {
+                        Optional<ButtonType> result = openConfirmationDialog("Attention", "The available copies are reserved",
+                                "Do you want to make a reservation?");
+                        if (result.get() == ButtonType.OK) {
+                            addReservation(lendingEntity);
+                            openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Reservation",
+                                    "Book reserved successfully");
+                        }
                     }
                 }
             } else {
                 try {
                     databaseManager.saveLending(lendingEntity);
+                    openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Borrowing",
+                            "Book borrowed successfully");
                 } catch (Exception e) {
                     openAlertDialog(Alert.AlertType.ERROR, "Attention", "Error", getExceptionCause(e));
                 }
