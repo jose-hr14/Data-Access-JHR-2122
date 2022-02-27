@@ -7,7 +7,8 @@ import java.sql.Date;
 import java.util.Objects;
 /**
  * POJO of lending. This class is a representation of a record from the lending table from PostgreSql
- * in the form of Java Object.
+ * in the form of Java Object. Thanks to the Where annotation, only lendings to be returned are retrieved from
+ * the database.
  */
 @Entity
 @Table(name = "lending", schema = "public", catalog = "Library")

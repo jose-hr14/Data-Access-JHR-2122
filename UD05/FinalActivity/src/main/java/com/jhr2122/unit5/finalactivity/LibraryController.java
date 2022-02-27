@@ -28,6 +28,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
+/**
+ * This is the controller of the main application, it manages the view and interaction while it makes calls to the
+ * database manager and spring manager methods when needed.
+ */
 public class LibraryController {
     DatabaseManager databaseManager;
     SpringManager springManager;
@@ -114,6 +118,11 @@ public class LibraryController {
     @FXML
     private ListView<BooksEntity> listView;
 
+    /**
+     * Main controller constructor. It disables hibernate warnings, instantiates the postgresql database manager,
+     * the spring petitions manager, creates the effect for the selected panel and initialises the state machine
+     * booleans.
+     */
     public LibraryController() {
         @SuppressWarnings("unused")
         org.jboss.logging.Logger logger =
@@ -157,6 +166,10 @@ public class LibraryController {
         return iconSearchUserCode;
     }
 
+    /**
+     * Shows the user panel to search, edit and add users.
+     * @param event
+     */
     @FXML
     void userIconListener(MouseEvent event) {
         paneBook.setVisible(false);
@@ -173,6 +186,10 @@ public class LibraryController {
         iconReturnBook.setEffect(null);
     }
 
+    /**
+     * Shows the book panel to edit, search and add books.
+     * @param event
+     */
     @FXML
     void bookIconListener(MouseEvent event) {
         paneUser.setVisible(false);
@@ -189,6 +206,10 @@ public class LibraryController {
         iconReturnBook.setEffect(null);
     }
 
+    /**
+     * Shows the lending tab to manage new lendings
+     * @param event
+     */
     @FXML
     void lentIconListener(MouseEvent event) {
         lblBorrowOrReturnState.setText("Borrow menu");
@@ -206,6 +227,10 @@ public class LibraryController {
         iconReturnBook.setEffect(null);
     }
 
+    /**
+     * Shows the returnal tab to manage books returning.
+     * @param event
+     */
     @FXML
     void returnIconListener(MouseEvent event) {
         lblBorrowOrReturnState.setText("Return menu");
@@ -223,6 +248,10 @@ public class LibraryController {
         iconReturnBook.setEffect(effect);
     }
 
+    /**
+     * Asks the user confirmation to exit the application
+     * @param event
+     */
     @FXML
     void iconExitListener(MouseEvent event) {
         Optional<ButtonType> result = openConfirmationDialog("Attention", "Confirm",
@@ -232,6 +261,10 @@ public class LibraryController {
         }
     }
 
+    /**
+     * Allows partial searching of users, opening a listview window to select one of the matching results.
+     * @param event
+     */
     @FXML
     void iconSearchUserCodeListener(MouseEvent event) {
         try {
@@ -240,7 +273,12 @@ public class LibraryController {
             openAlertDialog(Alert.AlertType.ERROR, "Error", "Searching", getExceptionCause(e));
         }
     }
-
+    /**
+     * Allows partial searching of books, opening a listview window to select one of the matching results. If
+     * called during a returning operation, listview will hold only the books borrowed by the specified user
+     * or will give an alert dialog notifying that the user has no books to be returned.
+     * @param event
+     */
     @FXML
     void iconSearchIsbnListener(MouseEvent event) {
         try {
@@ -265,6 +303,10 @@ public class LibraryController {
         }
     }
 
+    /**
+     * Alows to exit any ongoing operation.
+     * @param event
+     */
     @FXML
     void iconCancelListener(MouseEvent event) {
         if (paneUser.isVisible()) {
@@ -285,6 +327,10 @@ public class LibraryController {
         isSearchingToEdit = false;
     }
 
+    /**
+     * Enables the searching operation for users or books.
+     * @param event
+     */
     @FXML
     void iconReadListener(MouseEvent event) {
         if (paneUser.isVisible()) {
@@ -298,6 +344,10 @@ public class LibraryController {
         }
     }
 
+    /**
+     * Enables the adding operation for users, books, lendings and returnings.
+     * @param event
+     */
     @FXML
     void iconAddListener(MouseEvent event) {
         changePanelFromStandardToConfirm();
@@ -315,6 +365,10 @@ public class LibraryController {
         }
     }
 
+    /**
+     * Enables the editing operation for users and books.
+     * @param event
+     */
     @FXML
     void iconEditListener(MouseEvent event) {
         changePanelFromStandardToConfirm();
@@ -329,6 +383,11 @@ public class LibraryController {
         }
     }
 
+    /**
+     * Allows confirmation and commit of the current operation, while notifying the user of operation errors or
+     * confirmations.
+     * @param event
+     */
     @FXML
     void iconConfirmListener(MouseEvent event) {
         if (paneUser.isVisible() && isAdd) {
@@ -437,6 +496,10 @@ public class LibraryController {
         }
     }
 
+    /**
+     * If the mandatory fields are filled, allows to save a book returning, fines the user if the book is returned late
+     * and informs of the user that has a reservation on the book returned.
+     */
     private void addReturning() {
         if (!txfSearchUserCode.getText().isEmpty() && !txfSearchIsbn.getText().isEmpty()) {
             try {
@@ -448,7 +511,7 @@ public class LibraryController {
                         "The book was returned successfully");
                 if (lendingEntity.getBorrower().getFined() != null
                         && lendingEntity.getBorrower().getFined().toLocalDate().isAfter(LocalDate.now())) {
-                    openAlertDialog(Alert.AlertType.ERROR, "Error", "Late returnal",
+                    openAlertDialog(Alert.AlertType.ERROR, "Error", "Late returning",
                             "User was fined until " + lendingEntity.getBorrower().getFined());
                 }
                 if (!databaseManager.retrieveReservationsByBook(lendingEntity.getBook()).isEmpty())
@@ -465,12 +528,18 @@ public class LibraryController {
         }
     }
 
+    /**
+     * Allows book lending to users if there are enough copies, or allows to make a reservations if there are not.
+     * If the are copies to be lent, but there are more reservations than copies available, only those whose have a
+     * reservation may borrow the book
+     */
     private void addLending() {
         if (!txfSearchUserCode.getText().isEmpty() && !txfSearchIsbn.getText().isEmpty()) {
             LendingEntity lendingEntity = new LendingEntity();
             lendingEntity.setBorrower(databaseManager.retrieveFirstUserByID(txfSearchUserCode.getText()));
             lendingEntity.setBook(databaseManager.retrieveFirstBookByID(txfSearchIsbn.getText()));
             lendingEntity.setLendingdate(Date.valueOf(LocalDate.now()));
+
             if (lendingEntity.getBook().getCopies() < 1) {
                 Optional<ButtonType> result = openConfirmationDialog("Attention", "The are no copies available",
                         "Do you want to make a reservation?");
@@ -479,7 +548,7 @@ public class LibraryController {
                     openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Reservation",
                             "Book reserved successfully");
                 }
-            } else if (bookIsReserved(lendingEntity.getBook())) {
+            } else if (!lendingEntity.getBook().getReservedBy().isEmpty()) {
                 List<ReservationsEntity> reservationsOfThisBook = databaseManager.
                         retrieveReservationsByBook(lendingEntity.getBook());
                 List<UsersEntity> usersWhoCanBorrow = new ArrayList<>();
@@ -539,6 +608,11 @@ public class LibraryController {
         }
     }
 
+    /**
+     * Attemps to save a new reservation through Spring, if Spring is not running at the current moment, it will
+     * save the reservation through PostgreSql.
+     * @param lendingEntity
+     */
     private void addReservation(LendingEntity lendingEntity) {
         ReservationsEntity reservationsEntity = new ReservationsEntity();
         reservationsEntity.setBorrower(lendingEntity.getBorrower());
@@ -551,6 +625,9 @@ public class LibraryController {
         }
     }
 
+    /**
+     * Allows editing an existing book from the database.
+     */
     private void editBook() {
         BooksEntity booksEntity = databaseManager.retrieveFirstBookByID(txfISBN.getText());
         booksEntity.setTitle(txfTitle.getText());
@@ -568,6 +645,9 @@ public class LibraryController {
         isEdit = false;
     }
 
+    /**
+     * Allows a partial search of book by name that will be edited afterwards.
+     */
     private void searchBookToEdit() {
         BooksEntity booksEntity = databaseManager.retrieveFirstBookByID(txfISBN.getText());
         txfISBN.setText(booksEntity.getIsbn());
@@ -584,6 +664,9 @@ public class LibraryController {
         isEdit = true;
     }
 
+    /**
+     * Makes a partial search of book by ISBN and prints its information in the panel's textfields.
+     */
     private void readBook() {
         try
         {
@@ -605,6 +688,10 @@ public class LibraryController {
         changePanelFromConfirmToStandard();
     }
 
+    /**
+     * Read the information from the textfields of the panels to create a new book entity and saves it in the
+     * database.
+     */
     private void addBook() {
         BooksEntity booksEntity = new BooksEntity(txfISBN.getText(), txfTitle.getText(),
                 (int) sliderCopies.getValue(), txfCover.getText(), txfOutline.getText(),
@@ -617,6 +704,9 @@ public class LibraryController {
         isAdd = false;
     }
 
+    /**
+     * Allows editing a user with the new information written in the panel's textfield.
+     */
     private void editUser() {
         UsersEntity usersEntity = databaseManager.retrieveFirstUserByID(lblUserCode.getText());
         usersEntity.setName(lblUserName.getText());
@@ -632,6 +722,9 @@ public class LibraryController {
         isEdit = false;
     }
 
+    /**
+     * Makes a partial search of user by id to make possible editing int afterwards.
+     */
     private void searchingUserToEdit() {
         UsersEntity usersEntity = databaseManager.retrieveFirstUserByID(lblUserCode.getText());
         lblUserCode.setText(usersEntity.getCode());
@@ -647,6 +740,9 @@ public class LibraryController {
         isEdit = true;
     }
 
+    /**
+     * Makes a partial search of users by id, returning the first match.
+     */
     private void readUser() {
         lblUserCode.setDisable(true);
         UsersEntity usersEntity = databaseManager.retrieveFirstUserByID(lblUserCode.getText());
@@ -660,6 +756,9 @@ public class LibraryController {
         changePanelFromConfirmToStandard();
     }
 
+    /**
+     * Saves a new user in the database with the information read from the panel's textfields.
+     */
     private void addUser() {
         UsersEntity usersEntity = new UsersEntity();
         usersEntity.setCode(lblUserCode.getText());
@@ -675,18 +774,27 @@ public class LibraryController {
         isAdd = false;
     }
 
+    /**
+     * Hides the confirmation o cancel panel from the bottom of the window to the standard search, edit and add panel.
+     */
     void changePanelFromConfirmToStandard() {
         bottomPanel.setVisible(true);
         bottomConfirmPane.setVisible(false);
         upperPane.setDisable(false);
     }
 
+    /**
+     * Hides the bottom standard panel with the read, edit and add buttons to show the confirmation and cancel panel.
+     */
     void changePanelFromStandardToConfirm() {
         bottomPanel.setVisible(false);
         bottomConfirmPane.setVisible(true);
         upperPane.setDisable(true);
     }
 
+    /**
+     * Enables the textfields from the users panel
+     */
     void enableUserFields() {
         lblUserCode.setDisable(false);
         lblUserName.setDisable(false);
@@ -694,6 +802,9 @@ public class LibraryController {
         lblUserBirthdate.setDisable(false);
     }
 
+    /**
+     * Enables the textfields from the books panel
+     */
     void enableBookFields() {
         txfISBN.setDisable(false);
         txfTitle.setDisable(false);
@@ -703,6 +814,9 @@ public class LibraryController {
         txfPublisher.setDisable(false);
     }
 
+    /**
+     * Disables the textfields from the books panel
+     */
     void disableBookFields() {
         txfISBN.setDisable(true);
         txfTitle.setDisable(true);
@@ -712,6 +826,9 @@ public class LibraryController {
         txfPublisher.setDisable(true);
     }
 
+    /**
+     * Cleans all text from the book's textfields
+     */
     void cleanBookFields() {
 
         txfISBN.clear();
@@ -722,6 +839,9 @@ public class LibraryController {
         txfPublisher.clear();
     }
 
+    /**
+     * Disables the textfields from the user panel
+     */
     void disableUserFields() {
         lblUserCode.setDisable(true);
         lblUserName.setDisable(true);
@@ -729,6 +849,9 @@ public class LibraryController {
         lblUserBirthdate.setDisable(true);
     }
 
+    /**
+     * Cleans all text from the user's textfields
+     */
     void cleanUserFields() {
         lblUserCode.clear();
         lblUserName.clear();
@@ -736,6 +859,9 @@ public class LibraryController {
         lblUserBirthdate.setValue(null);
     }
 
+    /**
+     * Enables the id and isbn textfields from the lending-returning panel
+     */
     void enableRentReturnFields() {
         iconSearchUserCode.setDisable(false);
         iconSearchUserCode.setVisible(true);
@@ -745,6 +871,9 @@ public class LibraryController {
         txfFoundBookName.setDisable(false);
     }
 
+    /**
+     * Disables the id and isbn textfields from the lending-returning panel
+     */
     void disableRentReturnFields() {
         iconSearchUserCode.setDisable(true);
         iconSearchUserCode.setVisible(false);
@@ -754,6 +883,9 @@ public class LibraryController {
         txfFoundBookName.setDisable(true);
     }
 
+    /**
+     * Cleans all textfields from the lending-returning panel.
+     */
     void cleanRentReturnFields() {
         txfSearchUserCode.clear();
         txfFoundUserName.clear();
@@ -761,6 +893,13 @@ public class LibraryController {
         txfFoundBookName.clear();
     }
 
+    /**
+     * It opens a new window with a listview loaded with the books available to be borrowed or returned.
+     * The isbn of the selected book will be printed in the isbn textfield from the lending-returning panel
+     * after clicking the confirmation button.
+     * @param booksEntityList
+     * @throws IOException
+     */
     void openModalWindowBooks(List<BooksEntity> booksEntityList) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("listview-view.fxml"));
         Parent root = fxmlLoader.load();
@@ -776,6 +915,12 @@ public class LibraryController {
         stage.show();
     }
 
+    /**
+     * Opens a new window with a listview loaded with the users from the database. The id of the selected user will
+     * be printed in the id textfield from the lending-returning panel after clicking the confirmation button.
+     * @param usersEntities
+     * @throws IOException
+     */
     void openModalWindowUsers(List<UsersEntity> usersEntities) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("listview-view.fxml"));
         Parent root = fxmlLoader.load();
@@ -791,6 +936,13 @@ public class LibraryController {
         stage.show();
     }
 
+    /**
+     * It will open an alert dialog to inform the user of successful operations, exceptions, and more.
+     * @param alertType
+     * @param title
+     * @param headerText
+     * @param contentText
+     */
     void openAlertDialog(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -799,6 +951,14 @@ public class LibraryController {
         alert.showAndWait();
     }
 
+    /**
+     * It opens a confirmation dialog to ask user for confirmation before proceeding with some operations, like
+     * closing the application.
+     * @param title
+     * @param headerText
+     * @param contentText
+     * @return
+     */
     Optional<ButtonType> openConfirmationDialog(String title, String headerText, String contentText) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
@@ -807,12 +967,9 @@ public class LibraryController {
         return alert.showAndWait();
     }
 
-    public boolean bookIsReserved(BooksEntity booksEntity) {
-        List<ReservationsEntity> reservationsEntity = booksEntity.getReservedBy();
-        if (!booksEntity.getReservedBy().isEmpty()) return true;
-        else return false;
-    }
-
+    /**
+     * Set ups the efect that will have the imageView selected from the top panel
+     */
     private void setEffect() {
         Lighting lighting = new Lighting();
         lighting.setDiffuseConstant(1.0);
@@ -828,6 +985,11 @@ public class LibraryController {
         effect.setInput(lighting);
     }
 
+    /**
+     * It unwraps the exception thrown to get specific cause of the error
+     * @param exception
+     * @return
+     */
     private String getExceptionCause(Throwable exception)
     {
         while(exception.getCause() != null)

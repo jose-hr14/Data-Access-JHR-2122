@@ -10,29 +10,25 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * This class interacts with the PostgreSql database. It holds all the methods related with de CRUD of the database.
+ */
 public class DatabaseManager {
     SessionFactory sessionFactory;
 
+    /**
+     * The database manager is instantiated with an instantiation of the session factory to do its job.
+     * @param sessionFactory
+     */
     public DatabaseManager(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public List<UsersEntity> retrieveUserList() {
-        try (Session session = sessionFactory.openSession())
-        {
-            Query<UsersEntity> myQuery = session.createQuery("from com.jhr2122.unit5.finalactivity.UsersEntity");
-            return myQuery.list();
-        }
-    }
-
-    public List<BooksEntity> retrieveBooksList() {
-        try (Session session = sessionFactory.openSession())
-        {
-            Query<BooksEntity> myQuery = session.createQuery("from com.jhr2122.unit5.finalactivity.BooksEntity");
-            return myQuery.list();
-        }
-    }
-
+    /**
+     * It returns the reservations of a specific book
+     * @param booksEntity
+     * @return
+     */
     public List<ReservationsEntity> retrieveReservationsByBook(BooksEntity booksEntity) {
         try (Session session = sessionFactory.openSession())
         {
@@ -42,6 +38,12 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * It makes a partial search of the user by id, and returns the first match,
+     * @param id
+     * @return
+     * @throws HibernateException
+     */
     public UsersEntity retrieveFirstUserByID(String id) throws HibernateException {
         try (Session session = sessionFactory.openSession())
         {
@@ -54,6 +56,11 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Retrieve a list of users matching a partial search by user name
+     * @param name
+     * @return
+     */
     public List<UsersEntity> retrieveUsersByWildcard(String name) {
         try (Session session = sessionFactory.openSession())
         {
@@ -63,6 +70,11 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Retrieves a book list matching a partial search by tittle and returns it
+     * @param tittle
+     * @return
+     */
     public List<BooksEntity> retrieveBooksByWildcard(String tittle) {
         try (Session session = sessionFactory.openSession())
         {
@@ -72,6 +84,12 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Makes a partial search of book by id, and returns its first match.
+     * @param isbn
+     * @return
+     * @throws HibernateException
+     */
     public BooksEntity retrieveFirstBookByID(String isbn) throws HibernateException {
         try (Session session = sessionFactory.openSession())
         {
@@ -82,6 +100,13 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * It takes a book and user to find and return a specific lending.
+     * @param usersEntity
+     * @param booksEntity
+     * @return
+     * @throws HibernateException
+     */
     public LendingEntity retrieveLendingByIDAAndISBN(UsersEntity usersEntity, BooksEntity booksEntity) throws HibernateException {
         try (Session session = sessionFactory.openSession())
         {
@@ -93,6 +118,10 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Stores a user in the database
+     * @param usersEntity
+     */
     public void saveUser(UsersEntity usersEntity){
         try (Session session = sessionFactory.openSession())
         {
@@ -103,6 +132,10 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Stores a book in the database
+     * @param booksEntity
+     */
     public void saveBook(BooksEntity booksEntity) {
         try (Session session = sessionFactory.openSession())
         {
@@ -113,6 +146,11 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Stores a lending in the database
+     * @param lendingEntity
+     * @throws Exception
+     */
     public void saveLending(LendingEntity lendingEntity) throws Exception {
         try (Session session = sessionFactory.openSession())
         {
@@ -131,6 +169,10 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Stores a return in the database, seting the lending's returning date to null.
+     * @param lendingEntity
+     */
     public void saveReturn(LendingEntity lendingEntity) {
         try (Session session = sessionFactory.openSession())
         {
@@ -144,6 +186,10 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Stores a new reservation in the database.
+     * @param reservationsEntity
+     */
     public void saveReservation(ReservationsEntity reservationsEntity) {
         try (Session session = sessionFactory.openSession())
         {
@@ -153,6 +199,10 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Updates the specified user.
+     * @param usersEntity
+     */
     public void updateUser(UsersEntity usersEntity) {
         try (Session session = sessionFactory.openSession())
         {
@@ -162,6 +212,10 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Updates the specified book.
+     * @param booksEntity
+     */
     public void updateBook(BooksEntity booksEntity) {
         try (Session session = sessionFactory.openSession())
         {
@@ -171,6 +225,10 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Updates the specific lending
+     * @param lendingEntity
+     */
     public void updateLending(LendingEntity lendingEntity) {
         try (Session session = sessionFactory.openSession())
         {
@@ -180,24 +238,10 @@ public class DatabaseManager {
         }
     }
 
-    public void deleteUser(UsersEntity usersEntity) {
-        try (Session session = sessionFactory.openSession())
-        {
-            Transaction transaction = session.beginTransaction();
-            session.delete(usersEntity);
-            transaction.commit();
-        }
-    }
-
-    public void deleteBook(BooksEntity booksEntity) {
-        try (Session session = sessionFactory.openSession())
-        {
-            Transaction transaction = session.beginTransaction();
-            session.delete(booksEntity);
-            transaction.commit();
-        }
-    }
-
+    /**
+     * Deletes the specific reservations
+     * @param reservationsEntity
+     */
     public void deleteReservation(ReservationsEntity reservationsEntity) {
         try (Session session = sessionFactory.openSession())
         {

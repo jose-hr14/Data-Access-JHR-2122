@@ -11,8 +11,7 @@ import java.net.URL;
  */
 public class SpringManager {
     /**
-     * Makes a POST http request to spring to save a new reservation
-     *
+     * Makes a POST http request to spring to save a new reservation.
      * @param reservation to save in the database
      * @throws Exception if the post request fails
      */
@@ -56,7 +55,7 @@ public class SpringManager {
     }
 
     /**
-     * Makes a DELETE http request to spring to delete a reservation
+     * Makes a DELETE http request to spring to delete a reservation.
      * @param reservation
      * @throws Exception if the http request fails
      */
