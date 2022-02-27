@@ -249,14 +249,14 @@ public class LibraryController {
             if (isBorrowing)
                 openModalWindowBooks(databaseManager.retrieveBooksByWildcard(txfFoundBookName.getText()));
             else if (isReturning) {
-                List<BooksEntity> bookToBeReturned = new ArrayList<>();
+                List<BooksEntity> booksToBeReturned = new ArrayList<>();
                 for (LendingEntity lending : databaseManager.retrieveFirstUserByID(txfSearchUserCode.getText()).getLentBooks()) {
-                    bookToBeReturned.add(lending.getBook());
+                    booksToBeReturned.add(lending.getBook());
                 }
-                if (bookToBeReturned.isEmpty())
-                    throw new HibernateException("This user has no book to be returned");
+                if (booksToBeReturned.isEmpty())
+                    throw new HibernateException("This user has no books to be returned");
                 else
-                    openModalWindowBooks(bookToBeReturned);
+                    openModalWindowBooks(booksToBeReturned);
             }
         } catch (HibernateException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -442,28 +442,29 @@ public class LibraryController {
     }
 
     private void addReturning() {
-        try {
-            LendingEntity lendingEntity = databaseManager.retrieveLendingByIDAAndISBN
-                    (databaseManager.retrieveFirstUserByID(txfSearchUserCode.getText()),
-                            databaseManager.retrieveFirstBookByID(txfSearchIsbn.getText()));
-            databaseManager.saveReturn(lendingEntity);
-            if (lendingEntity.getBorrower().getFined() != null
-                    && lendingEntity.getBorrower().getFined().toLocalDate().isAfter(LocalDate.now())) {
-                openAlertDialog(Alert.AlertType.ERROR, "Error", "Late returnal",
-                        "User was fined until " + lendingEntity.getBorrower().getFined());
+        if (!txfSearchUserCode.getText().isEmpty() && !txfSearchIsbn.getText().isEmpty()) {
+            try {
+                LendingEntity lendingEntity = databaseManager.retrieveLendingByIDAAndISBN
+                        (databaseManager.retrieveFirstUserByID(txfSearchUserCode.getText()),
+                                databaseManager.retrieveFirstBookByID(txfSearchIsbn.getText()));
+                databaseManager.saveReturn(lendingEntity);
+                if (lendingEntity.getBorrower().getFined() != null
+                        && lendingEntity.getBorrower().getFined().toLocalDate().isAfter(LocalDate.now())) {
+                    openAlertDialog(Alert.AlertType.ERROR, "Error", "Late returnal",
+                            "User was fined until " + lendingEntity.getBorrower().getFined());
+                }
+                if (!databaseManager.retrieveReservationsByBook(lendingEntity.getBook()).isEmpty())
+                    openAlertDialog(Alert.AlertType.INFORMATION, "Attention", "A user has a reservation " +
+                            "of this book", "Please, notify " +
+                            databaseManager.retrieveReservationsByBook(lendingEntity.getBook()).get(0).getBorrower().toString());
+            } catch (Exception e) {
+                openAlertDialog(Alert.AlertType.ERROR, "Error", e.getClass().toString(), getExceptionCause(e));
             }
-            List<ReservationsEntity> reservationsEntity = databaseManager.retrieveReservationsByBook(lendingEntity.getBook());
-            if (!databaseManager.retrieveReservationsByBook(lendingEntity.getBook()).isEmpty())
-                openAlertDialog(Alert.AlertType.INFORMATION, "Attention", "A user has a reservation " +
-                        "of this book", "Please, notify " +
-                        databaseManager.retrieveReservationsByBook(lendingEntity.getBook()).get(0).getBorrower().toString());
-        } catch (Exception e) {
-            openAlertDialog(Alert.AlertType.ERROR, "Error", e.getClass().toString(), getExceptionCause(e));
+            isAdd = false;
+            disableRentReturnFields();
+            cleanRentReturnFields();
+            changePanelFromConfirmToStandard();
         }
-        isAdd = false;
-        disableRentReturnFields();
-        cleanRentReturnFields();
-        changePanelFromConfirmToStandard();
     }
 
     private void addLending() {
@@ -481,7 +482,12 @@ public class LibraryController {
             } else if (bookIsReserved(lendingEntity.getBook())) {
                 List<ReservationsEntity> reservationsOfThisBook = databaseManager.
                         retrieveReservationsByBook(lendingEntity.getBook());
-                if (reservationsOfThisBook.get(0).getBorrower().equals(lendingEntity.getBorrower())) {
+                List<UsersEntity> usersWhoCanBorrow = new ArrayList<>();
+                for(int i = 0; i < reservationsOfThisBook.size() && i < lendingEntity.getBook().getCopies(); i++)
+                {
+                    usersWhoCanBorrow.add(reservationsOfThisBook.get(i).getBorrower());
+                }
+                if (usersWhoCanBorrow.contains(lendingEntity.getBorrower())) {
                     try {
                         databaseManager.saveLending(lendingEntity);
                         try
@@ -786,7 +792,7 @@ public class LibraryController {
 
     public boolean bookIsReserved(BooksEntity booksEntity) {
         List<ReservationsEntity> reservationsEntity = booksEntity.getReservedBy();
-        if (reservationsEntity.size() >= booksEntity.getCopies()) return true;
+        if (!booksEntity.getReservedBy().isEmpty()) return true;
         else return false;
     }
 

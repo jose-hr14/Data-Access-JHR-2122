@@ -7,7 +7,10 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * POJO of users. This class is a representation of a record from the users table from PostgreSql
+ * in the form of Java Object.
+ */
 @Entity
 @Table(name = "users", schema = "public", catalog = "Library")
 public class UsersEntity {

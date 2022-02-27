@@ -5,7 +5,10 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
-
+/**
+ * POJO of lending. This class is a representation of a record from the lending table from PostgreSql
+ * in the form of Java Object.
+ */
 @Entity
 @Table(name = "lending", schema = "public", catalog = "Library")
 @Where(clause = "returningdate is null")
