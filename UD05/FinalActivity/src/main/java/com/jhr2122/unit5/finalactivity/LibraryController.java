@@ -120,10 +120,10 @@ public class LibraryController {
                 org.jboss.logging.Logger.getLogger("org.hibernate");
         java.util.logging.Logger.getLogger("org.hibernate") .setLevel(Level.OFF);
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        databaseManager = new DatabaseManager(sessionFactory);
-        springManager = new SpringManager();
         setEffect();
 
+        databaseManager = new DatabaseManager(sessionFactory);
+        springManager = new SpringManager();
         isRead = false;
         isAdd = false;
         isDelete = false;
@@ -225,21 +225,19 @@ public class LibraryController {
 
     @FXML
     void iconExitListener(MouseEvent event) {
-        Platform.exit();
+        Optional<ButtonType> result = openConfirmationDialog("Attention", "Confirm",
+                "Do you want to close the application?");
+        if (result.get() == ButtonType.OK) {
+            Platform.exit();
+        }
     }
 
     @FXML
     void iconSearchUserCodeListener(MouseEvent event) {
         try {
             openModalWindowUsers(databaseManager.retrieveUsersByWildcard(txfFoundUserName.getText()));
-        } catch (HibernateException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(e.getClass().toString());
-            alert.setContentText(e.getMessage());
-
-            alert.showAndWait();
-        } catch (IOException e) {
+        } catch (Exception e) {
+            openAlertDialog(Alert.AlertType.ERROR, "Error", "Searching", getExceptionCause(e));
         }
     }
 
@@ -258,14 +256,12 @@ public class LibraryController {
                 else
                     openModalWindowBooks(booksToBeReturned);
             }
-        } catch (HibernateException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(e.getClass().toString());
-            alert.setContentText(e.getMessage());
-
-            alert.showAndWait();
-        } catch (IOException e) {
+        } catch (Exception e) {
+            openAlertDialog(Alert.AlertType.ERROR, "Error", "Searching", getExceptionCause(e));
+            isAdd = false;
+            disableRentReturnFields();
+            cleanRentReturnFields();
+            changePanelFromConfirmToStandard();
         }
     }
 

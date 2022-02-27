@@ -68,7 +68,7 @@ public class DatabaseManager {
         {
             Query<BooksEntity> myQuery = session.createQuery("from com.jhr2122.unit5.finalactivity.BooksEntity where " + "upper(title) like upper('%" + tittle + "%')");
             if (!myQuery.list().isEmpty()) return myQuery.list();
-            else throw new HibernateException("User not found");
+            else throw new HibernateException("Book not found");
         }
     }
 
