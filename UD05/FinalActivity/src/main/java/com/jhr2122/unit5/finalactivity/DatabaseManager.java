@@ -250,4 +250,23 @@ public class DatabaseManager {
             transaction.commit();
         }
     }
+
+    /**
+     * EXAM USER
+     * @param user
+     * @throws Exception
+     */
+    public void deleteUser(UsersEntity user) throws Exception {
+        if(user.getReservedBooks().isEmpty() && user.getLentBooks().isEmpty())
+        {
+            try (Session session = sessionFactory.openSession())
+            {
+                Transaction transaction = session.beginTransaction();
+                session.delete(user);
+                transaction.commit();
+            }
+        }
+        else
+            throw new Exception("This user has reserved books or borrowed books");
+    }
 }

@@ -74,4 +74,25 @@ public class SpringManager {
                 conn.disconnect();
         }
     }
+
+    public void deleteBook(BooksEntity books) throws Exception {
+        if(books.getReservedBy().isEmpty() && books.getBorrowedBy().isEmpty())
+        {
+            HttpURLConnection conn = null;
+            try {
+                URL url = new URL("http://localhost:8080/api-rest/Library/Book/" + books.getIsbn());
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("DELETE");
+                if (conn.getResponseCode() != 200)
+                    throw new Exception("Book DELETE failed");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            } finally {
+                if (conn != null)
+                    conn.disconnect();
+            }
+        }
+        else
+            throw new Exception("This book is reserved o borrowed by someone");
+    }
 }

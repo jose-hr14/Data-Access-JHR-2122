@@ -42,7 +42,10 @@ public class LibraryController {
     boolean isSearchingToEdit;
     boolean isBorrowing;
     boolean isReturning;
+    boolean isSearchingToDelete;
     ColorAdjust effect;
+    @FXML
+    private ImageView iconDelete;
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -117,6 +120,8 @@ public class LibraryController {
     private ImageView iconConfirmModal;
     @FXML
     private ListView<BooksEntity> listView;
+    @FXML
+    private GridPane bottomPanel2;
 
     /**
      * Main controller constructor. It disables hibernate warnings, instantiates the postgresql database manager,
@@ -140,6 +145,7 @@ public class LibraryController {
         isSearchingToEdit = false;
         isBorrowing = false;
         isReturning = false;
+        isSearchingToDelete = false;
     }
 
     public TextField getTxfSearchIsbn() {
@@ -166,6 +172,19 @@ public class LibraryController {
         return iconSearchUserCode;
     }
 
+    @FXML
+    void iconDeleteListener(MouseEvent event) {
+        changePanelFromStandardToConfirm();
+        isSearchingToDelete = true;
+        if (paneUser.isVisible()) {
+            enableUserFields();
+            cleanUserFields();
+        } else if (paneBook.isVisible()) {
+            enableBookFields();
+            cleanBookFields();
+        }
+    }
+
     /**
      * Shows the user panel to search, edit and add users.
      * @param event
@@ -177,6 +196,8 @@ public class LibraryController {
         paneUser.setVisible(true);
         iconRead.setVisible(true);
         iconEdit.setVisible(true);
+        iconDelete.setVisible(true);
+
         isBorrowing = false;
         isReturning = false;
 
@@ -184,6 +205,9 @@ public class LibraryController {
         iconBook.setEffect(null);
         iconLentBook.setEffect(null);
         iconReturnBook.setEffect(null);
+
+        bottomPanel2.setVisible(false);
+        bottomPanel.setVisible(true);
     }
 
     /**
@@ -197,6 +221,8 @@ public class LibraryController {
         paneBook.setVisible(true);
         iconRead.setVisible(true);
         iconEdit.setVisible(true);
+        iconDelete.setVisible(true);
+
         isBorrowing = false;
         isReturning = false;
 
@@ -204,6 +230,9 @@ public class LibraryController {
         iconBook.setEffect(effect);
         iconLentBook.setEffect(null);
         iconReturnBook.setEffect(null);
+
+        bottomPanel2.setVisible(false);
+        bottomPanel.setVisible(true);
     }
 
     /**
@@ -218,6 +247,7 @@ public class LibraryController {
         paneLent.setVisible(true);
         iconRead.setVisible(false);
         iconEdit.setVisible(false);
+        iconDelete.setVisible(false);
         isBorrowing = true;
         isReturning = false;
 
@@ -225,6 +255,8 @@ public class LibraryController {
         iconBook.setEffect(null);
         iconLentBook.setEffect(effect);
         iconReturnBook.setEffect(null);
+        bottomPanel2.setVisible(true);
+        bottomPanel.setVisible(false);
     }
 
     /**
@@ -239,6 +271,8 @@ public class LibraryController {
         paneLent.setVisible(true);
         iconRead.setVisible(false);
         iconEdit.setVisible(false);
+        iconDelete.setVisible(false);
+
         isBorrowing = false;
         isReturning = true;
 
@@ -246,6 +280,9 @@ public class LibraryController {
         iconBook.setEffect(null);
         iconLentBook.setEffect(null);
         iconReturnBook.setEffect(effect);
+
+        bottomPanel2.setVisible(true);
+        bottomPanel.setVisible(false);
     }
 
     /**
@@ -444,7 +481,65 @@ public class LibraryController {
                         getExceptionCause(exception));
             }
 
-        } else if (paneBook.isVisible() && isAdd) {
+        }
+
+
+        /**
+         * EXAM USER DELETE OPERATIONS
+         */
+        else if (paneUser.isVisible() && isSearchingToDelete) {
+            try
+            {
+                searchingUserToDelete();
+            }
+            catch(Exception exception)
+            {
+                openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
+                        getExceptionCause(exception));
+            }
+        } else if (paneUser.isVisible() && isDelete) {
+            try{
+                deleteUser();
+                openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Users",
+                        "User deleted successfully");
+            }
+            catch(Exception exception)
+            {
+                openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
+                        getExceptionCause(exception));
+            }
+
+        }
+        /**
+         * EXAM BOOK DELETE OPERATION
+         */
+        else if (paneBook.isVisible() && isSearchingToDelete) {
+            try
+            {
+                searchingBookToDelete();
+            }
+            catch(Exception exception)
+            {
+                openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
+                        getExceptionCause(exception));
+            }
+        } else if (paneBook.isVisible() && isDelete) {
+            try{
+                deleteBook();
+                openAlertDialog(Alert.AlertType.INFORMATION, "Operation successful", "Books",
+                        "Book deleted successfully");
+            }
+            catch(Exception exception)
+            {
+                openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
+                        getExceptionCause(exception));
+            }
+
+        }
+
+
+
+        else if (paneBook.isVisible() && isAdd) {
             if(!txfISBN.getText().isEmpty() && !txfTitle.getText().isEmpty() && !txfPublisher.getText().isEmpty())
             {
                 try
@@ -476,7 +571,6 @@ public class LibraryController {
                 openAlertDialog(Alert.AlertType.ERROR, "Attention", "Aborting operation",
                         getExceptionCause(exception));
             }
-
         } else if (paneBook.isVisible() && isEdit) {
             try
             {
@@ -494,6 +588,66 @@ public class LibraryController {
         } else if (isReturning && isAdd) {
             addReturning();
         }
+    }
+
+    /**
+     * EXAM BOOK
+     * @throws Exception
+     */
+    private void deleteBook() throws Exception {
+        BooksEntity booksEntity = databaseManager.retrieveFirstBookByID(txfISBN.getText());
+        springManager.deleteBook(booksEntity);
+        isDelete = false;
+        changePanelFromConfirmToStandard();
+        cleanBookFields();
+    }
+
+    /**
+     * EXAM BOOK
+     */
+    private void searchingBookToDelete()
+    {
+        BooksEntity booksEntity = databaseManager.retrieveFirstBookByID(txfISBN.getText());
+        txfISBN.setText(booksEntity.getIsbn());
+        txfTitle.setText(booksEntity.getTitle());
+        sliderCopies.setValue(booksEntity.getCopies());
+        txfCover.setText(booksEntity.getCover());
+        txfOutline.setText(booksEntity.getOutline());
+        txfPublisher.setText(booksEntity.getPublisher());
+
+        disableBookFields();
+
+        isSearchingToDelete = false;
+        isDelete = true;
+    }
+
+    /**
+     * EXAM USER
+     */
+    private void searchingUserToDelete() {
+        UsersEntity usersEntity = databaseManager.retrieveFirstUserByID(lblUserCode.getText());
+        lblUserCode.setText(usersEntity.getCode());
+        lblUserName.setText(usersEntity.getName());
+        lblUserSurname.setText(usersEntity.getSurname());
+        if(usersEntity.getBirthdate() != null)
+            lblUserBirthdate.setValue(usersEntity.getBirthdate().toLocalDate());
+
+        disableUserFields();
+
+        isSearchingToDelete = false;
+        isDelete = true;
+    }
+
+    /**
+     * EXAM USER
+     * @throws Exception
+     */
+    private void deleteUser() throws Exception {
+        UsersEntity usersEntity = databaseManager.retrieveFirstUserByID(lblUserCode.getText());
+        databaseManager.deleteUser(usersEntity);
+        isDelete = false;
+        changePanelFromConfirmToStandard();
+        cleanUserFields();
     }
 
     /**
@@ -740,6 +894,9 @@ public class LibraryController {
         isEdit = true;
     }
 
+
+
+
     /**
      * Makes a partial search of users by id, returning the first match.
      */
@@ -778,9 +935,12 @@ public class LibraryController {
      * Hides the confirmation o cancel panel from the bottom of the window to the standard search, edit and add panel.
      */
     void changePanelFromConfirmToStandard() {
-        bottomPanel.setVisible(true);
         bottomConfirmPane.setVisible(false);
         upperPane.setDisable(false);
+        if(paneUser.isVisible() || paneBook.isVisible())
+            bottomPanel.setVisible(true);
+        else if(paneLent.isVisible())
+            bottomPanel2.setVisible(true);
     }
 
     /**
@@ -788,6 +948,7 @@ public class LibraryController {
      */
     void changePanelFromStandardToConfirm() {
         bottomPanel.setVisible(false);
+        bottomPanel2.setVisible(false);
         bottomConfirmPane.setVisible(true);
         upperPane.setDisable(true);
     }

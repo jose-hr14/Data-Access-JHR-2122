@@ -71,6 +71,7 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -91,8 +92,28 @@
                   <Image url="@iconEdit.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="iconDelete" fitHeight="87.0" fitWidth="93.0" onMouseClicked="#iconDeleteListener" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@delete-comments-delete-icon-black-11563177686kfv8sa8gps-removebg-preview.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
+       <GridPane fx:id="bottomPanel2" layoutY="246.0" prefHeight="91.0" prefWidth="431.0" style="-fx-background-color: #85C7DE;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+           <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+           </columnConstraints>
+           <rowConstraints>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+           </rowConstraints>
+           <children>
+               <ImageView fx:id="iconAdd" fitHeight="85.0" fitWidth="165.0" onMouseClicked="#iconAddListener" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+                   <image>
+                       <Image url="@addIcon.png" />
+                   </image>
+               </ImageView>
+           </children>
+       </GridPane>
       <GridPane fx:id="bottomConfirmPane" layoutX="-186.0" layoutY="342.0" prefHeight="85.0" prefWidth="500.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
