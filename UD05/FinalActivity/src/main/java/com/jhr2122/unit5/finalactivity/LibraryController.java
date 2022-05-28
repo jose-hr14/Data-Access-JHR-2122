@@ -1159,4 +1159,8 @@ public class LibraryController {
         }
         return  exception.getMessage();
     }
+
+    private void test(){
+        Object objecto = databaseManager.retrieveUsersByWildcard("2").get(0);
+    }
 }

@@ -269,4 +269,6 @@ public class DatabaseManager {
         else
             throw new Exception("This user has reserved books or borrowed books");
     }
+
+
 }

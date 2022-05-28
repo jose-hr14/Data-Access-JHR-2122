@@ -12,6 +12,7 @@ import java.net.URL;
 public class SpringManager {
     /**
      * Makes a POST http request to spring to save a new reservation.
+     *
      * @param reservation to save in the database
      * @throws Exception if the post request fails
      */
@@ -56,6 +57,7 @@ public class SpringManager {
 
     /**
      * Makes a DELETE http request to spring to delete a reservation.
+     *
      * @param reservation
      * @throws Exception if the http request fails
      */
@@ -76,23 +78,18 @@ public class SpringManager {
     }
 
     public void deleteBook(BooksEntity books) throws Exception {
-        if(books.getReservedBy().isEmpty() && books.getBorrowedBy().isEmpty())
-        {
-            HttpURLConnection conn = null;
-            try {
-                URL url = new URL("http://localhost:8080/api-rest/Library/Book/" + books.getIsbn());
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("DELETE");
-                if (conn.getResponseCode() != 200)
-                    throw new Exception("Book DELETE failed");
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            } finally {
-                if (conn != null)
-                    conn.disconnect();
-            }
+        HttpURLConnection conn = null;
+        try {
+            URL url = new URL("http://localhost:8080/api-rest/Library/Book/" + books.getIsbn());
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("DELETE");
+            if (conn.getResponseCode() != 200)
+                throw new Exception("Book DELETE failed");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn != null)
+                conn.disconnect();
         }
-        else
-            throw new Exception("This book is reserved o borrowed by someone");
     }
 }
